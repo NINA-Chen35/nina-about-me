@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nina 雙胞胎媽咪｜@1minaday.nina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script async src="https://www.instagram.com/embed.js"></script>
+  <script src="content.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Palette ── */
+    :root {
+      --coral:    #F56E4A;
+      --coral-lt: rgba(245,110,74,.13);
+      --yellow:   #FFDF6F;
+      --yellow-lt:rgba(255,223,111,.15);
+      --blue:     #7DABD0;
+      --blue-d:   #5E99C4;
+      --blue-lt:  rgba(125,171,208,.12);
+      --blue-bdr: rgba(125,171,208,.30);
+      --teal:     #CFE7EA;
+      --salmon:   #FBC1AD;
+      --pgray:    #E5E1E0;
+
+      /* Light theme */
+      --bg:       #F7F5F2;
+      --bg2:      #FFFFFF;
+      --bg3:      #EEECEA;
+      --text:     #1C1C1C;
+      --text2:    rgba(28,28,28,.55);
+      --text3:    rgba(28,28,28,.28);
+      --border:   rgba(0,0,0,.08);
+      --border2:  rgba(0,0,0,.05);
+
+      /* Hero-only dark */
+      --hero-bg:  #141414;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 16px; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ════════════════════════════
+       TOP BAR (fixed)
+    ════════════════════════════ */
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 18px;
+      background: rgba(14,14,14,.72);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .top-avatar {
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      background: url('img/avatar.jpg') center top / cover no-repeat;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      box-shadow: 0 0 0 2px var(--coral);
+    }
+    .top-handle {
+      font-size: .82rem; font-weight: 700; color: #fff; letter-spacing: .01em;
+    }
+    .top-handle span { color: rgba(255,255,255,.45); font-weight: 400; }
+    .top-bar-cta {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 5px;
+      background: var(--coral); color: #fff;
+      font-size: .75rem; font-weight: 800; text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s;
+    }
+    .top-bar-cta:hover { background: #E55E3A; }
+
+    /* ════════════════════════════
+       1. HERO  (dark)
+    ════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      overflow: hidden;
+      background: var(--hero-bg);
+      padding-top: 52px; /* space for fixed top-bar */
+    }
+
+    .hero-poster {
+      position: absolute; inset: 0;
+      background-image: url('img/hero_poster2.jpg');
+      background-size: cover;
+      background-position: center top;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-gradient {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 65%;
+      background: linear-gradient(to top, var(--hero-bg) 0%, rgba(20,20,20,.8) 45%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 3;
+      padding: 0 22px 36px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--coral); color: #fff;
+      font-size: .63rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 3px; margin-bottom: 11px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #fff;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+
+    .hero-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.9rem; font-weight: 700;
+      color: #fff; letter-spacing: .06em; line-height: 1.15;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 20px rgba(0,0,0,.4);
+    }
+    .hero-title span {
+      display: block; font-size: 1.55rem; font-weight: 400;
+      letter-spacing: .1em; opacity: .88; margin-top: 2px;
+    }
+
+    .hero-genres {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+    }
+    .genre-chip {
+      font-size: .67rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 3px; letter-spacing: .04em;
+    }
+    .c-blue   { background: rgba(125,171,208,.2); color: var(--teal);   border: 1px solid rgba(125,171,208,.38); }
+    .c-yellow { background: var(--yellow-lt);     color: var(--yellow); border: 1px solid rgba(255,223,111,.35); }
+    .c-coral  { background: var(--coral-lt);      color: var(--coral);  border: 1px solid rgba(245,110,74,.38); }
+
+    .hero-desc {
+      font-size: .9rem; color: rgba(255,255,255,.65);
+      line-height: 1.8; margin-bottom: 22px; max-width: 400px;
+    }
+
+    .hero-btns { display: flex; flex-direction: column; gap: 10px; }
+
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 14px 24px; background: #fff; color: var(--hero-bg);
+      font-family: 'Noto Sans TC', sans-serif; font-size: .94rem; font-weight: 800;
+      border-radius: 6px; text-decoration: none;
+      transition: background .18s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--pgray); transform: scale(1.01); }
+
+    .btn-secondary {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 13px 24px; background: rgba(109,109,110,.65); color: #fff;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .9rem; font-weight: 500;
+      border-radius: 6px; text-decoration: none; backdrop-filter: blur(6px);
+      transition: background .18s;
+    }
+    .btn-secondary:hover { background: rgba(109,109,110,.88); }
+
+    .scroll-cue {
+      position: absolute; bottom: 128px; right: 20px; z-index: 4;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      color: rgba(255,255,255,.3); font-size: .63rem; letter-spacing: .1em;
+      animation: bob 2.2s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+
+    /* ════════════════════════════
+       2. SEASON — Episode List  (light)
+    ════════════════════════════ */
+    .season-section { background: var(--bg2); padding: 32px 0 44px; }
+
+    .season-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; margin-bottom: 4px;
+    }
+    .season-left { display: flex; align-items: center; gap: 10px; }
+    .season-badge {
+      font-size: .58rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+      color: #fff; background: var(--coral);
+      padding: 3px 9px; border-radius: 3px;
+    }
+    .season-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--text);
+    }
+    .season-count { font-size: .72rem; color: var(--text3); }
+
+    /* ── Episode toggle button ── */
+    .ep-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; margin: 12px 22px 0;
+      width: calc(100% - 44px);
+      padding: 14px 18px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 10px; cursor: pointer;
+      font-family: 'Noto Serif TC', serif;
+      font-size: .95rem; font-weight: 700; color: var(--text);
+      transition: background .18s, border-color .18s;
+    }
+    .ep-toggle:hover { background: var(--bg3); border-color: rgba(0,0,0,.13); }
+    .ep-toggle .toggle-icon {
+      color: var(--text3); font-size: .75rem;
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    .ep-toggle.open .toggle-icon { transform: rotate(180deg); }
+
+    /* ── Collapsible wrapper ── */
+    .ep-list-wrap {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .5s cubic-bezier(.4,0,.2,1);
+    }
+    .ep-list-wrap.open { max-height: 4000px; }
+
+    .ep-list { padding: 8px 22px 0; }
+
+    .ep-row {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 14px;
+      row-gap: 10px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border2);
+    }
+    .ep-row:last-child { border-bottom: none; }
+
+    /* Replace thumb: add style="background-image:url('ep1.jpg');background-size:cover;" and remove inner elements */
+    .ep-thumb {
+      grid-row: 1 / 3;
+      width: 128px; aspect-ratio: 16/9;
+      border-radius: 7px; position: relative; overflow: hidden;
+      background: var(--ec, var(--blue));
+      flex-shrink: 0;
+    }
+    .ep-thumb::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 55%);
+    }
+    .ep-thumb::after {
+      content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.15);
+    }
+    .ep-num {
+      position: absolute; bottom: 5px; left: 7px; z-index: 1;
+      font-size: .58rem; font-weight: 800; color: rgba(255,255,255,.88); letter-spacing: .08em;
+    }
+    .ep-play-sm {
+      position: absolute; top: 50%; left: 50%; z-index: 1;
+      transform: translate(-50%, -50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(0,0,0,.38); border: 1.5px solid rgba(255,255,255,.65);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .55rem;
+    }
+    .ep-play-sm i { margin-left: 2px; }
+
+    .ep-row.crisis  .ep-thumb { box-shadow: 0 0 0 2px var(--coral); }
+    .ep-row.climax  .ep-thumb { box-shadow: 0 0 0 2.5px var(--coral), 0 0 10px rgba(245,110,74,.35); }
+
+    .ep-info {
+      grid-column: 2; grid-row: 1;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+    }
+    .ep-label {
+      font-size: .63rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 3px;
+    }
+    .ep-row.mood-blue   .ep-label { color: var(--blue-d); }
+    .ep-row.mood-teal   .ep-label { color: #4A9EA8; }
+    .ep-row.mood-yellow .ep-label { color: #B89000; }
+    .ep-row.mood-salmon .ep-label { color: #C4705A; }
+
+    .ep-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.45;
+    }
+    .ep-arrow { color: var(--text3); font-size: .75rem; padding-top: 2px; flex-shrink: 0; }
+
+    .ep-desc {
+      grid-column: 2 / 3; grid-row: 2;
+      font-size: .78rem; color: var(--text2); line-height: 1.65;
+    }
+
+
+    /* ════════════════════════════
+       3. VIDEOS — Horizontal Scroll  (light)
+    ════════════════════════════ */
+    .vid-section { background: var(--bg); padding: 36px 0 40px; }
+
+    .sec-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 0 22px; margin-bottom: 14px;
+    }
+    .sec-label {
+      font-size: .67rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 3px;
+    }
+    .sec-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.15rem; font-weight: 700; color: var(--text);
+    }
+    .see-all { font-size: .78rem; color: var(--blue-d); font-weight: 600; text-decoration: none; }
+    .see-all:hover { text-decoration: underline; }
+
+    .vid-scroll {
+      display: flex; gap: 10px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      padding: 0 22px 4px;
+    }
+    .vid-scroll::-webkit-scrollbar { display: none; }
+
+    .vid-card {
+      flex: 0 0 42%; scroll-snap-align: start;
+      background: var(--bg2); border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border); cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .vid-card:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+
+    /* Replace: style="background-image:url('thumb1.jpg');background-size:cover;" */
+    .vid-thumb {
+      width: 100%; aspect-ratio: 9/16; position: relative; overflow: hidden;
+      background: linear-gradient(155deg, #E0D5C8 0%, #C8B8A8 55%, #B8A898 100%);
+    }
+    .vid-thumb::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -50deg, transparent, transparent 12px,
+        rgba(0,0,0,.04) 12px, rgba(0,0,0,.04) 24px);
+    }
+    .vid-thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,.48) 100%);
+    }
+    .vid-ep-badge {
+      position: absolute; top: 8px; left: 8px; z-index: 2;
+      font-size: .6rem; font-weight: 800; letter-spacing: .1em;
+      color: var(--coral); background: rgba(255,255,255,.82);
+      padding: 2px 7px; border-radius: 3px; border: 1px solid rgba(245,110,74,.3);
+    }
+    .vid-play {
+      position: absolute; z-index: 2; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,.75); border: 1.5px solid rgba(245,110,74,.5);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--coral); font-size: .85rem;
+    }
+    .vid-play i { margin-left: 3px; }
+
+    .vid-info { padding: 10px 12px 14px; }
+    .vid-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: .82rem; font-weight: 700; color: var(--text); line-height: 1.45; margin-bottom: 4px;
+    }
+    .vid-desc { font-size: .72rem; color: var(--text2); line-height: 1.5; }
+
+    .ig-row { padding: 20px 22px 0; }
+    .ig-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 15px;
+      background: var(--coral); color: #fff;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .92rem; font-weight: 800;
+      border-radius: 6px; text-decoration: none; letter-spacing: .03em;
+      transition: background .18s, transform .15s; box-shadow: 0 4px 16px rgba(245,110,74,.28);
+    }
+    .ig-btn:hover { background: #E55E3A; transform: translateY(-1px); }
+
+
+    /* ════════════════════════════
+       IG REEL MODAL
+    ════════════════════════════ */
+    .ig-modal {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      visibility: hidden; opacity: 0;
+      transition: visibility .25s, opacity .25s;
+    }
+    .ig-modal.open { visibility: visible; opacity: 1; }
+    .ig-modal-bg {
+      position: absolute; inset: 0; background: rgba(0,0,0,.88); cursor: pointer;
+    }
+    .ig-modal-box {
+      position: relative; z-index: 1;
+      width: min(92vw, 340px);
+    }
+    .ig-modal-close {
+      position: absolute; top: -42px; right: 0;
+      background: none; border: none; cursor: pointer;
+      color: #fff; font-size: 1.5rem; padding: 8px; line-height: 1;
+      transition: opacity .15s;
+    }
+    .ig-modal-close:hover { opacity: .7; }
+    /* Instagram embed container */
+    .ig-embed-wrap {
+      border-radius: 12px; overflow: hidden;
+      /* Instagram embed.js generates its own iframe sizing */
+    }
+    .ig-embed-wrap .instagram-media {
+      margin: 0 auto !important;
+      min-width: unset !important;
+      max-width: 100% !important;
+    }
+
+    /* ════════════════════════════
+       4. VOTING  (light + blue)
+    ════════════════════════════ */
+    .vote-section { background: var(--bg2); padding: 40px 0 48px; }
+    .vote-wrap { padding: 0 22px; }
+    .vote-section .sec-label { color: var(--blue-d); }
+    .vote-section .sec-title { color: var(--text); margin-bottom: 6px; }
+
+    .vote-subtitle { font-size: .88rem; color: var(--text2); margin-bottom: 18px; }
+
+    .vote-card {
+      background: var(--bg); border-radius: 12px; padding: 22px 18px;
+      border: 1px solid var(--blue-bdr);
+    }
+    .vote-hint {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 600; color: var(--blue-d);
+      background: var(--blue-lt); border: 1px solid var(--blue-bdr);
+      padding: 3px 11px; border-radius: 4px; margin-bottom: 14px;
+    }
+    .vote-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .vote-opt {
+      display: flex; align-items: center; gap: 11px;
+      padding: 12px 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px; background: var(--bg2);
+      color: var(--text2);
+      font-family: 'Noto Sans TC', sans-serif; font-size: .88rem; text-align: left; width: 100%; cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s, opacity .15s;
+    }
+    .vote-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-lt); color: var(--text); }
+    .vote-opt.sel { border-color: var(--blue); background: var(--blue-lt); color: var(--text); font-weight: 600; }
+    .vote-opt:disabled { opacity: .28; cursor: not-allowed; }
+    .vote-opt.sel:disabled { opacity: 1; cursor: default; }
+    .v-em { font-size: 1.15rem; flex-shrink: 0; }
+
+    .submit-btn {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; padding: 14px;
+      background: var(--blue); color: #fff;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .92rem; font-weight: 800;
+      border-radius: 6px; border: none; cursor: pointer; letter-spacing: .03em;
+      transition: background .18s, transform .15s; box-shadow: 0 4px 16px rgba(125,171,208,.3);
+    }
+    .submit-btn:hover { background: var(--blue-d); transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: .35; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .vote-results { display: none; }
+    .vote-results.show { display: block; }
+    .thank-you {
+      font-family: 'Noto Serif TC', serif; font-size: .95rem;
+      color: var(--text); background: var(--blue-lt);
+      border: 1px solid var(--blue-bdr); border-radius: 8px;
+      padding: 15px; text-align: center; margin-bottom: 20px;
+    }
+    .res-item { margin-bottom: 14px; }
+    .res-item:last-child { margin-bottom: 0; }
+    .res-label { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: var(--text2); margin-bottom: 6px; }
+    .res-pct { font-weight: 700; color: var(--blue-d); min-width: 32px; text-align: right; }
+    .res-bar-bg { height: 7px; background: rgba(125,171,208,.15); border-radius: 999px; overflow: hidden; }
+    .res-bar { height: 100%; background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%); border-radius: 999px; width: 0%; transition: width .9s cubic-bezier(.4,0,.2,1); }
+
+
+    /* ════════════════════════════
+       5. FIND ME  (light)
+    ════════════════════════════ */
+    .find-section { background: var(--bg); padding: 44px 0; text-align: center; }
+    .find-section .sec-label { display: block; margin-bottom: 6px; }
+    .find-title { font-family: 'Noto Serif TC', serif; font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 24px; }
+    .ig-big {
+      display: inline-flex; align-items: center; justify-content: center; gap: 11px;
+      padding: 16px 40px; background: var(--text); color: #fff;
+      font-family: 'Noto Sans TC', sans-serif; font-size: 1rem; font-weight: 800;
+      border-radius: 6px; text-decoration: none;
+      width: 100%; max-width: 300px;
+      transition: background .18s, transform .15s;
+    }
+    .ig-big i { font-size: 1.2rem; }
+    .ig-big:hover { background: #333; transform: translateY(-2px); }
+
+
+    /* ════════════════════════════
+       6. FOOTER
+    ════════════════════════════ */
+    footer {
+      background: #111; color: #fff;
+      padding: 52px 0; text-align: center;
+    }
+    .foot-inner { max-width: 640px; margin: 0 auto; padding: 0 22px; }
+    .foot-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .foot-sub { font-size: .86rem; color: rgba(255,255,255,.5); line-height: 1.7; margin-bottom: 24px; }
+    .email-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 28px; border: 1.5px solid rgba(245,110,74,.45); color: var(--coral);
+      font-family: 'Noto Sans TC', sans-serif; font-size: .9rem; font-weight: 600;
+      border-radius: 6px; text-decoration: none;
+      transition: background .18s, color .18s, border-color .18s;
+    }
+    .email-btn:hover { background: var(--coral); color: #fff; border-color: var(--coral); }
+
+    .res-count { color: var(--text3); font-size: .72rem; font-weight: 400; margin-left: 4px; }
+
+    /* ════════════════════════════
+       2. GROUP BUY  (light)
+    ════════════════════════════ */
+    .gb-section { background: var(--bg2); padding: 0 0 44px; }
+
+    /* ── Banner Carousel ── */
+    .gb-banner-wrap { padding: 0 22px 24px; }
+    .gb-carousel-track { position: relative; border-radius: 14px; overflow: hidden; }
+    .gb-slide {
+      width: 100%;
+      background: linear-gradient(135deg, #1C2340 0%, #2A3560 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 8px 28px rgba(0,0,0,.18);
+      transition: opacity .55s ease;
+    }
+    .gb-slide:not(.gb-active) {
+      position: absolute; top: 0; left: 0;
+      opacity: 0; pointer-events: none;
+    }
+    .gb-slide.gb-active { opacity: 1; }
+    .gb-banner-img { width: 100%; aspect-ratio: 16/7; object-fit: cover; display: block; opacity: .92; }
+    .gb-banner-img-placeholder {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, #2A3560 0%, #3D4E80 50%, #2A3560 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gb-banner-img-placeholder i { font-size: 2.5rem; color: rgba(255,255,255,.18); }
+    .gb-banner-body { padding: 14px 18px 18px; }
+    .gb-banner-tags { display: flex; gap: 6px; margin-bottom: 9px; }
+    .gb-tag {
+      font-size: .58rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 3px; color: #fff;
+    }
+    .gb-banner-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 4px;
+    }
+    .gb-banner-sub { font-size: .76rem; color: rgba(255,255,255,.5); line-height: 1.55; margin-bottom: 13px; }
+    .gb-banner-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 20px; border-radius: 6px;
+      background: var(--coral); color: #fff;
+      font-size: .8rem; font-weight: 800; text-decoration: none;
+      transition: background .15s, transform .15s;
+      box-shadow: 0 4px 14px rgba(245,110,74,.45);
+    }
+    .gb-banner-btn:hover { background: #E55E3A; transform: translateY(-1px); }
+    /* Dots */
+    .gb-carousel-dots {
+      display: flex; justify-content: center; gap: 6px; padding: 10px 0 0;
+    }
+    .gb-carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(0,0,0,.15); cursor: pointer;
+      transition: background .25s, transform .25s;
+    }
+    .gb-carousel-dot.active { background: var(--coral); transform: scale(1.3); }
+
+    /* ── Schedule ── */
+    .gb-schedule-wrap { margin: 0 22px; }
+    .gb-schedule-hdr {
+      display: flex; align-items: center; gap: 9px;
+      padding: 0 2px 16px;
+      font-size: .67rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text3);
+    }
+    .gb-schedule-hdr i { color: var(--coral); font-size: .9rem; }
+
+    /* ── Timeline: grid [badge 56px | dot-track 24px | content 1fr] ── */
+    .gb-timeline {
+      position: relative;
+      display: flex; flex-direction: column;
+    }
+    /* Continuous vertical line: centered in dot-track column (56+12=68px from left) */
+    .gb-timeline::before {
+      content: ''; position: absolute;
+      left: 67px; top: 18px; bottom: 18px; width: 2px;
+      background: linear-gradient(to bottom, rgba(16,185,129,.7) 0%, rgba(0,0,0,.07) 100%);
+      border-radius: 2px;
+    }
+
+    .gb-row {
+      display: grid;
+      grid-template-columns: 56px 24px 1fr;
+      padding-bottom: 22px;
+      position: relative;
+    }
+    .gb-row:last-child { padding-bottom: 2px; }
+
+    /* Col 1: Badge */
+    .gb-badge-col {
+      display: flex; align-items: flex-start; justify-content: flex-end;
+      padding-right: 10px; padding-top: 2px;
+    }
+    .gb-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .58rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 99px; white-space: nowrap;
+    }
+    .gb-badge.open {
+      background: #10B981; color: #fff;
+      box-shadow: 0 2px 8px rgba(16,185,129,.4);
+    }
+    .gb-badge.open::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff;
+      animation: blink 1.2s ease-in-out infinite; flex-shrink: 0;
+    }
+    .gb-badge.soon { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
+    .gb-badge.ended { background: rgba(0,0,0,.04); color: rgba(0,0,0,.25); font-size: .55rem; }
+
+    /* Col 2: Dot (centered over ::before line at 67px) */
+    .gb-dot-col {
+      display: flex; justify-content: center;
+      padding-top: 4px; position: relative; z-index: 1;
+    }
+    .gb-dot {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+      background: var(--bg3); border: 2px solid rgba(0,0,0,.13);
+      transition: background .2s, border-color .2s, box-shadow .2s;
+    }
+    .gb-row.is-open .gb-dot {
+      background: #10B981; border-color: #10B981;
+      box-shadow: 0 0 0 4px rgba(16,185,129,.2);
+    }
+    .gb-row.is-ended .gb-dot { background: rgba(0,0,0,.08); border-color: rgba(0,0,0,.08); }
+
+    /* Col 3: Content */
+    .gb-info { min-width: 0; padding-top: 1px; }
+    .gb-title-row {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 8px;
+      margin-bottom: 4px;
+    }
+    .gb-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.4;
+      flex: 1; min-width: 0;
+    }
+    .gb-row.is-ended .gb-name { color: var(--text3); }
+    .gb-dates {
+      font-size: .66rem; color: var(--text3); font-weight: 500;
+      margin-bottom: 6px; letter-spacing: .01em;
+    }
+    .gb-urgent {
+      font-size: .72rem; font-weight: 700; color: var(--coral);
+      margin-bottom: 7px; letter-spacing: .01em;
+    }
+    .gb-marketing {
+      font-size: .74rem; color: var(--text2); line-height: 1.55;
+      margin-bottom: 8px;
+    }
+
+    /* Discount code chip */
+    .gb-code-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 6px;
+      background: var(--yellow-lt); color: #B89000;
+      font-size: .74rem; font-weight: 800; letter-spacing: .05em;
+      border: 1.5px dashed rgba(184,144,0,.4);
+      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+      transition: background .15s;
+      margin-bottom: 8px;
+    }
+    .gb-code-chip:hover { background: rgba(255,223,111,.28); }
+
+    /* Action buttons (right-aligned in title row) */
+    .gb-go-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 13px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--coral) 0%, #E55E3A 100%);
+      color: #fff; font-size: .72rem; font-weight: 800; text-decoration: none;
+      box-shadow: 0 3px 10px rgba(245,110,74,.38);
+      transition: transform .15s, box-shadow .15s;
+      white-space: nowrap;
+      animation: pulse-go 2.5s ease-in-out infinite;
+    }
+    .gb-go-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(245,110,74,.5); animation: none; }
+    @keyframes pulse-go {
+      0%,100% { box-shadow: 0 3px 10px rgba(245,110,74,.38); }
+      50%      { box-shadow: 0 3px 18px rgba(245,110,74,.6); }
+    }
+    .gb-remind-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 11px; border-radius: 6px; flex-shrink: 0;
+      background: var(--bg); color: var(--text2);
+      font-size: .72rem; font-weight: 700; text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: background .15s, border-color .15s;
+      white-space: nowrap;
+    }
+    .gb-remind-btn:hover { background: var(--yellow-lt); border-color: rgba(184,144,0,.3); color: #B89000; }
+
+    /* Copy toast */
+    .gb-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1C1C1C; color: #fff;
+      font-size: .8rem; font-weight: 600; padding: 9px 20px; border-radius: 8px;
+      opacity: 0; transition: opacity .25s, transform .25s;
+      pointer-events: none; z-index: 9999; white-space: nowrap;
+    }
+    .gb-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── "看看其他" collapse ── */
+    .gb-more-wrap { padding-top: 6px; }
+    .gb-more-btn {
+      display: flex; align-items: center; gap: 7px;
+      width: 100%; padding: 10px 0;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: .78rem; font-weight: 700; color: var(--text2);
+      transition: color .15s;
+    }
+    .gb-more-btn:hover { color: var(--text); }
+    .gb-more-btn i { font-size: .7rem; transition: transform .3s; }
+    .gb-more-btn.open i { transform: rotate(180deg); }
+    .gb-hidden-rows { overflow: hidden; max-height: 0; transition: max-height .45s cubic-bezier(.4,0,.2,1); }
+    .gb-hidden-rows.open { max-height: 2000px; }
+  </style>
+</head>
+<body>
+
+<!-- ════ TOP BAR (fixed) ════ -->
+<header class="top-bar">
+  <div class="top-avatar"></div>
+  <span class="top-handle">@1minaday.nina <span>· 雙胞胎媽咪</span></span>
+  <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="top-bar-cta">
+    <i class="fa-brands fa-instagram fa-sm"></i>追蹤
+  </a>
+</header>
+
+<!-- ════ IG REEL MODAL ════ -->
+<div class="ig-modal" id="igModal" aria-hidden="true" role="dialog">
+  <div class="ig-modal-bg" id="igModalBg"></div>
+  <div class="ig-modal-box">
+    <button class="ig-modal-close" id="igModalClose" aria-label="關閉">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="ig-embed-wrap" id="igEmbedWrap"></div>
+  </div>
+</div>
+
+<!-- ════ 1. HERO ════ -->
+<section class="hero">
+  <div class="hero-poster"></div>
+
+  <div class="hero-gradient"></div>
+
+  <div class="hero-content reveal" id="h-info">
+    <div class="hero-badge"><div class="dot"></div>熱播中 &nbsp;Streaming Now</div>
+    <h1 class="hero-title">
+      Nina
+      <span>雙胞胎媽咪</span>
+    </h1>
+    <div class="hero-genres">
+      <span class="genre-chip c-blue">真實故事</span>
+      <span class="genre-chip c-yellow">自傳喜劇</span>
+      <span class="genre-chip c-coral">高潮迭起</span>
+    </div>
+    <p class="hero-desc">
+      從小到大，老天給我的考題都是魔王級。<br>
+      但沒關係，我這個人就是不服輸，<br>
+      而且很會把苦日子過成幽默的段子！
+    </p>
+    <div class="hero-btns">
+      <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="btn-primary">
+        <i class="fa-solid fa-play fa-sm"></i>去 IG 追我
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>往下滑</span>
+    <i class="fa-solid fa-chevron-down fa-xs"></i>
+  </div>
+</section>
+
+
+<!-- ════ 2. GROUP BUY ════ -->
+<section class="gb-section" id="gbSection" style="display:none;">
+  <div class="reveal" style="padding: 36px 22px 20px;">
+    <span class="sec-label" style="color:#059669;display:block;margin-bottom:3px;">限時團購</span>
+    <h2 class="sec-title">雙胞胎媽咪好物推薦！</h2>
+  </div>
+
+  <!-- Banner Carousel -->
+  <div class="gb-banner-wrap reveal" id="gbBannerWrap" style="display:none;">
+    <div class="gb-carousel-track" id="gbCarouselTrack"></div>
+    <div class="gb-carousel-dots" id="gbCarouselDots"></div>
+  </div>
+
+  <!-- Schedule Timeline -->
+  <div class="gb-schedule-wrap reveal" id="gbScheduleWrap" style="display:none;">
+    <div class="gb-schedule-hdr">
+      <i class="fa-regular fa-calendar-days"></i> SCHEDULE
+    </div>
+    <div class="gb-timeline" id="gbScheduleList"></div>
+    <div class="gb-more-wrap" id="gbMoreWrap" style="display:none;">
+      <button class="gb-more-btn" id="gbMoreBtn" onclick="toggleGbMore()">
+        <i class="fa-solid fa-chevron-down"></i><span>看看其他活動</span>
+      </button>
+      <div class="gb-hidden-rows" id="gbHiddenRows"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Copy toast -->
+<div class="gb-toast" id="gbToast">已複製！</div>
+
+
+<!-- ════ 3. VIDEOS ════ -->
+<section class="vid-section">
+
+  <!-- Row 1: 那些我拍下來的時刻 -->
+  <div class="sec-header reveal" id="vhdr-main">
+    <div>
+      <span class="sec-label">精彩片段</span>
+      <h2 class="sec-title">那些我拍下來的時刻</h2>
+    </div>
+    <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="see-all">全部 →</a>
+  </div>
+  <div class="vid-scroll reveal" id="vsec-main"></div>
+
+  <!-- Row 2: 愛情故事番外篇 -->
+  <div class="sec-header reveal" id="vhdr-bonus" style="margin-top:32px;">
+    <div>
+      <span class="sec-label">番外篇</span>
+      <h2 class="sec-title">愛情故事番外篇</h2>
+    </div>
+  </div>
+  <div class="vid-scroll reveal" id="vsec-bonus"></div>
+
+  <!-- Row 3: 補助資訊 -->
+  <div class="sec-header reveal" id="vhdr-tips" style="margin-top:32px;">
+    <div>
+      <span class="sec-label" style="color:#4A9EA8;">補助懶人包</span>
+      <h2 class="sec-title">希望對你也有幫助</h2>
+    </div>
+  </div>
+  <div class="vid-scroll reveal" id="vsec-tips"></div>
+
+  <div class="ig-row reveal">
+    <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="ig-btn">
+      <i class="fa-brands fa-instagram"></i>去 IG 看完整故事 →
+    </a>
+  </div>
+</section>
+
+
+<!-- ════ 4. VOTING ════ -->
+<section class="vote-section">
+  <div class="vote-wrap reveal">
+    <span class="sec-label">互動特輯</span>
+    <h2 class="sec-title">你決定下一集</h2>
+    <p class="vote-subtitle">你的票，決定我下一支影片 👇</p>
+
+    <div class="vote-card">
+      <div id="votePanel">
+        <p class="vote-hint"><i class="fa-regular fa-hand-pointer"></i>&nbsp; 最多選 2 個</p>
+        <div class="vote-opts" id="voteOptions"></div>
+        <button class="submit-btn" id="submitVote" disabled>送出投票</button>
+      </div>
+      <div class="vote-results" id="voteResults">
+        <div class="thank-you">謝謝你！我會優先做你投的主題 💛</div>
+        <div id="resultBars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ 5. FIND ME ════ -->
+<section class="find-section">
+  <div class="reveal" style="padding:0 22px;">
+    <span class="sec-label" style="display:block;text-align:center;">找到我</span>
+    <h2 class="find-title">來 IG 找我</h2>
+    <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="ig-big" style="margin:0 auto;">
+      <i class="fa-brands fa-instagram"></i>@1minaday.nina
+    </a>
+  </div>
+</section>
+
+
+<!-- ════ 6. FOOTER ════ -->
+<footer>
+  <div class="foot-inner">
+    <p class="foot-title">廠商合作洽詢</p>
+    <p class="foot-sub">如果你想與我合作，歡迎來信聊聊 🤝</p>
+    <a href="mailto:nina.inren@gmail.com" class="email-btn">
+      <i class="fa-regular fa-envelope"></i>寫信給我
+    </a>
+  </div>
+</footer>
+
+
+<script>
+  /* ── SCROLL REVEAL ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('h-info')?.classList.add('in'), 200);
+  });
+
+
+
+  /* ── IG REEL MODAL ── */
+  const igModal   = document.getElementById('igModal');
+  const igWrap    = document.getElementById('igEmbedWrap');
+  const igClose   = document.getElementById('igModalClose');
+  const igModalBg = document.getElementById('igModalBg');
+
+  function openIg(reelUrl) {
+    // Clear previous embed
+    igWrap.innerHTML = '';
+
+    // Build official Instagram blockquote embed
+    const permalink = reelUrl.endsWith('/') ? reelUrl : reelUrl + '/';
+    const bq = document.createElement('blockquote');
+    bq.className = 'instagram-media';
+    // no captioned attribute → compact video-focused view
+    bq.setAttribute('data-instgrm-permalink',
+      permalink + '?utm_source=ig_embed&utm_campaign=loading');
+    bq.setAttribute('data-instgrm-version', '14');
+    bq.style.cssText =
+      'background:#FFF;border:0;border-radius:3px;' +
+      'box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);' +
+      'margin:0;max-width:100%;min-width:0;padding:0;width:100%;';
+    igWrap.appendChild(bq);
+
+    // Ask Instagram embed.js to render it
+    if (window.instgrm && window.instgrm.Embeds) {
+      window.instgrm.Embeds.process();
+    }
+
+    igModal.classList.add('open');
+    igModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeIg() {
+    igModal.classList.remove('open');
+    igModal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => { igWrap.innerHTML = ''; }, 300);
+  }
+
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+  }
+
+  igClose.addEventListener('click', closeIg);
+  igModalBg.addEventListener('click', closeIg);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeIg(); });
+
+
+  /* ── VOTING ── */
+  const KEY   = 'nina_1minaday_voted_v2';
+  let MAX     = 2;
+  let LABELS  = ['🍼 雙胞胎極早產育兒紀錄','💪 早產寶寶成長追蹤','🏠 帶娃真實日常','💡 保母／外傭踩雷心得','📝 媽媽身心恢復的過程','🎥 自媒體 & 接業配幕後'];
+  let VOTE_NS = 'nina1minaday';
+
+  const subBtn  = document.getElementById('submitVote');
+  const panel   = document.getElementById('votePanel');
+  const results = document.getElementById('voteResults');
+  const bars    = document.getElementById('resultBars');
+
+  function hasVoted() { try { return localStorage.getItem(KEY) === '1'; } catch(_) { return false; } }
+  function markVoted() { try { localStorage.setItem(KEY, '1'); } catch(_) {} }
+
+  async function fetchVoteCount(idx) {
+    try {
+      const r = await fetch(`https://api.counterapi.dev/v1/${VOTE_NS}/vote-${idx}/`);
+      if (!r.ok) return 0;
+      const j = await r.json();
+      return j.count || 0;
+    } catch { return 0; }
+  }
+
+  function renderBars(counts) {
+    const total = counts.reduce((a,b) => a+b, 0) || 1;
+    bars.innerHTML = counts.map((c, i) => {
+      const pct = Math.round((c / total) * 100);
+      return `<div class="res-item">
+        <div class="res-label">
+          <span>${LABELS[i] || ''}</span>
+          <span class="res-pct">${pct}%<span class="res-count">(${c} 票)</span></span>
+        </div>
+        <div class="res-bar-bg"><div class="res-bar" data-pct="${pct}"></div></div>
+      </div>`;
+    }).join('');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.querySelectorAll('.res-bar').forEach(b => b.style.width = b.dataset.pct + '%');
+    }));
+  }
+
+  async function showVoteResults() {
+    panel.style.display = 'none';
+    results.classList.add('show');
+    bars.innerHTML = '<div style="color:#9CA3AF;font-size:.85rem;padding:10px 0;text-align:center"><i class="fa-solid fa-spinner fa-spin"></i> 統計中...</div>';
+    const counts = await Promise.all(LABELS.map((_, i) => fetchVoteCount(i)));
+    renderBars(counts);
+  }
+
+  let sel = new Set();
+  function bindVoteListeners() {
+    sel = new Set();
+    const optBtns = document.querySelectorAll('.vote-opt');
+    optBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = +btn.dataset.idx;
+        if (sel.has(i)) { sel.delete(i); btn.classList.remove('sel'); }
+        else { if (sel.size >= MAX) return; sel.add(i); btn.classList.add('sel'); }
+        const full = sel.size >= MAX;
+        optBtns.forEach(b => { b.disabled = full && !sel.has(+b.dataset.idx); });
+        subBtn.disabled = sel.size === 0;
+      });
+    });
+    subBtn.onclick = () => {
+      // 立刻切換到結果畫面，顯示 loading
+      panel.style.display = 'none';
+      results.classList.add('show');
+      bars.innerHTML = '<div style="color:#9CA3AF;font-size:.85rem;padding:10px 0;text-align:center"><i class="fa-solid fa-spinner fa-spin"></i> 統計中...</div>';
+      // 送票 + 讀取結果（同時進行）
+      const selectedIdxs = Array.from(sel);
+      Promise.all(selectedIdxs.map(i =>
+        fetch(`https://api.counterapi.dev/v1/${VOTE_NS}/vote-${i}/up/`).catch(()=>{})
+      )).then(() => {
+        markVoted();
+        return Promise.all(LABELS.map((_, i) => fetchVoteCount(i)));
+      }).then(counts => renderBars(counts));
+    };
+  }
+
+  /* ── CONTENT INIT (loads from NINA_DATA in content.js) ── */
+  (function() {
+    const D = window.NINA_DATA;
+    if (!D) return;
+    const S = D.settings || {};
+    const NS = S.counterNs || 'nina1minaday';
+
+    // Google Analytics 4
+    if (S.ga4Id) {
+      const sc = document.createElement('script');
+      sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + S.ga4Id;
+      document.head.appendChild(sc);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config',S.ga4Id);
+    }
+
+    // Page view tracking
+    fetch('https://api.counterapi.dev/v1/' + NS + '/pageview/up').catch(()=>{});
+
+    // Update top bar
+    if (S.igHandle) {
+      const th = document.querySelector('.top-handle');
+      if (th) th.innerHTML = S.igHandle + ' <span>· 雙胞胎媽咪</span>';
+    }
+    document.querySelectorAll('a[href*="instagram.com/1minaday"]').forEach(a => {
+      if (S.igUrl) a.href = S.igUrl;
+    });
+
+    // Update hero
+    const H = D.hero || {};
+    if (H.badge) {
+      const hb = document.querySelector('.hero-badge');
+      if (hb) hb.innerHTML = '<div class="dot"></div>' + H.badge;
+    }
+    if (H.title || H.subtitle) {
+      const ht = document.querySelector('.hero-title');
+      if (ht) ht.innerHTML = (H.title||'Nina') + '<span>' + (H.subtitle||'') + '</span>';
+    }
+    if (H.desc) {
+      const hd = document.querySelector('.hero-desc');
+      if (hd) hd.innerHTML = H.desc;
+    }
+    if (H.genres) {
+      const hg = document.querySelector('.hero-genres');
+      if (hg) hg.innerHTML = H.genres.map(g=>`<span class="genre-chip ${g.cls}">${g.text}</span>`).join('');
+    }
+
+    // Season count
+    const pubEps = (D.episodes||[]).filter(e=>e.published);
+    const countEl = document.querySelector('.season-count');
+    if (countEl) countEl.textContent = pubEps.length + ' 個關鍵時刻';
+
+    // Render episodes
+    const epContainer = document.getElementById('epListContainer');
+    if (epContainer) {
+      epContainer.innerHTML = pubEps.map(ep => `
+        <div class="ep-row ${[ep.mood, ep.special].filter(Boolean).join(' ')}">
+          <div class="ep-thumb" style="--ec:${ep.color};background-image:url('${ep.thumb}');background-size:cover;background-position:center;">
+            <span class="ep-num">${ep.num}</span>
+            <div class="ep-play-sm"><i class="fa-solid fa-play fa-xs"></i></div>
+          </div>
+          <div class="ep-info">
+            <div>
+              <p class="ep-label">${ep.label}</p>
+              <h3 class="ep-title">${ep.title}</h3>
+            </div>
+            <i class="fa-solid fa-chevron-right ep-arrow"></i>
+          </div>
+          <p class="ep-desc">${ep.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    // Render video sections
+    if (D.videoSections) {
+      D.videoSections.forEach(sec => {
+        // Update section header
+        const hdr = document.getElementById('vhdr-' + sec.id);
+        if (hdr) {
+          const labelEl = hdr.querySelector('.sec-label');
+          const titleEl = hdr.querySelector('.sec-title');
+          if (labelEl) { if(sec.labelStyle) labelEl.style.cssText = sec.labelStyle; labelEl.textContent = sec.label; }
+          if (titleEl) titleEl.textContent = sec.title;
+          const seeAll = hdr.querySelector('.see-all');
+          if (!sec.showSeeAll && seeAll) seeAll.style.display = 'none';
+        }
+        // Render video cards
+        const container = document.getElementById('vsec-' + sec.id);
+        if (!container) return;
+        const pubVids = sec.videos.filter(v => v.published);
+        container.innerHTML = pubVids.map(v => `
+          <div class="vid-card" data-ig="${v.igUrl}" data-id="${v.id}">
+            <div class="vid-thumb" style="background-image:url('${v.thumb}');background-size:cover;background-position:center;">
+              <span class="vid-ep-badge"${v.badgeStyle?' style="'+v.badgeStyle+'"':''}>${v.badge}</span>
+              <div class="vid-play"><i class="fa-solid fa-play fa-xs"></i></div>
+            </div>
+            <div class="vid-info">
+              <p class="vid-title">${v.title}</p>
+              <p class="vid-desc">${v.desc}</p>
+            </div>
+          </div>
+        `).join('');
+      });
+    }
+
+    // Update voting options
+    const V = D.voting || {};
+    if (V.options) {
+      MAX = V.maxSelect || 2;
+      LABELS = V.options.map(o => o.emoji + ' ' + o.text);
+      const voteOpts = document.getElementById('voteOptions');
+      if (voteOpts) {
+        voteOpts.innerHTML = V.options.map((o,i) =>
+          `<button class="vote-opt" data-idx="${i}"><span class="v-em">${o.emoji}</span><span>${o.text}</span></button>`
+        ).join('');
+      }
+      const hint = document.querySelector('.vote-hint');
+      if (hint) hint.innerHTML = '<i class="fa-regular fa-hand-pointer"></i>&nbsp; 最多選 ' + MAX + ' 個';
+      const tyEl = document.querySelector('.thank-you');
+      if (tyEl && V.thankYou) tyEl.textContent = V.thankYou;
+    }
+    if (V.question) {
+      const vq = document.querySelector('.vote-section .sec-title');
+      if (vq) vq.textContent = V.question;
+    }
+    if (V.subtitle) {
+      const vs = document.querySelector('.vote-subtitle');
+      if (vs) vs.textContent = V.subtitle;
+    }
+
+    // ── GROUP BUY ──
+    const GB = D.groupBuy;
+    if (GB && ((GB.schedules && GB.schedules.length) || (GB.banners && GB.banners.length) || (GB.pinnedBanner && GB.pinnedBanner.enabled))) {
+      document.getElementById('gbSection').style.display = '';
+
+      function gbStatus(s, e) {
+        const now = new Date(); now.setHours(0,0,0,0);
+        const sd = new Date(s); sd.setHours(0,0,0,0);
+        const ed = new Date(e); ed.setHours(23,59,59,999);
+        if (now > ed) return 'ended';
+        if (now >= sd) return 'open';
+        return 'soon';
+      }
+      function fmtDate(d) {
+        const dt = new Date(d);
+        return String(dt.getMonth()+1).padStart(2,'0') + '.' + String(dt.getDate()).padStart(2,'0');
+      }
+      function gcalUrl(item) {
+        const title = encodeURIComponent('Nina 團購｜' + item.title);
+        const note  = encodeURIComponent(item.calNote || 'Nina 限定團購優惠！');
+        const ds = item.startDate.replace(/-/g,'');
+        const ed = new Date(item.endDate); ed.setDate(ed.getDate()+1);
+        const de = ed.toISOString().slice(0,10).replace(/-/g,'');
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${ds}/${de}&details=${note}`;
+      }
+      function buildSlide(b) {
+        const tagsHtml = (b.tags||[]).map(t=>`<span class="gb-tag" style="background:${t.color}">${t.text}</span>`).join('');
+        const imgHtml = b.image
+          ? `<img class="gb-banner-img" src="${b.image}" alt="${b.title}">`
+          : `<div class="gb-banner-img-placeholder"><i class="fa-solid fa-bag-shopping"></i></div>`;
+        const btnHtml = b.link
+          ? `<a href="${b.link}" target="_blank" rel="noopener" class="gb-banner-btn">來去看看 <i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+        return `<div class="gb-slide">${imgHtml}<div class="gb-banner-body"><div class="gb-banner-tags">${tagsHtml}</div><p class="gb-banner-title">${b.title}</p>${b.subtitle?`<p class="gb-banner-sub">${b.subtitle}</p>`:''}${btnHtml}</div></div>`;
+      }
+
+      // Banners carousel (support both `banners[]` and legacy `pinnedBanner`)
+      const rawBanners = GB.banners && GB.banners.length
+        ? GB.banners.filter(b => b.enabled !== false)
+        : (GB.pinnedBanner && GB.pinnedBanner.enabled ? [GB.pinnedBanner] : []);
+
+      if (rawBanners.length) {
+        const track = document.getElementById('gbCarouselTrack');
+        const dotsEl = document.getElementById('gbCarouselDots');
+        track.innerHTML = rawBanners.map(buildSlide).join('');
+        const slides = track.querySelectorAll('.gb-slide');
+        slides[0].classList.add('gb-active');
+
+        if (rawBanners.length > 1) {
+          dotsEl.innerHTML = rawBanners.map((_,i)=>`<div class="gb-carousel-dot${i===0?' active':''}" data-i="${i}"></div>`).join('');
+          dotsEl.querySelectorAll('.gb-carousel-dot').forEach(dot => {
+            dot.addEventListener('click', () => gbGoTo(+dot.dataset.i));
+          });
+          let gbIdx = 0;
+          function gbGoTo(n) {
+            slides[gbIdx].classList.remove('gb-active');
+            dotsEl.querySelectorAll('.gb-carousel-dot')[gbIdx].classList.remove('active');
+            gbIdx = (n + rawBanners.length) % rawBanners.length;
+            slides[gbIdx].classList.add('gb-active');
+            dotsEl.querySelectorAll('.gb-carousel-dot')[gbIdx].classList.add('active');
+          }
+          setInterval(() => gbGoTo(gbIdx + 1), 3000);
+        }
+        document.getElementById('gbBannerWrap').style.display = '';
+      }
+
+      // Schedule timeline
+      const schedules = (GB.schedules||[]);
+      if (schedules.length) {
+        const listEl   = document.getElementById('gbScheduleList');
+        const wrapEl   = document.getElementById('gbScheduleWrap');
+        const moreWrap = document.getElementById('gbMoreWrap');
+        const hiddenEl = document.getElementById('gbHiddenRows');
+        const LIMIT = 5;
+
+        function buildRow(item) {
+          const st = gbStatus(item.startDate, item.endDate);
+          const badgeLabel = st === 'open' ? 'OPEN' : st === 'soon' ? 'SOON' : 'END';
+          const dateStr = `${fmtDate(item.startDate)}(00:00) ～ ${fmtDate(item.endDate)}(00:00)`;
+
+          // Urgency: within 3 days of end
+          const now = new Date(); now.setHours(0,0,0,0);
+          const ed = new Date(item.endDate); ed.setHours(0,0,0,0);
+          const daysLeft = Math.round((ed - now) / 86400000);
+          const urgentHtml = (st === 'open' && daysLeft <= 3 && daysLeft >= 0)
+            ? `<p class="gb-urgent">⚡ ${daysLeft === 0 ? '今天結團！' : `還剩 ${daysLeft} 天，`}即將結團，趕快把握！</p>` : '';
+
+          // Marketing / discount — OPEN 才顯示
+          let extraHtml = '';
+          if (st === 'open') {
+            if (item.discountCode) {
+              const safe = item.discountCode.replace(/'/g, "\\'");
+              extraHtml = `<button class="gb-code-chip" onclick="copyGbCode(this,'${safe}')"><i class="fa-solid fa-tag fa-xs"></i>${item.discountCode}<i class="fa-regular fa-copy fa-xs"></i></button>`;
+            } else if (item.marketingText) {
+              extraHtml = `<p class="gb-marketing">${item.marketingText}</p>`;
+            }
+          }
+
+          // Action button — right side of title row
+          let actionBtn = '';
+          if (st === 'open' && item.link) {
+            actionBtn = `<a href="${item.link}" target="_blank" rel="noopener" class="gb-go-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>`;
+          } else if (st === 'soon') {
+            actionBtn = `<a href="${gcalUrl(item)}" target="_blank" rel="noopener" class="gb-remind-btn">🔔 提醒我</a>`;
+          }
+
+          return `<div class="gb-row is-${st}">
+            <div class="gb-badge-col"><span class="gb-badge ${st}">${badgeLabel}</span></div>
+            <div class="gb-dot-col"><div class="gb-dot"></div></div>
+            <div class="gb-info">
+              <div class="gb-title-row">
+                <p class="gb-name">${item.title}</p>
+                ${actionBtn}
+              </div>
+              <p class="gb-dates">${dateStr}</p>
+              ${urgentHtml}${extraHtml}
+            </div>
+          </div>`;
+        }
+
+        const visible = schedules.slice(0, LIMIT);
+        const hidden  = schedules.slice(LIMIT);
+        listEl.innerHTML = visible.map(buildRow).join('');
+        if (hidden.length) {
+          hiddenEl.innerHTML = hidden.map(buildRow).join('');
+          moreWrap.style.display = '';
+        }
+        wrapEl.style.display = '';
+      }
+    }
+
+    // Footer email
+    if (S.email) {
+      const emailBtn = document.querySelector('.email-btn');
+      if (emailBtn) emailBtn.href = 'mailto:' + S.email;
+    }
+
+    // Share NS with voting module
+    VOTE_NS = NS;
+
+    // Re-bind vote listeners after dynamic render
+    bindVoteListeners();
+
+    // Re-init video card modal listeners + click tracking
+    document.querySelectorAll('.vid-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const url = card.dataset.ig;
+        const id = card.dataset.id;
+        if (id) fetch('https://api.counterapi.dev/v1/' + NS + '/vid-' + id + '/up').catch(()=>{});
+        if (!url) return;
+        if (isMobile()) window.open(url, '_blank', 'noopener,noreferrer');
+        else openIg(url);
+      });
+    });
+
+    // IG button click tracking
+    document.querySelectorAll('.ig-btn, .ig-big, .top-bar-cta').forEach(el => {
+      el.addEventListener('click', () => {
+        fetch('https://api.counterapi.dev/v1/' + NS + '/igclick/up').catch(()=>{});
+      });
+    });
+  })();
+
+  // Init vote on page load
+  if (hasVoted()) showVoteResults();
+  else if (!window.NINA_DATA) bindVoteListeners();
+
+  function copyGbCode(btn, code) {
+    navigator.clipboard.writeText(code).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+    const toast = document.getElementById('gbToast');
+    toast.textContent = '已複製：' + code;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  function toggleGbMore() {
+    const btn = document.getElementById('gbMoreBtn');
+    const rows = document.getElementById('gbHiddenRows');
+    const isOpen = rows.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.querySelector('span') && (btn.querySelector('span').textContent = isOpen ? '收起' : '看看其他活動');
+  }
+</script>
+</body>
+</html>
