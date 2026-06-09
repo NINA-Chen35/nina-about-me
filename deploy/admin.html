@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
+<html lang="zh-TW"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nina 管理後台</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="content.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -59,6 +58,12 @@
       width:42px;height:42px;border-radius:50%;
       background:url('img/avatar.jpg') center top/cover;
       border:2px solid var(--coral);margin-bottom:10px;
+      cursor:pointer;display:block;
+      transition:box-shadow .2s, transform .2s;
+    }
+    .sb-avatar:hover{
+      box-shadow:0 0 0 4px rgba(245,110,74,.25);
+      transform:scale(1.06);
     }
     .sb-name{color:#fff;font-weight:700;font-size:.95rem;}
     .sb-handle{color:rgba(255,255,255,.4);font-size:.75rem;}
@@ -358,29 +363,28 @@
 <body>
 
 <!-- ── Login ── -->
-<div id="loginScreen">
+<div id="loginScreen" class="hidden">
   <div class="login-card">
     <div class="login-logo">Nina <span>後台</span></div>
     <p class="login-sub">@1minaday.nina 管理系統</p>
-    <input type="password" id="loginInput" placeholder="請輸入密碼" autocomplete="current-password"
-           onkeydown="if(event.key==='Enter')doLogin()">
+    <input type="password" id="loginInput" placeholder="請輸入密碼" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="login-btn" onclick="doLogin()">登入</button>
     <p id="loginErr" class="login-err hidden">密碼錯誤，請重試</p>
   </div>
 </div>
 
 <!-- ── App ── -->
-<div id="app" class="hidden">
+<div id="app" class="">
 
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sb-brand">
-      <div class="sb-avatar"></div>
+      <div class="sb-avatar" id="sbAvatar" onclick="openFrontend()" title="前往前台網站"></div>
       <div class="sb-name">Nina</div>
       <div class="sb-handle">@1minaday.nina</div>
     </div>
     <nav class="sidebar-nav">
-      <button class="nav-item active" onclick="showSection('dashboard')" data-s="dashboard">
+      <button class="nav-item" onclick="showSection('dashboard')" data-s="dashboard">
         <i class="fa-solid fa-chart-line"></i><span>數據總覽</span>
       </button>
       <button class="nav-item" onclick="showSection('videos')" data-s="videos">
@@ -399,7 +403,7 @@
       <button class="nav-item" onclick="showSection('settings')" data-s="settings">
         <i class="fa-solid fa-gear"></i><span>設定</span>
       </button>
-      <button class="nav-item deploy-btn" onclick="showSection('deploy')" data-s="deploy">
+      <button class="nav-item deploy-btn active" onclick="showSection('deploy')" data-s="deploy">
         <i class="fa-solid fa-rocket"></i><span>更新網站</span>
       </button>
     </nav>
@@ -414,7 +418,7 @@
   <main class="main-content">
 
     <!-- Dashboard -->
-    <section id="sec-dashboard" class="section active">
+    <section id="sec-dashboard" class="section">
       <div class="section-header">
         <h1>數據總覽</h1>
         <button class="btn-refresh" onclick="loadAnalytics()"><i class="fa-solid fa-rotate"></i> 重新整理</button>
@@ -422,20 +426,76 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon orange"><i class="fa-solid fa-eye"></i></div>
-          <div><div class="stat-value" id="stat-pv">—</div><div class="stat-label">總頁面瀏覽</div></div>
+          <div><div class="stat-value" id="stat-pv">82</div><div class="stat-label">總頁面瀏覽</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon blue"><i class="fa-solid fa-play"></i></div>
-          <div><div class="stat-value" id="stat-clicks">—</div><div class="stat-label">影片總點擊</div></div>
+          <div><div class="stat-value" id="stat-clicks">5</div><div class="stat-label">影片總點擊</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon pink"><i class="fa-brands fa-instagram"></i></div>
-          <div><div class="stat-value" id="stat-ig">—</div><div class="stat-label">IG 按鈕點擊</div></div>
+          <div><div class="stat-value" id="stat-ig">3</div><div class="stat-label">IG 按鈕點擊</div></div>
         </div>
       </div>
       <div class="analytics-card" style="margin-bottom:16px">
         <h3>各影片點擊數 <span class="hint">（點擊影片卡片的次數）</span></h3>
-        <div id="analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+        <div id="analytics-table">
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid1_求子.jpg')"></div>
+      <span class="analytics-title">求子六年，試管成功的那一刻</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
+      <span class="analytics-count">1</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid2_雙胞胎.jpg')"></div>
+      <span class="analytics-title">我懷的是雙胞胎</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:100%"></div></div>
+      <span class="analytics-count">2</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid3_安胎.jpg')"></div>
+      <span class="analytics-title">21週，手術安胎</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
+      <span class="analytics-count">1</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid4_早產.jpg')"></div>
+      <span class="analytics-title">898g · 890g，極度早產</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+      <span class="analytics-count">0</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid5_外傭.jpg')"></div>
+      <span class="analytics-title">外傭逃逸的那一天</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+      <span class="analytics-count">0</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid6_愛情.jpg')"></div>
+      <span class="analytics-title">跟老公認識是月老牽線</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+      <span class="analytics-count">0</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid7_母乳庫.jpg')"></div>
+      <span class="analytics-title">母乳庫捐贈</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+      <span class="analytics-count">0</span>
+    </div>
+  
+    <div class="analytics-row">
+      <div class="analytics-thumb" style="background-image:url('img/vid8_腸病毒.jpg')"></div>
+      <span class="analytics-title">腸病毒疫苗補助</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
+      <span class="analytics-count">1</span>
+    </div>
+  </div>
         <div class="ga-note" id="ga-note" style="display:none">
           <i class="fa-brands fa-google" style="color:#4285F4"></i>&nbsp;
           <strong>已設定 Google Analytics 4</strong> —
@@ -444,7 +504,52 @@
       </div>
       <div class="analytics-card">
         <h3>投票統計 <span class="hint">（所有人的累積票數）</span></h3>
-        <div id="vote-analytics"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+        <div id="vote-analytics">
+      <div style="font-size:.8rem;color:var(--text2);margin-bottom:12px">總票數：<strong>1</strong> 票</div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🍼</span>
+          <span class="analytics-title">雙胞胎極早產育兒紀錄</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:100%"></div></div>
+          <span class="analytics-count">1</span>
+        </div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">💪</span>
+          <span class="analytics-title">早產寶寶成長追蹤（體重、發展里程碑）</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+          <span class="analytics-count">0</span>
+        </div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🏠</span>
+          <span class="analytics-title">帶娃真實日常（不假掰版）</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+          <span class="analytics-count">0</span>
+        </div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">💡</span>
+          <span class="analytics-title">保母／外傭／托育踩雷與選擇心得</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+          <span class="analytics-count">0</span>
+        </div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">📝</span>
+          <span class="analytics-title">媽媽身心恢復的過程</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+          <span class="analytics-count">0</span>
+        </div>
+      
+        <div class="analytics-row">
+          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🎥</span>
+          <span class="analytics-title">自媒體創作 &amp; 接業配的幕後</span>
+          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
+          <span class="analytics-count">0</span>
+        </div>
+      
+    </div>
       </div>
     </section>
 
@@ -569,6 +674,36 @@
       </div>
 
       <div class="settings-section">
+        <h3><i class="fa-brands fa-github" style="margin-right:7px"></i>GitHub 自動發布設定</h3>
+        <div class="form-hint" style="margin-bottom:14px;font-size:.82rem;color:var(--text2);line-height:1.6;">
+          設定完成後，在「更新網站」頁點「一鍵發布」，系統會自動把內容推到 GitHub，Vercel 30 秒內自動重新部署。
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>GitHub 用戶名</label><input type="text" id="set-gh-owner" placeholder="NINA-Chen35"></div>
+          <div class="form-group"><label>Repository 名稱</label><input type="text" id="set-gh-repo" placeholder="nina-about-me"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>分支（預設 main）</label><input type="text" id="set-gh-branch" placeholder="main"></div>
+          <div class="form-group"><label>檔案路徑</label><input type="text" id="set-gh-path" placeholder="deploy/content.js"></div>
+        </div>
+        <div class="form-group">
+          <label>Personal Access Token (PAT)</label>
+          <input type="password" id="set-gh-token" placeholder="ghp_xxxxxxxxxxxxxxxx">
+          <div class="form-hint">
+            取得方式：GitHub → 右上角頭像 → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token → 勾選 <strong>repo</strong> 權限 → 複製貼上
+          </div>
+        </div>
+        <div class="form-group">
+          <label>前台網址（發布成功後顯示）</label>
+          <input type="url" id="set-gh-siteurl" placeholder="https://nina-about-me.vercel.app">
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button class="btn-save" onclick="saveGhSettings()">儲存 GitHub 設定</button>
+          <span id="ghSaveStatus" style="font-size: 0.84rem; font-weight: 700; color: rgb(5, 150, 105); display: none;">✅ 已儲存！</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
         <h3><i class="fa-solid fa-lock" style="color:var(--yellow);margin-right:7px"></i>修改密碼</h3>
         <div class="form-group"><label>目前密碼</label><input type="password" id="set-curpass"></div>
         <div class="form-row">
@@ -581,33 +716,37 @@
     </section>
 
     <!-- Deploy -->
-    <section id="sec-deploy" class="section">
+    <section id="sec-deploy" class="section active">
       <div class="section-header"><h1>更新網站</h1></div>
-      <div class="deploy-hero">
+
+      <!-- 一鍵發布 -->
+      <div class="deploy-hero" id="deployHero" style="opacity: 1;">
         <div class="deploy-icon">🚀</div>
-        <h3>下載最新的 content.js</h3>
-        <p>
-          把目前後台的所有設定打包成 content.js，<br>
-          下載後上傳到 Netlify 即可更新網站內容。
-        </p>
-        <button class="btn-deploy" onclick="downloadContentJs()">
+        <h3>一鍵發布到網站</h3>
+        <p id="deployDesc">把最新內容直接推送到 GitHub，<br>Vercel 會在 30 秒內自動更新網站。</p>
+        <button class="btn-deploy" id="publishBtn" onclick="publishToGitHub()" disabled=""><i class="fa-solid fa-spinner fa-spin"></i> 發布中...</button>
+        <p id="publishStatus" style="margin-top: 14px; font-size: 0.84rem; min-height: 20px; color: var(--text2);">推送 admin.html...</p>
+      </div>
+
+      <!-- GitHub 未設定提示 -->
+      <div id="deployNoGh" style="display:none;" class="deploy-steps">
+        <h3>⚙️ 先完成 GitHub 設定</h3>
+        <ol>
+          <li>前往 <strong>設定</strong> 頁面</li>
+          <li>找到「GitHub 自動發布設定」區塊</li>
+          <li>填入 GitHub 用戶名、Repo 名稱、PAT</li>
+          <li>儲存後回來點「一鍵發布」</li>
+        </ol>
+        <button class="btn-save" style="margin-top:8px" onclick="showSection('settings')">前往設定 →</button>
+      </div>
+
+      <!-- 備用：手動下載 -->
+      <div class="deploy-steps" style="margin-top:16px;">
+        <h3>📥 備用：手動下載</h3>
+        <p style="font-size:.84rem;color:var(--text2);margin-bottom:12px;">如果一鍵發布失敗，可以手動下載後上傳到 GitHub。</p>
+        <button class="btn-secondary" style="width:100%;padding:12px;border-radius:8px;font-size:.88rem;font-weight:700;background:var(--bg3);color:var(--text);border:1.5px solid var(--border);cursor:pointer;" onclick="downloadContentJs()">
           <i class="fa-solid fa-download"></i> 下載 content.js
         </button>
-      </div>
-      <div class="deploy-steps">
-        <h3>📋 上傳步驟</h3>
-        <ol>
-          <li>點擊上方 <strong>下載 content.js</strong> 按鈕</li>
-          <li>前往 <strong>Netlify</strong> 後台（netlify.com）</li>
-          <li>選擇你的網站 → <strong>Deploys</strong> 分頁</li>
-          <li>把整個網站資料夾（含新的 content.js）拖曳到部署區域</li>
-          <li>等待 30 秒部署完成</li>
-          <li>完成！訪客立即看到更新後的內容 ✅</li>
-        </ol>
-        <div class="deploy-tip">
-          💡 <strong>提示：</strong>第一次使用時，請確認 index.html 裡面有這行：<br>
-          <code style="background:rgba(0,0,0,.06);padding:2px 6px;border-radius:4px;font-size:.82rem">&lt;script src="content.js"&gt;&lt;/script&gt;</code>
-        </div>
       </div>
     </section>
 
@@ -658,7 +797,7 @@
       </div>
       <div class="toggle-row">
         <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
-        <label class="toggle"><input type="checkbox" id="vm-published" checked><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox" id="vm-published" checked=""><span class="toggle-slider"></span></label>
         <span id="vm-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
       </div>
     </div>
@@ -723,7 +862,7 @@
       </div>
       <div class="toggle-row">
         <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
-        <label class="toggle"><input type="checkbox" id="em-published" checked><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox" id="em-published" checked=""><span class="toggle-slider"></span></label>
         <span id="em-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
       </div>
     </div>
@@ -774,7 +913,7 @@
       <input type="hidden" id="gb-modal-id">
       <div class="form-group"><label>商品名稱 *</label><input type="text" id="gb-m-title" placeholder="例：achu achu 超酷冷感系列"></div>
       <div class="form-row">
-        <div class="form-group"><label>開團日期 *</label><input type="date" id="gb-m-start"></div>
+        <div class="form-group"><label>開團日期 *</label><input type="date" id="gb-m-start" oninput="autoFillEndDate()"></div>
         <div class="form-group"><label>結團日期 *</label><input type="date" id="gb-m-end"></div>
       </div>
       <div class="form-group"><label>團購連結（開團後填入）</label><input type="url" id="gb-m-link" placeholder="https://..."></div>
@@ -804,7 +943,7 @@
 </div>
 
 <!-- ── Toast ── -->
-<div id="toast"></div>
+<div id="toast" class="">GitHub 設定已儲存 ✅</div>
 
 <script>
 // ═══════════════════════════════════════════
@@ -864,6 +1003,7 @@ let CONTENT = {};
 // ═══════════════════════════════════════════
 function initApp(){
   CONTENT = loadContent();
+  renderGhSettings();   // 預先填入 GitHub 設定（避免切頁時才載入）
   showSection('dashboard');
   loadAnalytics();
 }
@@ -879,8 +1019,9 @@ function showSection(name){
   if(name==='videos') renderVideos();
   if(name==='episodes') renderEpisodes();
   if(name==='voting') renderVoting();
-  if(name==='settings') renderSettings();
+  if(name==='settings') { renderSettings(); renderGhSettings(); }
   if(name==='groupbuy') renderGroupBuy();
+  if(name==='deploy') renderDeploy();
 }
 
 // ═══════════════════════════════════════════
@@ -1286,8 +1427,28 @@ function deleteVoteOpt(optId){
 // ═══════════════════════════════════════════
 function ensureGroupBuy(){
   if(!CONTENT.groupBuy) CONTENT.groupBuy = { pinnedBanner: { enabled:false, tags:[], title:'', subtitle:'', image:'', link:'' }, schedules:[] };
-  if(!CONTENT.groupBuy.pinnedBanner) CONTENT.groupBuy.pinnedBanner = { enabled:false, tags:[], title:'', subtitle:'', image:'', link:'' };
+  // migrate legacy banners[] → pinnedBanner (read-only, do NOT delete banners here)
+  if(!CONTENT.groupBuy.pinnedBanner){
+    const legacy = CONTENT.groupBuy.banners && CONTENT.groupBuy.banners[0];
+    CONTENT.groupBuy.pinnedBanner = legacy
+      ? { enabled:!!legacy.enabled, tags:legacy.tags||[], title:legacy.title||'', subtitle:legacy.subtitle||'', image:legacy.image||'', link:legacy.link||'' }
+      : { enabled:false, tags:[], title:'', subtitle:'', image:'', link:'' };
+  }
   if(!CONTENT.groupBuy.schedules) CONTENT.groupBuy.schedules = [];
+}
+
+function normalizeGroupBuyForExport(data){
+  // Called only when generating content.js — unify to pinnedBanner, drop banners[]
+  if(data.groupBuy && data.groupBuy.banners){
+    if(!data.groupBuy.pinnedBanner){
+      const b = data.groupBuy.banners[0];
+      data.groupBuy.pinnedBanner = b
+        ? { enabled:!!b.enabled, tags:b.tags||[], title:b.title||'', subtitle:b.subtitle||'', image:b.image||'', link:b.link||'' }
+        : { enabled:false, tags:[], title:'', subtitle:'', image:'', link:'' };
+    }
+    delete data.groupBuy.banners;
+  }
+  return data;
 }
 
 function renderGroupBuy(){
@@ -1301,6 +1462,8 @@ function renderGroupBuy(){
   document.getElementById('gb-banner-tags').value = (pb.tags||[]).map(t=>t.text+':'+t.color).join(',');
 
   const list = document.getElementById('gbScheduleList');
+  // 依開團日升冪排列後再顯示
+  CONTENT.groupBuy.schedules.sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
   const items = CONTENT.groupBuy.schedules;
   if(!items.length){ list.innerHTML='<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未新增任何團購活動</p>'; return; }
   list.innerHTML = items.map((item,i)=>{
@@ -1350,6 +1513,15 @@ function openGbModal(idx){
   document.getElementById('gbModal').classList.add('open');
 }
 function closeGbModal(){ document.getElementById('gbModal').classList.remove('open'); }
+
+function autoFillEndDate(){
+  const start = document.getElementById('gb-m-start').value;
+  const endEl = document.getElementById('gb-m-end');
+  if(!start || endEl.value) return; // 結團日期已有值就不覆蓋
+  const d = new Date(start);
+  d.setDate(d.getDate() + 7);
+  endEl.value = d.toISOString().slice(0, 10);
+}
 
 function saveGbItem(){
   ensureGroupBuy();
@@ -1444,8 +1616,171 @@ function changePassword(){
 // ═══════════════════════════════════════════
 //  DEPLOY — Generate content.js
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+//  GITHUB AUTO-PUBLISH
+// ═══════════════════════════════════════════
+const GH_KEY       = 'nina_gh_settings_v1';
+const GH_TOKEN_KEY = 'nina_gh_token_v1';
+const GH_TOKEN_COOKIE = 'nina_gh_pat';
+
+function setCookie(name, value, days) {
+  const exp = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${exp};path=/;SameSite=Strict`;
+}
+function getCookie(name) {
+  const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+function loadGhSettings() {
+  const saved = CONTENT.github || {};
+  // Token: localStorage 優先，再查 cookie，再查舊格式
+  const token = localStorage.getItem(GH_TOKEN_KEY) || getCookie(GH_TOKEN_COOKIE) ||
+    (()=>{ try{ return JSON.parse(localStorage.getItem(GH_KEY)||'{}').token||''; }catch{ return ''; } })();
+  const legacy = (()=>{ try{ return JSON.parse(localStorage.getItem(GH_KEY)||'{}'); }catch{ return {}; } })();
+  return {
+    owner:   saved.owner   || legacy.owner   || '',
+    repo:    saved.repo    || legacy.repo    || '',
+    branch:  saved.branch  || legacy.branch  || 'main',
+    path:    saved.path    || legacy.path    || 'deploy/content.js',
+    siteurl: saved.siteurl || legacy.siteurl || '',
+    token
+  };
+}
+
+function saveGhSettings() {
+  const s = {
+    owner:   document.getElementById('set-gh-owner').value.trim(),
+    repo:    document.getElementById('set-gh-repo').value.trim(),
+    branch:  document.getElementById('set-gh-branch').value.trim() || 'main',
+    path:    document.getElementById('set-gh-path').value.trim() || 'deploy/content.js',
+    token:   document.getElementById('set-gh-token').value.trim(),
+    siteurl: document.getElementById('set-gh-siteurl').value.trim()
+  };
+  if (!s.owner || !s.repo || !s.token) { showToast('請填寫用戶名、Repo 名稱和 Token'); return; }
+  // 非敏感欄位存進 CONTENT（會隨 content.js 發布，永久保留）
+  CONTENT.github = { owner: s.owner, repo: s.repo, branch: s.branch, path: s.path, siteurl: s.siteurl };
+  saveContent(CONTENT);
+  // Token 同時存 localStorage 和 Cookie（365 天），雙重備份
+  localStorage.setItem(GH_TOKEN_KEY, s.token);
+  setCookie(GH_TOKEN_COOKIE, s.token, 365);
+  showToast('GitHub 設定已儲存 ✅');
+  const st = document.getElementById('ghSaveStatus');
+  if (st) { st.style.display = 'inline'; setTimeout(() => st.style.display = 'none', 3000); }
+}
+
+function renderGhSettings() {
+  const s = loadGhSettings();
+  document.getElementById('set-gh-owner').value   = s.owner   || '';
+  document.getElementById('set-gh-repo').value    = s.repo    || '';
+  document.getElementById('set-gh-branch').value  = s.branch  || 'main';
+  document.getElementById('set-gh-path').value    = s.path    || 'deploy/content.js';
+  document.getElementById('set-gh-token').value   = s.token   || '';
+  document.getElementById('set-gh-siteurl').value = s.siteurl || '';
+}
+
+function openFrontend() {
+  const s = loadGhSettings();
+  const url = s.siteurl || 'index.html';
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function renderDeploy() {
+  const s = loadGhSettings();
+  const hasGh = !!(s.owner && s.repo && s.token);
+  document.getElementById('deployHero').style.opacity   = hasGh ? '1' : '.45';
+  document.getElementById('publishBtn').disabled        = !hasGh;
+  document.getElementById('deployNoGh').style.display   = hasGh ? 'none' : '';
+}
+
+function toBase64Unicode(str) {
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+    (_, p1) => String.fromCharCode('0x' + p1)));
+}
+
+async function ghPushFile(headers, owner, repo, branch, filePath, text, message) {
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+  let sha = null;
+  const getResp = await fetch(`${apiUrl}?ref=${branch}`, { headers });
+  if (getResp.ok) sha = (await getResp.json()).sha;
+  else if (getResp.status !== 404) throw new Error(`無法讀取 ${filePath} (${getResp.status})`);
+  const body = { message, content: toBase64Unicode(text), branch };
+  if (sha) body.sha = sha;
+  const putResp = await fetch(apiUrl, { method: 'PUT', headers, body: JSON.stringify(body) });
+  if (!putResp.ok) {
+    const err = await putResp.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${putResp.status}`);
+  }
+}
+
+async function publishToGitHub() {
+  const s = loadGhSettings();
+  if (!s.owner || !s.repo || !s.token) {
+    showToast('請先完成 GitHub 設定');
+    showSection('settings');
+    return;
+  }
+
+  const btn      = document.getElementById('publishBtn');
+  const statusEl = document.getElementById('publishStatus');
+  btn.disabled   = true;
+  btn.innerHTML  = '<i class="fa-solid fa-spinner fa-spin"></i> 發布中...';
+  statusEl.style.color = 'var(--text2)';
+
+  const headers = {
+    'Authorization': `Bearer ${s.token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+
+  // 從 content.js 路徑推算資料夾（例如 deploy/content.js → deploy/）
+  const dir = s.path.includes('/') ? s.path.slice(0, s.path.lastIndexOf('/') + 1) : '';
+
+  try {
+    // 1. content.js（含五下連點後台功能）
+    statusEl.textContent = '推送 content.js...';
+    const data = normalizeGroupBuyForExport(JSON.parse(JSON.stringify(CONTENT)));
+    const adminShortcut = `\n// 頭像連點 5 下進入後台\n(function(){\n  function init(){\n    var el=document.getElementById('topAvatar');\n    if(!el)return;\n    var clicks=0,timer;\n    function tap(e){e.preventDefault();clicks++;clearTimeout(timer);if(clicks>=5){clicks=0;window.location.href='admin.html';}else{timer=setTimeout(function(){clicks=0;},2000);}}\n    el.addEventListener('touchend',tap,{passive:false});\n    el.addEventListener('click',tap);\n  }\n  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}\n})();\n`;
+    const js = `// Nina Content Data\n// 此檔案由管理後台 admin.html 自動生成，請勿直接手動修改\nwindow.NINA_DATA = ${JSON.stringify(data, null, 2)};\n${adminShortcut}`;
+    await ghPushFile(headers, s.owner, s.repo, s.branch, s.path, js, '更新 content.js');
+
+    // 2. admin.html（直接取目前頁面內容）
+    statusEl.textContent = '推送 admin.html...';
+    const adminText = document.documentElement.outerHTML;
+    await ghPushFile(headers, s.owner, s.repo, s.branch, dir + 'admin.html', adminText, '更新 admin.html');
+
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> 發布成功！';
+    btn.style.background = '#10B981';
+    statusEl.style.color = '#059669';
+    const siteUrl = s.siteurl || '';
+    const urlBtns = siteUrl ? `
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button onclick="navigator.clipboard.writeText('${siteUrl}').then(()=>showToast('網址已複製！'))"
+          style="flex:1;padding:9px 14px;border-radius:7px;border:1.5px solid rgba(16,185,129,.4);background:rgba(16,185,129,.08);color:#059669;font-weight:700;font-size:.8rem;cursor:pointer;min-width:120px;">
+          <i class="fa-regular fa-copy"></i> 複製網址
+        </button>
+        <a href="${siteUrl}" target="_blank" rel="noopener"
+          style="flex:1;padding:9px 14px;border-radius:7px;background:#10B981;color:#fff;font-weight:700;font-size:.8rem;text-decoration:none;text-align:center;min-width:120px;">
+          <i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i> 開啟網站
+        </a>
+      </div>` : '';
+    statusEl.innerHTML = `✅ 已推送到 GitHub！Vercel 約 <strong>30 秒</strong>後自動更新${urlBtns}`;
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-rocket"></i> 一鍵發布';
+      btn.style.background = '';
+    }, 5000);
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-rocket"></i> 一鍵發布';
+    statusEl.style.color = 'var(--coral)';
+    statusEl.textContent = '❌ 失敗：' + e.message + '。請檢查 Token 和 Repo 設定。';
+  }
+}
+
 function downloadContentJs(){
-  const data = JSON.parse(JSON.stringify(CONTENT));
+  const data = normalizeGroupBuyForExport(JSON.parse(JSON.stringify(CONTENT)));
   const js = `// Nina Content Data\n// 此檔案由管理後台 admin.html 自動生成，請勿直接手動修改\nwindow.NINA_DATA = ${JSON.stringify(data, null, 2)};\n`;
   const blob = new Blob([js], {type:'text/javascript'});
   const a = document.createElement('a');
@@ -1523,5 +1858,6 @@ function getDefaultContent(){
   };
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
