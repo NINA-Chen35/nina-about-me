@@ -1,8 +1,10 @@
-<html lang="zh-TW"><head>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nina 管理後台</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="content.js"></script>
   <style>
@@ -386,18 +388,19 @@
 <body>
 
 <!-- ── Login ── -->
-<div id="loginScreen" class="hidden">
+<div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">Nina <span>後台</span></div>
     <p class="login-sub">@1minaday.nina 管理系統</p>
-    <input type="password" id="loginInput" placeholder="請輸入密碼" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <input type="password" id="loginInput" placeholder="請輸入密碼" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()">
     <button class="login-btn" onclick="doLogin()">登入</button>
     <p id="loginErr" class="login-err hidden">密碼錯誤，請重試</p>
   </div>
 </div>
 
 <!-- ── App ── -->
-<div id="app" class="">
+<div id="app" class="hidden">
 
   <!-- Sidebar -->
   <aside class="sidebar">
@@ -407,7 +410,7 @@
       <div class="sb-handle">@1minaday.nina</div>
     </div>
     <nav class="sidebar-nav">
-      <button class="nav-item" onclick="showSection('dashboard')" data-s="dashboard">
+      <button class="nav-item active" onclick="showSection('dashboard')" data-s="dashboard">
         <i class="fa-solid fa-chart-line"></i><span>數據總覽</span>
       </button>
       <button class="nav-item" onclick="showSection('videos')" data-s="videos">
@@ -426,7 +429,7 @@
       <button class="nav-item" onclick="showSection('settings')" data-s="settings">
         <i class="fa-solid fa-gear"></i><span>設定</span>
       </button>
-      <button class="nav-item deploy-btn active" onclick="showSection('deploy')" data-s="deploy">
+      <button class="nav-item deploy-btn" onclick="showSection('deploy')" data-s="deploy">
         <i class="fa-solid fa-rocket"></i><span>更新網站</span>
       </button>
     </nav>
@@ -441,7 +444,7 @@
   <main class="main-content">
 
     <!-- Dashboard -->
-    <section id="sec-dashboard" class="section">
+    <section id="sec-dashboard" class="section active">
       <div class="section-header">
         <h1>數據總覽</h1>
         <button class="btn-refresh" onclick="loadAnalytics()"><i class="fa-solid fa-rotate"></i> 重新整理</button>
@@ -449,76 +452,20 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon orange"><i class="fa-solid fa-eye"></i></div>
-          <div><div class="stat-value" id="stat-pv">96</div><div class="stat-label">總頁面瀏覽</div></div>
+          <div><div class="stat-value" id="stat-pv">—</div><div class="stat-label">總頁面瀏覽</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon blue"><i class="fa-solid fa-play"></i></div>
-          <div><div class="stat-value" id="stat-clicks">5</div><div class="stat-label">影片總點擊</div></div>
+          <div><div class="stat-value" id="stat-clicks">—</div><div class="stat-label">影片總點擊</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon pink"><i class="fa-brands fa-instagram"></i></div>
-          <div><div class="stat-value" id="stat-ig">3</div><div class="stat-label">IG 按鈕點擊</div></div>
+          <div><div class="stat-value" id="stat-ig">—</div><div class="stat-label">IG 按鈕點擊</div></div>
         </div>
       </div>
       <div class="analytics-card" style="margin-bottom:16px">
         <h3>各影片點擊數 <span class="hint">（點擊影片卡片的次數）</span></h3>
-        <div id="analytics-table">
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid1_求子.jpg')"></div>
-      <span class="analytics-title">求子六年，試管成功的那一刻</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
-      <span class="analytics-count">1</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid2_雙胞胎.jpg')"></div>
-      <span class="analytics-title">我懷的是雙胞胎</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:100%"></div></div>
-      <span class="analytics-count">2</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid3_安胎.jpg')"></div>
-      <span class="analytics-title">21週，手術安胎</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
-      <span class="analytics-count">1</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid4_早產.jpg')"></div>
-      <span class="analytics-title">898g · 890g，極度早產</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-      <span class="analytics-count">0</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid5_外傭.jpg')"></div>
-      <span class="analytics-title">外傭逃逸的那一天</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-      <span class="analytics-count">0</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid6_愛情.jpg')"></div>
-      <span class="analytics-title">跟老公認識是月老牽線</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-      <span class="analytics-count">0</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid7_母乳庫.jpg')"></div>
-      <span class="analytics-title">母乳庫捐贈</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-      <span class="analytics-count">0</span>
-    </div>
-  
-    <div class="analytics-row">
-      <div class="analytics-thumb" style="background-image:url('img/vid8_腸病毒.jpg')"></div>
-      <span class="analytics-title">腸病毒疫苗補助</span>
-      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:50%"></div></div>
-      <span class="analytics-count">1</span>
-    </div>
-  </div>
+        <div id="analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
         <div class="ga-note" id="ga-note" style="display:none">
           <i class="fa-brands fa-google" style="color:#4285F4"></i>&nbsp;
           <strong>已設定 Google Analytics 4</strong> —
@@ -527,52 +474,7 @@
       </div>
       <div class="analytics-card">
         <h3>投票統計 <span class="hint">（所有人的累積票數）</span></h3>
-        <div id="vote-analytics">
-      <div style="font-size:.8rem;color:var(--text2);margin-bottom:12px">總票數：<strong>1</strong> 票</div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🍼</span>
-          <span class="analytics-title">雙胞胎極早產育兒紀錄</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:100%"></div></div>
-          <span class="analytics-count">1</span>
-        </div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">💪</span>
-          <span class="analytics-title">早產寶寶成長追蹤（體重、發展里程碑）</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-          <span class="analytics-count">0</span>
-        </div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🏠</span>
-          <span class="analytics-title">帶娃真實日常（不假掰版）</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-          <span class="analytics-count">0</span>
-        </div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">💡</span>
-          <span class="analytics-title">保母／外傭／托育踩雷與選擇心得</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-          <span class="analytics-count">0</span>
-        </div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">📝</span>
-          <span class="analytics-title">媽媽身心恢復的過程</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-          <span class="analytics-count">0</span>
-        </div>
-      
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">🎥</span>
-          <span class="analytics-title">自媒體創作 &amp; 接業配的幕後</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:0%"></div></div>
-          <span class="analytics-count">0</span>
-        </div>
-      
-    </div>
+        <div id="vote-analytics"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
       </div>
     </section>
 
@@ -722,7 +624,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
           <button class="btn-save" onclick="saveGhSettings()">儲存 GitHub 設定</button>
-          <span id="ghSaveStatus" style="font-size: 0.84rem; font-weight: 700; color: rgb(5, 150, 105); display: none;">✅ 已儲存！</span>
+          <span id="ghSaveStatus" style="font-size:.84rem;font-weight:700;color:#059669;display:none;">✅ 已儲存！</span>
         </div>
       </div>
 
@@ -739,16 +641,18 @@
     </section>
 
     <!-- Deploy -->
-    <section id="sec-deploy" class="section active">
+    <section id="sec-deploy" class="section">
       <div class="section-header"><h1>更新網站</h1></div>
 
       <!-- 一鍵發布 -->
-      <div class="deploy-hero" id="deployHero" style="opacity: 1;">
+      <div class="deploy-hero" id="deployHero">
         <div class="deploy-icon">🚀</div>
         <h3>一鍵發布到網站</h3>
         <p id="deployDesc">把最新內容直接推送到 GitHub，<br>Vercel 會在 30 秒內自動更新網站。</p>
-        <button class="btn-deploy" id="publishBtn" onclick="publishToGitHub()" disabled=""><i class="fa-solid fa-spinner fa-spin"></i> 發布中...</button>
-        <p id="publishStatus" style="margin-top: 14px; font-size: 0.84rem; min-height: 20px; color: var(--text2);">推送 admin.html...</p>
+        <button class="btn-deploy" id="publishBtn" onclick="publishToGitHub()">
+          <i class="fa-solid fa-rocket"></i> 一鍵發布
+        </button>
+        <p id="publishStatus" style="margin-top:14px;font-size:.84rem;min-height:20px;"></p>
       </div>
 
       <!-- GitHub 未設定提示 -->
@@ -820,7 +724,7 @@
       </div>
       <div class="toggle-row">
         <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
-        <label class="toggle"><input type="checkbox" id="vm-published" checked=""><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox" id="vm-published" checked><span class="toggle-slider"></span></label>
         <span id="vm-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
       </div>
     </div>
@@ -885,7 +789,7 @@
       </div>
       <div class="toggle-row">
         <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
-        <label class="toggle"><input type="checkbox" id="em-published" checked=""><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox" id="em-published" checked><span class="toggle-slider"></span></label>
         <span id="em-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
       </div>
     </div>
@@ -966,7 +870,7 @@
 </div>
 
 <!-- ── Toast ── -->
-<div id="toast" class="">GitHub 設定已儲存 ✅</div>
+<div id="toast"></div>
 
 <script>
 // ═══════════════════════════════════════════
@@ -1884,6 +1788,5 @@ function getDefaultContent(){
   };
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
