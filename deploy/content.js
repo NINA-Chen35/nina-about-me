@@ -227,6 +227,34 @@ window.NINA_DATA = {
       ]
     }
   ],
+  "groupBuy": {
+    "pinnedBanner": {
+      "enabled": false,
+      "tags": [],
+      "title": "",
+      "subtitle": "",
+      "image": "",
+      "link": ""
+    },
+    "schedules": [
+      {
+        "id": "gb1780678699010",
+        "title": "韓國 Bebenuvo 幼兒睡袋組",
+        "startDate": "2026-07-01",
+        "endDate": "2026-07-31",
+        "link": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      },
+      {
+        "id": "gb1780678651647",
+        "title": "zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素",
+        "startDate": "2026-08-18",
+        "endDate": "2026-08-24",
+        "link": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      }
+    ]
+  },
   "voting": {
     "question": "你決定下一集",
     "subtitle": "你的票，決定我下一支影片 👇",
@@ -265,32 +293,11 @@ window.NINA_DATA = {
       }
     ]
   },
-  "groupBuy": {
-    "pinnedBanner": {
-      "enabled": false,
-      "tags": [],
-      "title": "",
-      "subtitle": "",
-      "image": "",
-      "link": ""
-    },
-    "schedules": [
-      {
-        "id": "gb1780678699010",
-        "title": "韓國 Bebenuvo 幼兒睡袋組",
-        "startDate": "2026-07-01",
-        "endDate": "2026-07-31",
-        "link": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
-      },
-      {
-        "id": "gb1780678651647",
-        "title": "zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素",
-        "startDate": "2026-08-18",
-        "endDate": "2026-08-24",
-        "link": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
-      }
-    ]
+  "github": {
+    "owner": "NINA-Chen35",
+    "repo": "nina-about-me",
+    "branch": "main",
+    "path": "deploy/content.js",
+    "siteurl": "https://nina-about-me.vercel.app"
   }
 };
