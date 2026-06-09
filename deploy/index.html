@@ -75,6 +75,8 @@
       border: 2px solid transparent;
       background-clip: padding-box;
       box-shadow: 0 0 0 2px var(--coral);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     .top-handle {
       font-size: .82rem; font-weight: 700; color: #fff; letter-spacing: .01em;
@@ -755,7 +757,7 @@
 
 <!-- ════ TOP BAR (fixed) ════ -->
 <header class="top-bar">
-  <div class="top-avatar"></div>
+  <div class="top-avatar" id="topAvatar"></div>
   <span class="top-handle">@1minaday.nina <span>· 雙胞胎媽咪</span></span>
   <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="top-bar-cta">
     <i class="fa-brands fa-instagram fa-sm"></i>追蹤
@@ -1261,8 +1263,8 @@
         document.getElementById('gbBannerWrap').style.display = '';
       }
 
-      // Schedule timeline
-      const schedules = (GB.schedules||[]);
+      // Schedule timeline — 依開團日升冪排列
+      const schedules = (GB.schedules||[]).slice().sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
       if (schedules.length) {
         const listEl   = document.getElementById('gbScheduleList');
         const wrapEl   = document.getElementById('gbScheduleWrap');
@@ -1382,6 +1384,28 @@
     btn.classList.toggle('open', isOpen);
     btn.querySelector('span') && (btn.querySelector('span').textContent = isOpen ? '收起' : '看看其他活動');
   }
+</script>
+
+<script>
+// 頭像連點 5 下進入後台
+(function(){
+  let clicks = 0, timer;
+  const el = document.getElementById('topAvatar');
+  if (!el) return;
+  function handleTap(e) {
+    e.preventDefault();
+    clicks++;
+    clearTimeout(timer);
+    if (clicks >= 5) {
+      clicks = 0;
+      window.location.href = 'admin.html';
+    } else {
+      timer = setTimeout(() => { clicks = 0; }, 2000);
+    }
+  }
+  el.addEventListener('touchend', handleTap, { passive: false });
+  el.addEventListener('click', handleTap);
+})();
 </script>
 </body>
 </html>
