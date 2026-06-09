@@ -392,7 +392,7 @@
     <p class="login-sub">@1minaday.nina 管理系統</p>
     <input type="password" id="loginInput" placeholder="請輸入密碼" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="login-btn" onclick="doLogin()">登入</button>
-    <p id="loginErr" class="login-err">密碼錯誤，請重試</p>
+    <p id="loginErr" class="login-err hidden">密碼錯誤，請重試</p>
   </div>
 </div>
 
@@ -449,7 +449,7 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon orange"><i class="fa-solid fa-eye"></i></div>
-          <div><div class="stat-value" id="stat-pv">87</div><div class="stat-label">總頁面瀏覽</div></div>
+          <div><div class="stat-value" id="stat-pv">95</div><div class="stat-label">總頁面瀏覽</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon blue"><i class="fa-solid fa-play"></i></div>
@@ -591,147 +591,7 @@
         <h1>集數管理</h1>
         <button class="btn-primary" onclick="openEpModal(null)"><i class="fa-solid fa-plus"></i> 新增集數</button>
       </div>
-      <div id="episodesList">
-    <div class="content-card" id="ec-ep01">
-      <div class="card-thumb ep" style="background-image:url('img/ep01.jpg');background:#7DABD0"></div>
-      <div class="card-body">
-        <div class="card-label">EP 01 · 17 歲</div>
-        <div class="card-title">隻身回台，花一年讀完三年的書</div>
-        <div class="card-desc">父母離異一個人搭飛機回來。沒在台灣讀過書，硬是花一年讀完三年的書，考上理想志願。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep01',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep01')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP01 集數？',()=&gt;deleteEpisode('ep01'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep02">
-      <div class="card-thumb ep" style="background-image:url('img/ep02.jpg');background:#CFE7EA"></div>
-      <div class="card-body">
-        <div class="card-label">EP 02 · 出社會</div>
-        <div class="card-title">員工、接案、開公司，能做的我都做過了</div>
-        <div class="card-desc">出社會、結婚、創業。人生劇本一直在跑，我也一直在追，只因我不甘於現狀不服輸。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep02',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep02')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP02 集數？',()=&gt;deleteEpisode('ep02'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep03">
-      <div class="card-thumb ep" style="background-image:url('img/ep03.jpg');background:#FFDF6F"></div>
-      <div class="card-body">
-        <div class="card-label">EP 03 · 求子</div>
-        <div class="card-title">試管，六年的等待，竟發現是雙胞胎！</div>
-        <div class="card-desc">每一次失敗、每一次等待，都是真實發生過的。超音波螢幕上出現了那個畫面，我永遠記得。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep03',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep03')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP03 集數？',()=&gt;deleteEpisode('ep03'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep04">
-      <div class="card-thumb ep" style="background-image:url('img/ep04.jpg');background:#F56E4A"></div>
-      <div class="card-body">
-        <div class="card-label">EP 04 · 21 週</div>
-        <div class="card-title">手術安胎，羊膜澎出子宮頸口</div>
-        <div class="card-desc">300 克的兩個孩子，在世界之外等待。那是我第一次知道自己有多不服輸。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep04',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep04')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP04 集數？',()=&gt;deleteEpisode('ep04'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep05">
-      <div class="card-thumb ep" style="background-image:url('img/ep05.jpg');background:#F56E4A"></div>
-      <div class="card-body">
-        <div class="card-label">EP 05 · 極度早產</div>
-        <div class="card-title">898g · 890g</div>
-        <div class="card-desc">他們來了，比預期的早太多。我自己也差點沒命，產後憂鬱每天都在哭。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep05',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep05')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP05 集數？',()=&gt;deleteEpisode('ep05'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep06">
-      <div class="card-thumb ep" style="background-image:url('img/ep06.jpg');background:#F56E4A"></div>
-      <div class="card-body">
-        <div class="card-label">EP 06 · 同一時間</div>
-        <div class="card-title">創業失敗，玻璃窗外面的媽媽</div>
-        <div class="card-desc">以為最難的已經過了，結果創業也失敗了。兩個月，我每天去加護病房，隔著玻璃，等他們長大。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep06',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep06')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP06 集數？',()=&gt;deleteEpisode('ep06'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="content-card" id="ec-ep07">
-      <div class="card-thumb ep" style="background-image:url('img/ep07.jpg');background:#FFDF6F"></div>
-      <div class="card-body">
-        <div class="card-label">EP 07 · 現在</div>
-        <div class="card-title">繼續把日子過下去</div>
-        <div class="card-desc">保母踩雷、外傭逃跑、搬家再搬家。帶著兩個早產小孩，繼續。順便把這一切，拍成影片給你看。</div>
-      </div>
-      <div class="card-actions">
-        <div class="toggle-wrap">
-          <label class="toggle">
-            <input type="checkbox" checked="" onchange="toggleEpisode('ep07',this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">上架</span>
-        </div>
-        <button class="btn-icon btn-edit" onclick="openEpModal('ep07')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除 EP07 集數？',()=&gt;deleteEpisode('ep07'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  </div>
+      <div id="episodesList"></div>
     </section>
 
     <!-- Voting -->
@@ -761,61 +621,7 @@
         <span style="font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em">投票選項</span>
         <button class="btn-primary" onclick="openVoteOptModal(null)"><i class="fa-solid fa-plus"></i> 新增選項</button>
       </div>
-      <div id="voteOptList">
-    <div class="vote-option-card" id="vo-v0">
-      <span class="vote-emoji">🍼</span>
-      <span class="vote-text">雙胞胎極早產育兒紀錄</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v0')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v0'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="vote-option-card" id="vo-v1">
-      <span class="vote-emoji">💪</span>
-      <span class="vote-text">早產寶寶成長追蹤（體重、發展里程碑）</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v1')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v1'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="vote-option-card" id="vo-v2">
-      <span class="vote-emoji">🏠</span>
-      <span class="vote-text">帶娃真實日常（不假掰版）</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v2')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v2'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="vote-option-card" id="vo-v3">
-      <span class="vote-emoji">💡</span>
-      <span class="vote-text">保母／外傭／托育踩雷與選擇心得</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v3')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v3'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="vote-option-card" id="vo-v4">
-      <span class="vote-emoji">📝</span>
-      <span class="vote-text">媽媽身心恢復的過程</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v4')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v4'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  
-    <div class="vote-option-card" id="vo-v5">
-      <span class="vote-emoji">🎥</span>
-      <span class="vote-text">自媒體創作 &amp; 接業配的幕後</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('v5')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=&gt;deleteVoteOpt('v5'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  </div>
+      <div id="voteOptList"></div>
     </section>
 
     <!-- Group Buy -->
@@ -853,7 +659,23 @@
           <span style="font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em">活動列表</span>
           <button class="btn-primary" onclick="openGbModal(null)"><i class="fa-solid fa-plus"></i> 新增活動</button>
         </div>
-        <div id="gbScheduleList"><p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未新增任何團購活動</p></div>
+        <div id="gbScheduleList"><div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
+      <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:#9CA3AF22;color:#9CA3AF;border:1px solid #9CA3AF44;min-width:38px;text-align:center">SOON</span>
+      <div style="flex:1;min-width:0">
+        <p style="font-size:.82rem;font-weight:700;color:var(--text)">韓國 Bebenuvo 幼兒睡袋組</p>
+        <p style="font-size:.7rem;color:var(--text3)">2026-07-01 ～ 2026-07-31</p>
+      </div>
+      <button class="btn-icon" onclick="openGbModal(0)" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
+      <button class="btn-icon btn-icon-del" onclick="deleteGbItem(0)" title="刪除"><i class="fa-solid fa-trash"></i></button>
+    </div><div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
+      <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:#9CA3AF22;color:#9CA3AF;border:1px solid #9CA3AF44;min-width:38px;text-align:center">SOON</span>
+      <div style="flex:1;min-width:0">
+        <p style="font-size:.82rem;font-weight:700;color:var(--text)">zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素</p>
+        <p style="font-size:.7rem;color:var(--text3)">2026-08-18 ～ 2026-08-24</p>
+      </div>
+      <button class="btn-icon" onclick="openGbModal(1)" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
+      <button class="btn-icon btn-icon-del" onclick="deleteGbItem(1)" title="刪除"><i class="fa-solid fa-trash"></i></button>
+    </div></div>
       </div>
     </section>
 
@@ -946,7 +768,7 @@
       </div>
 
       <!-- GitHub 未設定提示 -->
-      <div id="deployNoGh" style="display: none;" class="deploy-steps">
+      <div id="deployNoGh" style="display:none;" class="deploy-steps">
         <h3>⚙️ 先完成 GitHub 設定</h3>
         <ol>
           <li>前往 <strong>設定</strong> 頁面</li>
@@ -1127,7 +949,7 @@
       <button class="modal-close" onclick="closeGbModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="modal-body">
-      <input type="hidden" id="gb-modal-id" value="">
+      <input type="hidden" id="gb-modal-id">
       <div class="form-group"><label>商品名稱 *</label><input type="text" id="gb-m-title" placeholder="例：achu achu 超酷冷感系列"></div>
       <div class="form-row">
         <div class="form-group"><label>開團日期 *</label><input type="date" id="gb-m-start" oninput="autoFillEndDate()"></div>
@@ -1203,11 +1025,14 @@ window.onload = () => {
 //  CONTENT STORE
 // ═══════════════════════════════════════════
 function loadContent(){
+  // 從 Vercel 等遠端開啟時，以 content.js (window.NINA_DATA) 為準
+  // 從本機 file:// 開啟時，以 localStorage 為準（離線編輯模式）
+  const isRemote = location.protocol === 'https:' || location.protocol === 'http:';
+  if(isRemote && window.NINA_DATA) return JSON.parse(JSON.stringify(window.NINA_DATA));
   try {
     const s = localStorage.getItem(CONTENT_KEY);
     if(s) return JSON.parse(s);
   } catch(_){}
-  // Load from content.js if available
   if(window.NINA_DATA) return JSON.parse(JSON.stringify(window.NINA_DATA));
   return getDefaultContent();
 }
