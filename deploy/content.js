@@ -238,11 +238,19 @@ window.NINA_DATA = {
     },
     "schedules": [
       {
+        "id": "gb1782269898329",
+        "title": "Cofit 一對一營養師控醣分析｜優惠碼 NINA14 只要 $450",
+        "startDate": "2026-06-23",
+        "endDate": "2026-07-23",
+        "link": "https://hi.cofit.me/wDsbb",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      },
+      {
         "id": "gb1781023716515",
         "title": "one-meter 小冰磚手持風扇",
         "startDate": "2026-06-24",
         "endDate": "2026-06-30",
-        "link": "",
+        "link": "https://onemeter01.1shop-app.com/o7gzop",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
