@@ -258,7 +258,7 @@ window.NINA_DATA = {
         "title": "韓國 Bebenuvo 幼兒睡袋組",
         "startDate": "2026-07-01",
         "endDate": "2026-07-31",
-        "link": "",
+        "link": "https://gbf.tw/n3obr",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
