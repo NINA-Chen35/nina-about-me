@@ -1317,8 +1317,9 @@
           </div>`;
         }
 
-        const visible = schedules.slice(0, LIMIT);
-        const hidden  = schedules.slice(LIMIT);
+        const active  = schedules.filter(it => gbStatus(it.startDate, it.endDate) !== 'ended');
+        const visible = active.slice(0, LIMIT);
+        const hidden  = active.slice(LIMIT);
         listEl.innerHTML = visible.map(buildRow).join('');
         if (hidden.length) {
           hiddenEl.innerHTML = hidden.map(buildRow).join('');

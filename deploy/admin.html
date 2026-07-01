@@ -558,10 +558,14 @@
       <div class="settings-section">
         <h3><i class="fa-regular fa-calendar-days" style="color:var(--blue);margin-right:7px"></i>團購時間軸</h3>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <span style="font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em">活動列表</span>
+          <div style="display:flex;gap:6px;">
+            <button id="gbTab-active" onclick="switchGbTab('active')" style="font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:none;cursor:pointer;background:var(--coral);color:#fff;">活動列表</button>
+            <button id="gbTab-ended" onclick="switchGbTab('ended')" style="font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;">已結束</button>
+          </div>
           <button class="btn-primary" onclick="openGbModal(null)"><i class="fa-solid fa-plus"></i> 新增活動</button>
         </div>
         <div id="gbScheduleList"></div>
+        <div id="gbEndedList" style="display:none;"></div>
       </div>
     </section>
 
@@ -1379,6 +1383,42 @@ function normalizeGroupBuyForExport(data){
   return data;
 }
 
+function gbItemStatus(item){
+  const now=new Date(); now.setHours(0,0,0,0);
+  const s=new Date(item.startDate); s.setHours(0,0,0,0);
+  const e=new Date(item.endDate); e.setHours(23,59,59,999);
+  return now>e?'ended': now>=s?'open':'soon';
+}
+
+function buildGbRow(item, i){
+  const st = gbItemStatus(item);
+  const stLabel = st==='open'?'OPEN':st==='soon'?'SOON':'END';
+  const stColor = st==='open'?'#059669':st==='soon'?'#9CA3AF':'#D1D5DB';
+  return `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
+    <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:${stColor}22;color:${stColor};border:1px solid ${stColor}44;min-width:38px;text-align:center">${stLabel}</span>
+    <div style="flex:1;min-width:0">
+      <p style="font-size:.82rem;font-weight:700;color:var(--text)">${item.title}</p>
+      <p style="font-size:.7rem;color:var(--text3)">${item.startDate} ～ ${item.endDate}</p>
+    </div>
+    <button class="btn-icon" onclick="openGbModal(${i})" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
+    <button class="btn-icon btn-icon-del" onclick="deleteGbItem(${i})" title="刪除"><i class="fa-solid fa-trash"></i></button>
+  </div>`;
+}
+
+let _gbCurrentTab = 'active';
+function switchGbTab(tab){
+  _gbCurrentTab = tab;
+  const isActive = tab === 'active';
+  document.getElementById('gbTab-active').style.cssText = isActive
+    ? 'font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:none;cursor:pointer;background:var(--coral);color:#fff;'
+    : 'font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;';
+  document.getElementById('gbTab-ended').style.cssText = !isActive
+    ? 'font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:none;cursor:pointer;background:var(--coral);color:#fff;'
+    : 'font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;';
+  document.getElementById('gbScheduleList').style.display = isActive ? '' : 'none';
+  document.getElementById('gbEndedList').style.display   = isActive ? 'none' : '';
+}
+
 function renderGroupBuy(){
   ensureGroupBuy();
   const pb = CONTENT.groupBuy.pinnedBanner;
@@ -1389,28 +1429,21 @@ function renderGroupBuy(){
   document.getElementById('gb-banner-link').value = pb.link||'';
   document.getElementById('gb-banner-tags').value = (pb.tags||[]).map(t=>t.text+':'+t.color).join(',');
 
-  const list = document.getElementById('gbScheduleList');
-  // 依開團日升冪排列後再顯示
   CONTENT.groupBuy.schedules.sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
   const items = CONTENT.groupBuy.schedules;
-  if(!items.length){ list.innerHTML='<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未新增任何團購活動</p>'; return; }
-  list.innerHTML = items.map((item,i)=>{
-    const now=new Date(); now.setHours(0,0,0,0);
-    const s=new Date(item.startDate); s.setHours(0,0,0,0);
-    const e=new Date(item.endDate); e.setHours(23,59,59,999);
-    const st = now>e?'ended': now>=s?'open':'soon';
-    const stLabel = st==='open'?'OPEN':st==='soon'?'SOON':'END';
-    const stColor = st==='open'?'#059669':st==='soon'?'#9CA3AF':'#D1D5DB';
-    return `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
-      <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:${stColor}22;color:${stColor};border:1px solid ${stColor}44;min-width:38px;text-align:center">${stLabel}</span>
-      <div style="flex:1;min-width:0">
-        <p style="font-size:.82rem;font-weight:700;color:var(--text)">${item.title}</p>
-        <p style="font-size:.7rem;color:var(--text3)">${item.startDate} ～ ${item.endDate}</p>
-      </div>
-      <button class="btn-icon" onclick="openGbModal(${i})" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
-      <button class="btn-icon btn-icon-del" onclick="deleteGbItem(${i})" title="刪除"><i class="fa-solid fa-trash"></i></button>
-    </div>`;
-  }).join('');
+  const activeItems = items.filter((_,i) => gbItemStatus(items[i]) !== 'ended');
+  const endedItems  = items.filter((_,i) => gbItemStatus(items[i]) === 'ended');
+
+  const list = document.getElementById('gbScheduleList');
+  const endedList = document.getElementById('gbEndedList');
+  list.innerHTML = activeItems.length
+    ? activeItems.map(item => buildGbRow(item, items.indexOf(item))).join('')
+    : '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未有進行中或即將開始的活動</p>';
+  endedList.innerHTML = endedItems.length
+    ? endedItems.map(item => buildGbRow(item, items.indexOf(item))).join('')
+    : '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚無已結束的活動</p>';
+
+  switchGbTab(_gbCurrentTab);
 }
 
 function saveGbBanner(){
