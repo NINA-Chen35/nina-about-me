@@ -249,7 +249,7 @@ window.NINA_DATA = {
         "id": "gb1781023716515",
         "title": "one-meter 小冰磚手持風扇",
         "startDate": "2026-06-24",
-        "endDate": "2026-06-30",
+        "endDate": "2026-09-30",
         "link": "https://onemeter01.1shop-app.com/o7gzop",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
