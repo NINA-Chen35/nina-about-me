@@ -266,7 +266,7 @@ window.NINA_DATA = {
         "title": "Finicky stuff. 韓國機能質感媽媽包",
         "startDate": "2026-07-08",
         "endDate": "2026-07-15",
-        "link": "",
+        "link": "https://reurl.cc/O62ka9",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
