@@ -274,7 +274,7 @@ window.NINA_DATA = {
         "title": "Oolab 良杯製作",
         "startDate": "2026-07-14",
         "endDate": "2026-07-20",
-        "link": "",
+        "link": "https://oolabtw.co/1minadaynina",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
