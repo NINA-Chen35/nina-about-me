@@ -282,7 +282,7 @@ window.NINA_DATA = {
         "title": "All:ba 韓國醫療級白金矽膠蓮蓬頭",
         "startDate": "2026-07-22",
         "endDate": "2026-07-28",
-        "link": "",
+        "link": "https://yhwakr.pse.is/9cvt85",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
