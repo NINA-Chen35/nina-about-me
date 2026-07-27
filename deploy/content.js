@@ -286,6 +286,14 @@ window.NINA_DATA = {
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
+        "id": "gb1785183498524",
+        "title": "喜光護眼檯燈",
+        "startDate": "2026-08-01",
+        "endDate": "2026-08-31",
+        "link": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      },
+      {
         "id": "gb1781023821684",
         "title": "澳洲 Learn&Grow 磁力片",
         "startDate": "2026-08-04",
