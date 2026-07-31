@@ -290,7 +290,7 @@ window.NINA_DATA = {
         "title": "喜光護眼檯燈",
         "startDate": "2026-08-01",
         "endDate": "2026-08-31",
-        "link": "",
+        "link": "https://www.sylstarled.com.tw/hidden/1minaday.nina",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
@@ -303,9 +303,25 @@ window.NINA_DATA = {
       },
       {
         "id": "gb1780678651647",
-        "title": "zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素",
+        "title": "🇹🇼zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素",
         "startDate": "2026-08-18",
         "endDate": "2026-08-24",
+        "link": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      },
+      {
+        "id": "gb1785485692996",
+        "title": "🇰🇷 Rieti 韓星同款平價墨鏡",
+        "startDate": "2026-08-25",
+        "endDate": "2026-08-31",
+        "link": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
+      },
+      {
+        "id": "gb1785485762963",
+        "title": "Happy Hours 生機纖果飲",
+        "startDate": "2026-09-01",
+        "endDate": "2026-09-07",
         "link": "",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       }
