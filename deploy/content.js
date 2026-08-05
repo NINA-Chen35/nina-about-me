@@ -237,12 +237,12 @@ window.NINA_DATA = {
   ],
   "groupBuy": {
     "pinnedBanner": {
-      "enabled": false,
+      "enabled": true,
       "tags": [],
-      "title": "",
+      "title": "澳洲 Learn&Grow 磁力片",
       "subtitle": "",
-      "image": "",
-      "link": ""
+      "image": "img/uploads/1785954815103-IMG_4521.jpg",
+      "link": "https://gbf.tw/wtdjz"
     },
     "schedules": [
       {
@@ -264,16 +264,16 @@ window.NINA_DATA = {
         "id": "gb1781023716515",
         "title": "one-meter 小冰磚手持風扇",
         "type": "limited",
+        "startDate": "2026-06-24",
+        "endDate": "2026-09-30",
         "image": "img/uploads/1785954570815-IMG_4630.jpg",
         "tagline": "",
         "ninaNote": "",
-        "startDate": "2026-06-24",
-        "endDate": "2026-09-30",
         "link": "https://onemeter01.1shop-app.com/o7gzop",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
-        "cardStyle": "full"
+        "cardStyle": "compact",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
         "id": "gb1780678699010",
@@ -339,16 +339,16 @@ window.NINA_DATA = {
         "id": "gb1781023821684",
         "title": "澳洲 Learn&Grow 磁力片",
         "type": "limited",
+        "startDate": "2026-08-04",
+        "endDate": "2026-08-10",
         "image": "img/uploads/1785954815103-IMG_4521.jpg",
         "tagline": "",
         "ninaNote": "",
-        "startDate": "2026-08-04",
-        "endDate": "2026-08-10",
         "link": "https://gbf.tw/wtdjz",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
-        "cardStyle": "full"
+        "cardStyle": "full",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
         "id": "gb1781710381956",
@@ -429,3 +429,16 @@ window.NINA_DATA = {
     "siteurl": "https://nina-about-me.vercel.app"
   }
 };
+
+// 頭像連點 5 下進入後台
+(function(){
+  function init(){
+    var el=document.getElementById('topAvatar');
+    if(!el)return;
+    var clicks=0,timer;
+    function tap(e){e.preventDefault();clicks++;clearTimeout(timer);if(clicks>=5){clicks=0;window.location.href='admin.html';}else{timer=setTimeout(function(){clicks=0;},2000);}}
+    el.addEventListener('touchend',tap,{passive:false});
+    el.addEventListener('click',tap);
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+})();
