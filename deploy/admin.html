@@ -278,6 +278,8 @@
     .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--coral);}
     .form-group textarea{resize:vertical;min-height:80px;}
     .form-hint{font-size:.75rem;color:var(--text3);margin-top:4px;}
+    .img-upload-row{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+    .img-upload-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:.78rem;cursor:pointer;}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
     .toggle-row{display:flex;align-items:center;gap:12px;padding:10px 0;}
     .toggle-row label:first-child{font-size:.8rem;font-weight:600;color:var(--text2);}
@@ -320,22 +322,6 @@
       font-size:.8rem;color:var(--text2);
     }
 
-    /* ── Voting ── */
-    .vote-option-card{
-      background:var(--card);border-radius:10px;border:1px solid var(--border);
-      display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:8px;
-    }
-    .vote-emoji{font-size:1.3rem;width:32px;text-align:center;flex-shrink:0;}
-    .vote-text{flex:1;font-size:.88rem;font-weight:500;color:var(--text);}
-    .vote-settings-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border);margin-bottom:20px;}
-    .vote-settings-card h3{font-size:.9rem;font-weight:700;margin-bottom:12px;}
-    .vote-settings-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-    .vote-settings-row label{font-size:.8rem;font-weight:600;color:var(--text2);width:80px;flex-shrink:0;}
-    .vote-settings-row input{
-      flex:1;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;
-      font-family:'Noto Sans TC',sans-serif;font-size:.85rem;outline:none;
-    }
-    .vote-settings-row input:focus{border-color:var(--coral);}
 
     /* ── Confirm Modal ── */
     .confirm-box{max-width:360px;}
@@ -419,11 +405,11 @@
       <button class="nav-item" onclick="showSection('episodes')" data-s="episodes">
         <i class="fa-solid fa-book-open"></i><span>集數管理</span>
       </button>
-      <button class="nav-item" onclick="showSection('voting')" data-s="voting">
-        <i class="fa-solid fa-square-poll-vertical"></i><span>投票管理</span>
-      </button>
       <button class="nav-item" onclick="showSection('groupbuy')" data-s="groupbuy">
         <i class="fa-solid fa-bag-shopping"></i><span>團購管理</span>
+      </button>
+      <button class="nav-item" onclick="showSection('goods')" data-s="goods">
+        <i class="fa-solid fa-star"></i><span>好物推薦</span>
       </button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="showSection('settings')" data-s="settings">
@@ -472,10 +458,6 @@
           <a href="https://analytics.google.com" target="_blank">前往查看完整報表 →</a>
         </div>
       </div>
-      <div class="analytics-card">
-        <h3>投票統計 <span class="hint">（所有人的累積票數）</span></h3>
-        <div id="vote-analytics"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
-      </div>
     </section>
 
     <!-- Videos -->
@@ -494,36 +476,6 @@
         <button class="btn-primary" onclick="openEpModal(null)"><i class="fa-solid fa-plus"></i> 新增集數</button>
       </div>
       <div id="episodesList"></div>
-    </section>
-
-    <!-- Voting -->
-    <section id="sec-voting" class="section">
-      <div class="section-header"><h1>投票管理</h1></div>
-      <div class="vote-settings-card">
-        <h3>投票設定</h3>
-        <div class="vote-settings-row">
-          <label>問題標題</label>
-          <input type="text" id="vq-question">
-        </div>
-        <div class="vote-settings-row">
-          <label>副標題</label>
-          <input type="text" id="vq-subtitle">
-        </div>
-        <div class="vote-settings-row">
-          <label>最多選幾項</label>
-          <input type="number" id="vq-max" min="1" max="6" style="max-width:80px">
-        </div>
-        <div class="vote-settings-row">
-          <label>感謝語</label>
-          <input type="text" id="vq-thanks">
-        </div>
-        <button class="btn-primary" onclick="saveVoteSettings()" style="margin-top:4px"><i class="fa-solid fa-check"></i> 儲存投票設定</button>
-      </div>
-      <div class="section-header" style="margin-bottom:12px">
-        <span style="font-size:.82rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em">投票選項</span>
-        <button class="btn-primary" onclick="openVoteOptModal(null)"><i class="fa-solid fa-plus"></i> 新增選項</button>
-      </div>
-      <div id="voteOptList"></div>
     </section>
 
     <!-- Group Buy -->
@@ -569,6 +521,16 @@
       </div>
     </section>
 
+    <!-- Goods Picks -->
+    <section id="sec-goods" class="section">
+      <div class="section-header">
+        <h1>好物推薦</h1>
+        <button class="btn-primary" onclick="openGoodsModal(null)"><i class="fa-solid fa-plus"></i> 新增好物</button>
+      </div>
+      <div class="form-hint" style="margin-bottom:14px;">跟團購檔期分開，適合放蝦皮酷碰分潤連結這類長期陳列、沒有時效性的推薦商品。</div>
+      <div id="goodsList"></div>
+    </section>
+
     <!-- Settings -->
     <section id="sec-settings" class="section">
       <div class="section-header"><h1>設定</h1></div>
@@ -590,6 +552,24 @@
         </div>
         <div class="form-group"><label>描述文字（可使用 &lt;br&gt; 換行）</label><textarea id="set-desc" rows="3"></textarea></div>
         <button class="btn-save" onclick="saveHeroSettings()">儲存主視覺</button>
+      </div>
+
+      <div class="settings-section">
+        <h3><i class="fa-solid fa-chart-simple" style="color:var(--blue);margin-right:7px"></i>信任數據（Hero ＋ Media Kit 共用）</h3>
+        <div class="form-hint" style="margin-bottom:12px;">這組數據會同時顯示在首頁 Hero 區與合作資料頁，手動更新即可，不會自動串接 IG。</div>
+        <div class="form-row">
+          <div class="form-group"><label>IG 追蹤數</label><input type="text" id="set-stat-followers" placeholder="12.3K"></div>
+          <div class="form-group"><label>單支最高觀看</label><input type="text" id="set-stat-maxviews" placeholder="89萬"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>平均互動率</label><input type="text" id="set-stat-engagement" placeholder="6.8%"></div>
+          <div class="form-group"><label>月觸及</label><input type="text" id="set-stat-reach" placeholder="45萬"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>開團檔期數</label><input type="text" id="set-stat-campaigns" placeholder="12"></div>
+          <div class="form-group"><label>數據更新日期</label><input type="text" id="set-stat-updated" placeholder="2026.07"></div>
+        </div>
+        <button class="btn-save" onclick="saveStats()">儲存信任數據</button>
       </div>
 
       <div class="settings-section">
@@ -804,34 +784,6 @@
   </div>
 </div>
 
-<!-- ── Vote Option Modal ── -->
-<div id="voteOptModal" class="modal">
-  <div class="modal-overlay" onclick="closeVoteOptModal()"></div>
-  <div class="modal-box" style="max-width:400px">
-    <div class="modal-header">
-      <h3 id="vom-title">新增投票選項</h3>
-      <button class="modal-close" onclick="closeVoteOptModal()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="vom-id">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Emoji</label>
-          <input type="text" id="vom-emoji" placeholder="🍼" maxlength="4" style="font-size:1.2rem">
-        </div>
-        <div class="form-group">
-          <label>選項文字 *</label>
-          <input type="text" id="vom-text" placeholder="雙胞胎育兒紀錄">
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeVoteOptModal()">取消</button>
-      <button class="btn-primary" onclick="saveVoteOpt()"><i class="fa-solid fa-check"></i> 儲存</button>
-    </div>
-  </div>
-</div>
-
 <!-- ── Group Buy Modal ── -->
 <div id="gbModal" class="modal">
   <div class="modal-overlay" onclick="closeGbModal()"></div>
@@ -843,16 +795,74 @@
     <div class="modal-body">
       <input type="hidden" id="gb-modal-id">
       <div class="form-group"><label>商品名稱 *</label><input type="text" id="gb-m-title" placeholder="例：achu achu 超酷冷感系列"></div>
-      <div class="form-row">
+      <div class="form-group">
+        <label>團購類型</label>
+        <select id="gb-m-type" onchange="toggleGbTypeFields()">
+          <option value="limited">期間限定團</option>
+          <option value="ongoing">長久團</option>
+        </select>
+      </div>
+      <div class="form-row" id="gb-m-date-row">
         <div class="form-group"><label>開團日期 *</label><input type="date" id="gb-m-start" oninput="autoFillEndDate()"></div>
         <div class="form-group"><label>結團日期 *</label><input type="date" id="gb-m-end"></div>
       </div>
+      <div class="form-group">
+        <label>商品情境照</label>
+        <input type="url" id="gb-m-image" placeholder="https://... 或直接上傳圖片">
+        <div class="img-upload-row">
+          <label class="btn-secondary img-upload-btn">
+            <i class="fa-solid fa-upload"></i> 上傳圖片
+            <input type="file" id="gb-m-image-file" accept="image/*" style="display:none;">
+          </label>
+          <span id="gb-m-image-status" class="form-hint" style="margin:0;"></span>
+        </div>
+      </div>
+      <div class="form-group"><label>一句話介紹</label><input type="text" id="gb-m-tagline" placeholder="例：產後想瘦但沒時間研究？營養師直接幫你排"></div>
+      <div class="form-group"><label>Nina 真心話</label><textarea id="gb-m-ninanote" rows="2" placeholder="我自己實際使用的心得..."></textarea></div>
       <div class="form-group"><label>團購連結（開團後填入）</label><input type="url" id="gb-m-link" placeholder="https://..."></div>
+      <div class="form-group"><label>優惠碼</label><input type="text" id="gb-m-code" placeholder="例：NINA14"></div>
+      <div class="form-group" id="gb-m-introlink-wrap"><label>介紹影片／精選限動連結（長久團專用）</label><input type="url" id="gb-m-introlink" placeholder="https://..."></div>
       <div class="form-group"><label>行事曆備註</label><input type="text" id="gb-m-calnote" placeholder="Nina 限定團購優惠，記得把握時間！"></div>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeGbModal()">取消</button>
       <button class="btn-primary" onclick="saveGbItem()"><i class="fa-solid fa-check"></i> 儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Goods Pick Modal ── -->
+<div id="goodsModal" class="modal">
+  <div class="modal-overlay" onclick="closeGoodsModal()"></div>
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <h3 id="goods-modal-title">新增好物</h3>
+      <button class="modal-close" onclick="closeGoodsModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="goods-m-id">
+      <div class="form-group"><label>商品名稱 *</label><input type="text" id="goods-m-title" placeholder="例：兒童防蚊噴霧"></div>
+      <div class="form-group">
+        <label>商品圖片</label>
+        <input type="url" id="goods-m-image" placeholder="https://... 或直接上傳圖片">
+        <div class="img-upload-row">
+          <label class="btn-secondary img-upload-btn">
+            <i class="fa-solid fa-upload"></i> 上傳圖片
+            <input type="file" id="goods-m-image-file" accept="image/*" style="display:none;">
+          </label>
+          <span id="goods-m-image-status" class="form-hint" style="margin:0;"></span>
+        </div>
+      </div>
+      <div class="form-group"><label>蝦皮酷碰／分潤連結 *</label><input type="url" id="goods-m-link" placeholder="https://s.shopee.tw/..."></div>
+      <div class="toggle-row">
+        <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
+        <label class="toggle"><input type="checkbox" id="goods-m-published" checked><span class="toggle-slider"></span></label>
+        <span id="goods-m-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeGoodsModal()">取消</button>
+      <button class="btn-primary" onclick="saveGoodsItem()"><i class="fa-solid fa-check"></i> 儲存</button>
     </div>
   </div>
 </div>
@@ -950,9 +960,9 @@ function showSection(name){
   document.querySelector(`[data-s="${name}"]`).classList.add('active');
   if(name==='videos') renderVideos();
   if(name==='episodes') renderEpisodes();
-  if(name==='voting') renderVoting();
   if(name==='settings') { renderSettings(); renderGhSettings(); }
   if(name==='groupbuy') renderGroupBuy();
+  if(name==='goods') renderGoods();
   if(name==='deploy') renderDeploy();
 }
 
@@ -998,29 +1008,6 @@ async function loadAnalytics(){
   const ga4 = CONTENT.settings?.ga4Id;
   const gaNote = document.getElementById('ga-note');
   if(ga4){ gaNote.style.display='block'; } else { gaNote.style.display='none'; }
-
-  // Vote statistics
-  const voteEl = document.getElementById('vote-analytics');
-  const voteOpts = CONTENT.voting?.options || [];
-  if(voteOpts.length){
-    voteEl.innerHTML='<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
-    const voteCounts = await Promise.all(voteOpts.map((_,i)=>fetchCount('vote-'+i)));
-    const voteTotal = voteCounts.reduce((a,b)=>a+b,0);
-    const voteMax = Math.max(...voteCounts,1);
-    voteEl.innerHTML = `
-      <div style="font-size:.8rem;color:var(--text2);margin-bottom:12px">總票數：<strong>${voteTotal}</strong> 票</div>
-      ${voteOpts.map((o,i)=>`
-        <div class="analytics-row">
-          <span style="font-size:1.1rem;width:24px;text-align:center;flex-shrink:0">${o.emoji}</span>
-          <span class="analytics-title">${o.text}</span>
-          <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(voteCounts[i]/voteMax*100)}%"></div></div>
-          <span class="analytics-count">${voteCounts[i]}</span>
-        </div>
-      `).join('')}
-    `;
-  } else {
-    voteEl.innerHTML='<div class="loading">尚未設定投票選項</div>';
-  }
 }
 
 // ═══════════════════════════════════════════
@@ -1277,84 +1264,6 @@ function saveEpisode(){
 }
 
 // ═══════════════════════════════════════════
-//  VOTING
-// ═══════════════════════════════════════════
-function renderVoting(){
-  const v = CONTENT.voting;
-  document.getElementById('vq-question').value = v.question||'';
-  document.getElementById('vq-subtitle').value = v.subtitle||'';
-  document.getElementById('vq-max').value = v.maxSelect||2;
-  document.getElementById('vq-thanks').value = v.thankYou||'';
-
-  document.getElementById('voteOptList').innerHTML = v.options.map((o,i)=>`
-    <div class="vote-option-card" id="vo-${o.id}">
-      <span class="vote-emoji">${o.emoji}</span>
-      <span class="vote-text">${o.text}</span>
-      <div class="card-actions">
-        <button class="btn-icon btn-edit" onclick="openVoteOptModal('${o.id}')"><i class="fa-solid fa-pen"></i></button>
-        <button class="btn-icon btn-del" onclick="confirmDelete('刪除投票選項？',()=>deleteVoteOpt('${o.id}'))"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function saveVoteSettings(){
-  CONTENT.voting.question = document.getElementById('vq-question').value.trim();
-  CONTENT.voting.subtitle = document.getElementById('vq-subtitle').value.trim();
-  CONTENT.voting.maxSelect = parseInt(document.getElementById('vq-max').value)||2;
-  CONTENT.voting.thankYou = document.getElementById('vq-thanks').value.trim();
-  saveContent(CONTENT);
-  showToast('投票設定已儲存');
-}
-
-function openVoteOptModal(optId){
-  if(optId){
-    document.getElementById('vom-title').textContent='編輯選項';
-    const o = CONTENT.voting.options.find(o=>o.id===optId);
-    if(o){
-      document.getElementById('vom-id').value=optId;
-      document.getElementById('vom-emoji').value=o.emoji;
-      document.getElementById('vom-text').value=o.text;
-    }
-  } else {
-    document.getElementById('vom-title').textContent='新增選項';
-    document.getElementById('vom-id').value='';
-    document.getElementById('vom-emoji').value='';
-    document.getElementById('vom-text').value='';
-  }
-  document.getElementById('voteOptModal').classList.add('open');
-}
-function closeVoteOptModal(){ document.getElementById('voteOptModal').classList.remove('open'); }
-
-function saveVoteOpt(){
-  const text = document.getElementById('vom-text').value.trim();
-  if(!text){ alert('請填寫選項文字'); return; }
-  const optId = document.getElementById('vom-id').value;
-  const odata = {
-    id: optId||'v'+Date.now(),
-    emoji: document.getElementById('vom-emoji').value||'📌',
-    text
-  };
-  if(optId){
-    const idx = CONTENT.voting.options.findIndex(o=>o.id===optId);
-    if(idx>-1) CONTENT.voting.options[idx]=odata;
-  } else {
-    CONTENT.voting.options.push(odata);
-  }
-  saveContent(CONTENT);
-  closeVoteOptModal();
-  renderVoting();
-  showToast('選項已儲存');
-}
-
-function deleteVoteOpt(optId){
-  CONTENT.voting.options = CONTENT.voting.options.filter(o=>o.id!==optId);
-  saveContent(CONTENT);
-  renderVoting();
-  showToast('選項已刪除');
-}
-
-// ═══════════════════════════════════════════
 //  GROUP BUY
 // ═══════════════════════════════════════════
 function ensureGroupBuy(){
@@ -1367,6 +1276,15 @@ function ensureGroupBuy(){
       : { enabled:false, tags:[], title:'', subtitle:'', image:'', link:'' };
   }
   if(!CONTENT.groupBuy.schedules) CONTENT.groupBuy.schedules = [];
+  // migrate legacy schedule items missing the new fields
+  CONTENT.groupBuy.schedules.forEach(it=>{
+    if(!it.type) it.type = 'limited';
+    if(it.image===undefined) it.image = '';
+    if(it.tagline===undefined) it.tagline = '';
+    if(it.ninaNote===undefined) it.ninaNote = '';
+    if(it.code===undefined) it.code = '';
+    if(it.introLink===undefined) it.introLink = '';
+  });
 }
 
 function normalizeGroupBuyForExport(data){
@@ -1384,6 +1302,7 @@ function normalizeGroupBuyForExport(data){
 }
 
 function gbItemStatus(item){
+  if(item.type==='ongoing') return 'open';
   const now=new Date(); now.setHours(0,0,0,0);
   const s=new Date(item.startDate); s.setHours(0,0,0,0);
   const e=new Date(item.endDate); e.setHours(23,59,59,999);
@@ -1392,13 +1311,15 @@ function gbItemStatus(item){
 
 function buildGbRow(item, i){
   const st = gbItemStatus(item);
-  const stLabel = st==='open'?'OPEN':st==='soon'?'SOON':'END';
+  const stLabel = item.type==='ongoing' ? '長久' : st==='open'?'OPEN':st==='soon'?'SOON':'END';
   const stColor = st==='open'?'#059669':st==='soon'?'#9CA3AF':'#D1D5DB';
+  const typeLabel = item.type==='ongoing' ? '♾️ 長久團' : '🔥 限定團';
+  const dateStr = item.type==='ongoing' ? '不限時間' : `${item.startDate} ～ ${item.endDate}`;
   return `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
     <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:${stColor}22;color:${stColor};border:1px solid ${stColor}44;min-width:38px;text-align:center">${stLabel}</span>
     <div style="flex:1;min-width:0">
       <p style="font-size:.82rem;font-weight:700;color:var(--text)">${item.title}</p>
-      <p style="font-size:.7rem;color:var(--text3)">${item.startDate} ～ ${item.endDate}</p>
+      <p style="font-size:.7rem;color:var(--text3)">${typeLabel} · ${dateStr}</p>
     </div>
     <button class="btn-icon" onclick="openGbModal(${i})" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
     <button class="btn-icon btn-icon-del" onclick="deleteGbItem(${i})" title="刪除"><i class="fa-solid fa-trash"></i></button>
@@ -1460,17 +1381,30 @@ function saveGbBanner(){
   showToast('Banner 設定已儲存');
 }
 
+function toggleGbTypeFields(){
+  const isOngoing = document.getElementById('gb-m-type').value === 'ongoing';
+  document.getElementById('gb-m-date-row').style.display = isOngoing ? 'none' : '';
+  document.getElementById('gb-m-introlink-wrap').style.display = isOngoing ? '' : 'none';
+}
+
 function openGbModal(idx){
   ensureGroupBuy();
   const isNew = idx===null;
   document.getElementById('gb-modal-title').textContent = isNew?'新增團購活動':'編輯團購活動';
   document.getElementById('gb-modal-id').value = isNew?'':idx;
-  const item = isNew ? {title:'',startDate:'',endDate:'',link:'',calNote:'Nina 限定團購優惠，記得把握時間！'} : CONTENT.groupBuy.schedules[idx];
+  const item = isNew ? {title:'',type:'limited',image:'',tagline:'',ninaNote:'',startDate:'',endDate:'',link:'',code:'',introLink:'',calNote:'Nina 限定團購優惠，記得把握時間！'} : CONTENT.groupBuy.schedules[idx];
   document.getElementById('gb-m-title').value = item.title||'';
+  document.getElementById('gb-m-type').value = item.type||'limited';
   document.getElementById('gb-m-start').value = item.startDate||'';
   document.getElementById('gb-m-end').value = item.endDate||'';
+  document.getElementById('gb-m-image').value = item.image||'';
+  document.getElementById('gb-m-tagline').value = item.tagline||'';
+  document.getElementById('gb-m-ninanote').value = item.ninaNote||'';
   document.getElementById('gb-m-link').value = item.link||'';
+  document.getElementById('gb-m-code').value = item.code||'';
+  document.getElementById('gb-m-introlink').value = item.introLink||'';
   document.getElementById('gb-m-calnote').value = item.calNote||'Nina 限定團購優惠，記得把握時間！';
+  toggleGbTypeFields();
   document.getElementById('gbModal').classList.add('open');
 }
 function closeGbModal(){ document.getElementById('gbModal').classList.remove('open'); }
@@ -1487,13 +1421,19 @@ function autoFillEndDate(){
 function saveGbItem(){
   ensureGroupBuy();
   const title = document.getElementById('gb-m-title').value.trim();
+  const type = document.getElementById('gb-m-type').value;
   const startDate = document.getElementById('gb-m-start').value;
   const endDate = document.getElementById('gb-m-end').value;
-  if(!title||!startDate||!endDate){ showToast('請填寫商品名稱和日期'); return; }
+  if(!title || (type==='limited' && (!startDate||!endDate))){ showToast('請填寫商品名稱和日期'); return; }
   const item = {
     id: 'gb'+Date.now(),
-    title, startDate, endDate,
+    title, type, startDate, endDate,
+    image: document.getElementById('gb-m-image').value.trim(),
+    tagline: document.getElementById('gb-m-tagline').value.trim(),
+    ninaNote: document.getElementById('gb-m-ninanote').value.trim(),
     link: document.getElementById('gb-m-link').value.trim(),
+    code: document.getElementById('gb-m-code').value.trim(),
+    introLink: document.getElementById('gb-m-introlink').value.trim(),
     calNote: document.getElementById('gb-m-calnote').value.trim()
   };
   const idxStr = document.getElementById('gb-modal-id').value;
@@ -1510,7 +1450,7 @@ function saveGbItem(){
 }
 
 function deleteGbItem(idx){
-  showConfirm('確定要刪除這個團購活動嗎？', ()=>{
+  confirmDelete('確定要刪除這個團購活動嗎？', ()=>{
     CONTENT.groupBuy.schedules.splice(idx,1);
     saveContent(CONTENT);
     renderGroupBuy();
@@ -1519,11 +1459,105 @@ function deleteGbItem(idx){
 }
 
 // ═══════════════════════════════════════════
+//  GOODS PICKS
+// ═══════════════════════════════════════════
+function ensureGoodsPicks(){
+  if(!CONTENT.goodsPicks) CONTENT.goodsPicks = [];
+}
+
+function renderGoods(){
+  ensureGoodsPicks();
+  const list = document.getElementById('goodsList');
+  if(!CONTENT.goodsPicks.length){
+    list.innerHTML = '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未新增好物</p>';
+    return;
+  }
+  list.innerHTML = CONTENT.goodsPicks.map((g,i)=>`
+    <div class="content-card" id="gc-${g.id}">
+      <div class="card-thumb" style="background-image:url('${g.image}');background:${g.image?'':'#eee'}"></div>
+      <div class="card-body">
+        <div class="card-title">${g.title||'（未命名）'}</div>
+        <div class="card-desc">${g.link||''}</div>
+      </div>
+      <div class="card-actions">
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" ${g.published?'checked':''} onchange="toggleGoodsPublished(${i},this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">${g.published?'上架':'下架'}</span>
+        </div>
+        <button class="btn-icon btn-edit" onclick="openGoodsModal(${i})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon btn-del" onclick="confirmDelete('刪除這個好物推薦？',()=>deleteGoodsItem(${i}))"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleGoodsPublished(idx, published){
+  CONTENT.goodsPicks[idx].published = published;
+  saveContent(CONTENT);
+  renderGoods();
+  showToast(published?'已上架':'已下架');
+}
+
+function openGoodsModal(idx){
+  ensureGoodsPicks();
+  const isNew = idx===null;
+  document.getElementById('goods-modal-title').textContent = isNew?'新增好物':'編輯好物';
+  document.getElementById('goods-m-id').value = isNew?'':idx;
+  const g = isNew ? {title:'',image:'',link:'',published:true} : CONTENT.goodsPicks[idx];
+  document.getElementById('goods-m-title').value = g.title||'';
+  document.getElementById('goods-m-image').value = g.image||'';
+  document.getElementById('goods-m-link').value = g.link||'';
+  document.getElementById('goods-m-published').checked = g.published!==false;
+  document.getElementById('goods-m-pub-label').textContent = g.published!==false?'已上架':'已下架';
+  document.getElementById('goods-m-published').onchange = function(){
+    document.getElementById('goods-m-pub-label').textContent = this.checked?'已上架':'已下架';
+  };
+  document.getElementById('goodsModal').classList.add('open');
+}
+function closeGoodsModal(){ document.getElementById('goodsModal').classList.remove('open'); }
+
+function saveGoodsItem(){
+  ensureGoodsPicks();
+  const title = document.getElementById('goods-m-title').value.trim();
+  const link = document.getElementById('goods-m-link').value.trim();
+  if(!title || !link){ showToast('請填寫商品名稱和連結'); return; }
+  const item = {
+    id: 'goods'+Date.now(),
+    title,
+    image: document.getElementById('goods-m-image').value.trim(),
+    link,
+    published: document.getElementById('goods-m-published').checked
+  };
+  const idxStr = document.getElementById('goods-m-id').value;
+  if(idxStr===''){
+    CONTENT.goodsPicks.push(item);
+  } else {
+    item.id = CONTENT.goodsPicks[+idxStr].id;
+    CONTENT.goodsPicks[+idxStr] = item;
+  }
+  saveContent(CONTENT);
+  renderGoods();
+  closeGoodsModal();
+  showToast('好物已儲存');
+}
+
+function deleteGoodsItem(idx){
+  CONTENT.goodsPicks.splice(idx,1);
+  saveContent(CONTENT);
+  renderGoods();
+  showToast('好物已刪除');
+}
+
+// ═══════════════════════════════════════════
 //  SETTINGS
 // ═══════════════════════════════════════════
 function renderSettings(){
   const s = CONTENT.settings||{};
   const h = CONTENT.hero||{};
+  const st = CONTENT.stats||{};
   document.getElementById('set-ig').value = s.igHandle||'';
   document.getElementById('set-igurl').value = s.igUrl||'';
   document.getElementById('set-email').value = s.email||'';
@@ -1532,6 +1566,24 @@ function renderSettings(){
   document.getElementById('set-title').value = h.title||'';
   document.getElementById('set-subtitle').value = h.subtitle||'';
   document.getElementById('set-desc').value = h.desc||'';
+  document.getElementById('set-stat-followers').value = st.followers||'';
+  document.getElementById('set-stat-maxviews').value = st.maxViews||'';
+  document.getElementById('set-stat-engagement').value = st.engagementRate||'';
+  document.getElementById('set-stat-reach').value = st.monthlyReach||'';
+  document.getElementById('set-stat-campaigns').value = st.campaignCount||'';
+  document.getElementById('set-stat-updated').value = st.updatedAt||'';
+}
+
+function saveStats(){
+  if(!CONTENT.stats) CONTENT.stats={};
+  CONTENT.stats.followers = document.getElementById('set-stat-followers').value.trim();
+  CONTENT.stats.maxViews = document.getElementById('set-stat-maxviews').value.trim();
+  CONTENT.stats.engagementRate = document.getElementById('set-stat-engagement').value.trim();
+  CONTENT.stats.monthlyReach = document.getElementById('set-stat-reach').value.trim();
+  CONTENT.stats.campaignCount = document.getElementById('set-stat-campaigns').value.trim();
+  CONTENT.stats.updatedAt = document.getElementById('set-stat-updated').value.trim();
+  saveContent(CONTENT);
+  showToast('信任數據已儲存');
 }
 
 function saveBasicSettings(){
@@ -1674,6 +1726,73 @@ async function ghPushFile(headers, owner, repo, branch, filePath, text, message)
   }
 }
 
+// ═══════════════════════════════════════════
+//  IMAGE UPLOAD（推送到 GitHub img/uploads/）
+// ═══════════════════════════════════════════
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = () => reject(new Error('圖片讀取失敗'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadImageFile(file) {
+  const s = loadGhSettings();
+  if (!s.owner || !s.repo || !s.token) {
+    throw new Error('請先到「設定」頁完成 GitHub 自動發布設定（用戶名／Repo／Token）');
+  }
+  if (!file.type.startsWith('image/')) throw new Error('請選擇圖片檔案');
+  if (file.size > 8 * 1024 * 1024) throw new Error('圖片太大，請控制在 8MB 以內');
+
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  const safeName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9一-龥_-]/g, '').slice(0, 40) || 'image';
+  const path = `img/uploads/${Date.now()}-${safeName}.${ext}`;
+
+  const base64 = await fileToBase64(file);
+  const headers = {
+    'Authorization': `Bearer ${s.token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+  const apiUrl = `https://api.github.com/repos/${s.owner}/${s.repo}/contents/${path}`;
+  const putResp = await fetch(apiUrl, {
+    method: 'PUT', headers,
+    body: JSON.stringify({ message: `上傳圖片 ${path}`, content: base64, branch: s.branch || 'main' })
+  });
+  if (!putResp.ok) {
+    const err = await putResp.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${putResp.status}`);
+  }
+  return path;
+}
+
+function bindImageUpload(fileInputId, urlInputId, statusId) {
+  const fileInput = document.getElementById(fileInputId);
+  if (!fileInput) return;
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    fileInput.value = '';
+    if (!file) return;
+    const statusEl = document.getElementById(statusId);
+    if (statusEl) statusEl.textContent = '上傳中...';
+    try {
+      const path = await uploadImageFile(file);
+      document.getElementById(urlInputId).value = path;
+      if (statusEl) statusEl.textContent = '✅ 已上傳：' + path;
+      showToast('圖片已上傳！記得到「更新網站」按一鍵發布才會上線');
+    } catch (e) {
+      if (statusEl) statusEl.textContent = '';
+      showToast('上傳失敗：' + e.message);
+    }
+  });
+}
+
+bindImageUpload('gb-m-image-file', 'gb-m-image', 'gb-m-image-status');
+bindImageUpload('goods-m-image-file', 'goods-m-image', 'goods-m-image-status');
+
 async function publishToGitHub() {
   const s = loadGhSettings();
   if (!s.owner || !s.repo || !s.token) {
@@ -1773,7 +1892,8 @@ function showToast(msg){
 function getDefaultContent(){
   return {
     settings:{igHandle:"@1minaday.nina",igUrl:"https://www.instagram.com/1minaday.nina",email:"nina.inren@gmail.com",ga4Id:"",counterNs:"nina1minaday"},
-    hero:{badge:"熱播中 &nbsp;Streaming Now",title:"Nina",subtitle:"雙胞胎媽咪",genres:[{text:"真實故事",cls:"c-blue"},{text:"自傳喜劇",cls:"c-yellow"},{text:"高潮迭起",cls:"c-coral"}],desc:"從小到大，老天給我的考題都是魔王級。<br>但沒關係，我這個人就是不服輸，<br>而且很會把苦日子過成幽默的段子！"},
+    hero:{badge:"熱播中 &nbsp;Streaming Now",title:"Nina",subtitle:"雙胞胎媽咪",genres:[{text:"真實故事",cls:"c-blue"},{text:"自傳喜劇",cls:"c-coral"},{text:"高潮迭起",cls:"c-green"}],desc:"從小到大，老天給我的考題都是魔王級。<br>但沒關係，我這個人就是不服輸，<br>而且很會把苦日子過成幽默的段子！"},
+    stats:{followers:"",maxViews:"",engagementRate:"",monthlyReach:"",campaignCount:"",updatedAt:""},
     season:{badge:"Season 01",name:"人生劇本"},
     episodes:[
       {id:"ep01",num:"01",mood:"mood-blue",special:"",label:"17 歲",title:"隻身回台，花一年讀完三年的書",desc:"父母離異一個人搭飛機回來。沒在台灣讀過書，硬是花一年讀完三年的書，考上理想志願。",thumb:"img/ep01.jpg",color:"#7DABD0",published:true},
@@ -1800,14 +1920,8 @@ function getDefaultContent(){
         {id:"vid8",title:"腸病毒疫苗補助",desc:"全台補助懶人包",badge:"補助",badgeStyle:"color:#4A9EA8;border-color:rgba(79,158,168,.4);",thumb:"img/vid8_腸病毒.jpg",igUrl:"https://www.instagram.com/reel/DYoiouES27A/",published:true}
       ]}
     ],
-    voting:{question:"你決定下一集",subtitle:"你的票，決定我下一支影片 👇",maxSelect:2,thankYou:"謝謝你！我會優先做你投的主題 💛",options:[
-      {id:"v0",emoji:"🍼",text:"雙胞胎極早產育兒紀錄"},
-      {id:"v1",emoji:"💪",text:"早產寶寶成長追蹤（體重、發展里程碑）"},
-      {id:"v2",emoji:"🏠",text:"帶娃真實日常（不假掰版）"},
-      {id:"v3",emoji:"💡",text:"保母／外傭／托育踩雷與選擇心得"},
-      {id:"v4",emoji:"📝",text:"媽媽身心恢復的過程"},
-      {id:"v5",emoji:"🎥",text:"自媒體創作 & 接業配的幕後"}
-    ]}
+    groupBuy:{pinnedBanner:{enabled:false,tags:[],title:"",subtitle:"",image:"",link:""},schedules:[]},
+    goodsPicks:[]
   };
 }
 </script>

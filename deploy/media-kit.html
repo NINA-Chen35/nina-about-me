@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nina 合作資料｜@1minaday.nina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="content.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:    #F4A082;
+      --coral-lt: rgba(244,160,130,.18);
+      --coral-d:  #8A3A1E;
+      --blue:     #D2DCF6;
+      --blue-d:   #39447E;
+      --blue-lt:  rgba(210,220,246,.35);
+      --blue-bdr: rgba(57,68,126,.22);
+      --green:    #D4DCA4;
+      --green-d:  #4F5420;
+      --green-lt: rgba(212,220,164,.35);
+
+      --bg:       #FFFFFF;
+      --bg2:      #ECEEDE;
+      --text:     #1C1C1C;
+      --text2:    rgba(28,28,28,.55);
+      --text3:    rgba(28,28,28,.28);
+      --border:   rgba(0,0,0,.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 16px; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .wrap { max-width: 640px; margin: 0 auto; padding: 0 22px 60px; }
+
+    /* ── Top bar ── */
+    .top-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .top-bar a.back { color: var(--text2); font-size: .85rem; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .top-bar a.back:hover { color: var(--text); }
+
+    /* ── 1. Header ── */
+    .mk-header { text-align: center; padding: 40px 0 36px; }
+    .mk-avatar {
+      width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 16px;
+      background: url('img/avatar.jpg') center top / cover no-repeat;
+      box-shadow: 0 0 0 3px var(--coral);
+    }
+    .mk-name { font-family: 'Noto Serif TC', serif; font-size: 1.6rem; font-weight: 700; }
+    .mk-handle { font-size: .88rem; color: var(--text2); margin-bottom: 10px; }
+    .mk-position {
+      display: inline-block; font-size: .82rem; font-weight: 700; color: var(--blue-d);
+      background: var(--blue-lt); border: 1px solid var(--blue-bdr);
+      padding: 4px 14px; border-radius: 99px; margin-bottom: 16px;
+    }
+    .mk-quote {
+      font-family: 'Noto Serif TC', serif; font-size: 1.02rem; line-height: 1.8;
+      color: var(--text); max-width: 460px; margin: 0 auto 14px;
+    }
+    .mk-updated { font-size: .74rem; color: var(--text3); }
+
+    /* ── Section shared ── */
+    .mk-section { padding: 34px 0; border-top: 1px solid var(--border); }
+    .mk-label {
+      font-size: .67rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--coral-d); display: block; margin-bottom: 4px;
+    }
+    .mk-title { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 18px; }
+
+    /* ── 2. Stats ── */
+    .mk-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mk-stat-card {
+      background: var(--bg2); border-radius: 12px; padding: 18px;
+      text-align: center;
+    }
+    .mk-stat-num { font-family: 'Noto Serif TC', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    .mk-stat-label { font-size: .74rem; color: var(--text2); margin-top: 4px; }
+
+    /* ── 3. Audience ── */
+    .mk-audience-row { margin-bottom: 18px; }
+    .mk-audience-row:last-child { margin-bottom: 0; }
+    .mk-audience-hdr { display: flex; justify-content: space-between; font-size: .8rem; color: var(--text2); margin-bottom: 8px; }
+    .mk-audience-hdr b { color: var(--text); }
+    .mk-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--bg2); }
+    .mk-bar span { height: 100%; }
+    .mk-audience-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 8px; font-size: .72rem; color: var(--text2); }
+    .mk-audience-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; }
+    .mk-audience-note {
+      margin-top: 16px; font-size: .8rem; color: var(--text2);
+      background: var(--blue-lt); border-left: 3px solid var(--blue-d);
+      padding: 10px 13px; border-radius: 0 8px 8px 0; line-height: 1.6;
+    }
+    .mk-todo-note { margin-top: 10px; font-size: .72rem; color: var(--text3); }
+
+    /* ── 4. Principles ── */
+    .mk-principle-list { display: flex; flex-direction: column; gap: 12px; }
+    .mk-principle {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .88rem; color: var(--text); line-height: 1.65;
+    }
+    .mk-principle i { color: var(--green-d); margin-top: 3px; flex-shrink: 0; }
+
+    /* ── 5. Cooperation formats ── */
+    .mk-format-list { display: flex; flex-direction: column; gap: 10px; }
+    .mk-format {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--bg2); border-radius: 10px; padding: 14px 16px;
+    }
+    .mk-format i { color: var(--coral-d); font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+    .mk-format span { font-size: .86rem; font-weight: 600; }
+    .mk-price-note { margin-top: 14px; font-size: .78rem; color: var(--text3); text-align: center; }
+
+    /* ── 6. Brands ── */
+    .mk-brands-placeholder {
+      text-align: center; padding: 30px 20px; color: var(--text3); font-size: .85rem;
+      background: var(--bg2); border-radius: 12px; line-height: 1.7;
+    }
+    .mk-brand-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mk-brand-chip {
+      font-size: .8rem; font-weight: 600; color: var(--text);
+      background: var(--bg2); padding: 8px 16px; border-radius: 8px;
+    }
+
+    /* ── 7. Contact ── */
+    .mk-contact { text-align: center; }
+    .mk-contact-sub { font-size: .86rem; color: var(--text2); margin-bottom: 20px; }
+    .mk-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .mk-btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 24px; background: var(--coral); color: var(--coral-d);
+      font-size: .88rem; font-weight: 700; border-radius: 6px; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(244,160,130,.4);
+    }
+    .mk-btn-outline {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 24px; border: 1.5px solid var(--border); color: var(--text);
+      background: none; cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .88rem; font-weight: 600;
+      border-radius: 6px; text-decoration: none;
+    }
+
+    /* ── Toast ── */
+    .mk-toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: #1C1C1C; color: #fff;
+      font-size: .8rem; font-weight: 600; padding: 9px 20px; border-radius: 8px;
+      opacity: 0; transition: opacity .25s, transform .25s;
+      pointer-events: none; z-index: 9999; white-space: nowrap;
+    }
+    .mk-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="index.html" class="back"><i class="fa-solid fa-arrow-left fa-xs"></i>回首頁</a>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. 開場 -->
+  <div class="mk-header">
+    <div class="mk-avatar"></div>
+    <p class="mk-name">Nina</p>
+    <p class="mk-handle" id="mkHandle">@1minaday.nina</p>
+    <span class="mk-position">雙胞胎媽咪・真實故事系創作者</span>
+    <p class="mk-quote">從小到大，老天給我的考題都是魔王級，但我這個人就是不服輸，而且很會把苦日子過成幽默的段子——這是我的故事，也是我為什麼認真做每一次合作的原因。</p>
+    <p class="mk-updated" id="mkUpdated">數據更新於 —</p>
+  </div>
+
+  <!-- 2. 核心數據卡 -->
+  <div class="mk-section">
+    <span class="mk-label">核心數據</span>
+    <h2 class="mk-title">創作者數據</h2>
+    <div class="mk-stats-grid" id="mkStatsGrid"></div>
+  </div>
+
+  <!-- 3. 受眾輪廓 -->
+  <div class="mk-section">
+    <span class="mk-label">受眾輪廓</span>
+    <h2 class="mk-title">追蹤者是誰</h2>
+
+    <div class="mk-audience-row">
+      <div class="mk-audience-hdr"><span>性別</span></div>
+      <div class="mk-bar">
+        <span style="width:88%;background:var(--blue);"></span>
+        <span style="width:12%;background:var(--green);"></span>
+      </div>
+      <div class="mk-audience-legend">
+        <span><i style="background:var(--blue);"></i>女性 88%</span>
+        <span><i style="background:var(--green);"></i>男性 12%</span>
+      </div>
+    </div>
+
+    <div class="mk-audience-row">
+      <div class="mk-audience-hdr"><span>年齡層</span></div>
+      <div class="mk-bar">
+        <span style="width:15%;background:var(--coral);"></span>
+        <span style="width:55%;background:var(--blue);"></span>
+        <span style="width:22%;background:var(--green);"></span>
+        <span style="width:8%;background:var(--text3);"></span>
+      </div>
+      <div class="mk-audience-legend">
+        <span><i style="background:var(--coral);"></i>18–24 15%</span>
+        <span><i style="background:var(--blue);"></i>25–34 55%</span>
+        <span><i style="background:var(--green);"></i>35–44 22%</span>
+        <span><i style="background:var(--text3);"></i>45+ 8%</span>
+      </div>
+    </div>
+
+    <div class="mk-audience-row">
+      <div class="mk-audience-hdr"><span>地區</span></div>
+      <div class="mk-bar">
+        <span style="width:62%;background:var(--blue);"></span>
+        <span style="width:20%;background:var(--green);"></span>
+        <span style="width:18%;background:var(--text3);"></span>
+      </div>
+      <div class="mk-audience-legend">
+        <span><i style="background:var(--blue);"></i>北部 62%</span>
+        <span><i style="background:var(--green);"></i>中南部 20%</span>
+        <span><i style="background:var(--text3);"></i>其他 18%</span>
+      </div>
+    </div>
+
+    <p class="mk-audience-note">以 25–44 歲媽媽族群為核心受眾，多為北部雙薪家庭與新手爸媽。</p>
+    <p class="mk-todo-note">＊受眾數據待補上最新 IG 洞察報告，目前為示意佔位數字</p>
+  </div>
+
+  <!-- 4. 內容風格與原則 -->
+  <div class="mk-section">
+    <span class="mk-label">合作原則</span>
+    <h2 class="mk-title">內容風格與原則</h2>
+    <div class="mk-principle-list">
+      <p class="mk-principle"><i class="fa-solid fa-circle-check"></i>真實使用過、認同的產品才推薦，不做純業配腳本</p>
+      <p class="mk-principle"><i class="fa-solid fa-circle-check"></i>不接保養品、保健食品類團購或業配</p>
+      <p class="mk-principle"><i class="fa-solid fa-circle-check"></i>內容以雙胞胎育兒、早產兒照護、真實家庭日常為核心，置入需符合帳號調性</p>
+    </div>
+  </div>
+
+  <!-- 5. 合作形式 -->
+  <div class="mk-section">
+    <span class="mk-label">合作方式</span>
+    <h2 class="mk-title">合作形式</h2>
+    <div class="mk-format-list">
+      <div class="mk-format"><i class="fa-solid fa-clapperboard"></i><span>短影音業配（IG + FB 雙平台）</span></div>
+      <div class="mk-format"><i class="fa-solid fa-bolt"></i><span>限時動態合作</span></div>
+      <div class="mk-format"><i class="fa-solid fa-bag-shopping"></i><span>團購合作（保底＋分潤）</span></div>
+      <div class="mk-format"><i class="fa-solid fa-file-contract"></i><span>素材二次使用與廣告授權</span></div>
+    </div>
+    <p class="mk-price-note">報價請來信索取，會依合作形式與檔期另行提供</p>
+  </div>
+
+  <!-- 6. 過往合作品牌 -->
+  <div class="mk-section">
+    <span class="mk-label">合作紀錄</span>
+    <h2 class="mk-title">過往合作品牌</h2>
+    <div class="mk-brands-placeholder">
+      合作品牌清單整理中，即將公佈 🤝
+    </div>
+  </div>
+
+  <!-- 7. 聯絡區 -->
+  <div class="mk-section mk-contact">
+    <span class="mk-label">聯絡方式</span>
+    <h2 class="mk-title">合作洽詢</h2>
+    <p class="mk-contact-sub">如果你想與我合作，歡迎來信聊聊 🤝</p>
+    <div class="mk-btns">
+      <a href="mailto:nina.inren@gmail.com" class="mk-btn-primary" id="mkMailBtn">
+        <i class="fa-regular fa-envelope"></i>來信洽詢
+      </a>
+      <button class="mk-btn-outline" onclick="copyMkEmail(this)">
+        <i class="fa-regular fa-copy"></i>複製 email
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="mk-toast" id="mkToast">已複製！</div>
+
+<script>
+  (function() {
+    const D = window.NINA_DATA;
+    if (!D) return;
+    const S = D.settings || {};
+    const ST = D.stats || {};
+
+    if (S.igHandle) document.getElementById('mkHandle').textContent = S.igHandle;
+    window.NINA_EMAIL = S.email || 'nina.inren@gmail.com';
+    document.getElementById('mkMailBtn').href = 'mailto:' + window.NINA_EMAIL;
+
+    if (ST.updatedAt) document.getElementById('mkUpdated').textContent = '數據更新於 ' + ST.updatedAt;
+
+    const stats = [
+      { num: ST.followers || '—', label: 'IG 追蹤數' },
+      { num: ST.maxViews || '—', label: '單支最高觀看' },
+      { num: ST.engagementRate || '—', label: '平均互動率' },
+      { num: ST.monthlyReach || '—', label: '月觸及' }
+    ];
+    document.getElementById('mkStatsGrid').innerHTML = stats.map(s =>
+      `<div class="mk-stat-card"><div class="mk-stat-num">${s.num}</div><div class="mk-stat-label">${s.label}</div></div>`
+    ).join('');
+  })();
+
+  function copyMkEmail(btn) {
+    const email = window.NINA_EMAIL || 'nina.inren@gmail.com';
+    navigator.clipboard.writeText(email).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+    const toast = document.getElementById('mkToast');
+    toast.textContent = '已複製：' + email;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+</script>
+</body>
+</html>

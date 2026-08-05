@@ -13,23 +13,28 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Palette ── */
+    /* ── Palette ──
+       藍＝故事／信任｜綠＝商品／瀏覽｜橘＝行動（僅點綴，不做大面積背景） */
     :root {
-      --coral:    #F56E4A;
-      --coral-lt: rgba(245,110,74,.13);
+      --coral:    #F4A082;  /* 鮭魚橘：行動點綴 */
+      --coral-lt: rgba(244,160,130,.18);
+      --coral-d:  #8A3A1E;  /* 深橘文字 */
       --yellow:   #FFDF6F;
       --yellow-lt:rgba(255,223,111,.15);
-      --blue:     #7DABD0;
-      --blue-d:   #5E99C4;
-      --blue-lt:  rgba(125,171,208,.12);
-      --blue-bdr: rgba(125,171,208,.30);
+      --blue:     #D2DCF6;  /* 薰衣草藍：故事線 */
+      --blue-d:   #39447E;  /* 深藍文字 */
+      --blue-lt:  rgba(210,220,246,.35);
+      --blue-bdr: rgba(57,68,126,.22);
+      --green:    #D4DCA4;  /* 奶油綠：商品線 */
+      --green-d:  #4F5420;  /* 深綠文字 */
+      --green-lt: rgba(212,220,164,.35);
       --teal:     #CFE7EA;
       --salmon:   #FBC1AD;
       --pgray:    #E5E1E0;
 
       /* Light theme */
-      --bg:       #F7F5F2;
-      --bg2:      #FFFFFF;
+      --bg:       #FFFFFF;
+      --bg2:      #ECEEDE;
       --bg3:      #EEECEA;
       --text:     #1C1C1C;
       --text2:    rgba(28,28,28,.55);
@@ -94,58 +99,56 @@
     .top-bar-cta:hover { background: #E55E3A; }
 
     /* ════════════════════════════
-       1. HERO  (dark)
+       1. HERO — compact video banner  (light)
     ════════════════════════════ */
-    .hero {
-      position: relative;
-      min-height: 100svh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      overflow: hidden;
-      background: var(--hero-bg);
-      padding-top: 52px; /* space for fixed top-bar */
-    }
+    .hero-banner-section { background: var(--bg); padding-top: 52px; }
 
-    .hero-poster {
+    .hero-video-wrap {
+      position: relative; width: 100%; aspect-ratio: 4/3;
+      overflow: hidden; background: #141414;
+    }
+    @media (min-width: 700px) {
+      .hero-video-wrap { aspect-ratio: 21/9; }
+    }
+    .hero-video, .hero-video-fallback {
       position: absolute; inset: 0;
-      background-image: url('img/hero_poster2.jpg');
-      background-size: cover;
-      background-position: center top;
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .hero-gradient {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 65%;
-      background: linear-gradient(to top, var(--hero-bg) 0%, rgba(20,20,20,.8) 45%, transparent 100%);
+    .hero-info-card {
+      position: relative; z-index: 2;
+      padding: 0 22px 28px;
     }
 
-    .hero-content {
-      position: relative; z-index: 3;
-      padding: 0 22px 36px;
+    .hero-avatar {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: url('img/avatar.jpg') center top / cover no-repeat;
+      border: 4px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--coral), 0 4px 14px rgba(0,0,0,.15);
+      margin-top: -38px; margin-bottom: 14px;
     }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 7px;
-      background: var(--coral); color: #fff;
+      background: var(--coral); color: var(--coral-d);
       font-size: .63rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
       padding: 4px 11px; border-radius: 3px; margin-bottom: 11px;
     }
     .hero-badge .dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #fff;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--coral-d);
       animation: blink 1.4s ease-in-out infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
 
     .hero-title {
       font-family: 'Noto Serif TC', serif;
-      font-size: 2.9rem; font-weight: 700;
-      color: #fff; letter-spacing: .06em; line-height: 1.15;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 20px rgba(0,0,0,.4);
+      font-size: 2rem; font-weight: 700;
+      color: var(--text); letter-spacing: .04em; line-height: 1.15;
+      margin-bottom: 10px;
     }
     .hero-title span {
-      display: block; font-size: 1.55rem; font-weight: 400;
-      letter-spacing: .1em; opacity: .88; margin-top: 2px;
+      display: inline-block; font-size: 1rem; font-weight: 400;
+      letter-spacing: .06em; color: var(--text2); margin-left: 8px;
     }
 
     .hero-genres {
@@ -155,159 +158,14 @@
       font-size: .67rem; font-weight: 600; padding: 3px 10px;
       border-radius: 3px; letter-spacing: .04em;
     }
-    .c-blue   { background: rgba(125,171,208,.2); color: var(--teal);   border: 1px solid rgba(125,171,208,.38); }
-    .c-yellow { background: var(--yellow-lt);     color: var(--yellow); border: 1px solid rgba(255,223,111,.35); }
-    .c-coral  { background: var(--coral-lt);      color: var(--coral);  border: 1px solid rgba(245,110,74,.38); }
+    .c-blue   { background: var(--blue-lt);  color: var(--blue-d);  border: 1px solid var(--blue-bdr); }
+    .c-yellow { background: var(--yellow-lt); color: #8A6D00;       border: 1px solid rgba(255,223,111,.5); }
+    .c-coral  { background: var(--coral-lt); color: var(--coral-d); border: 1px solid rgba(244,160,130,.42); }
+    .c-green  { background: var(--green-lt); color: var(--green-d); border: 1px solid rgba(212,220,164,.5); }
 
     .hero-desc {
-      font-size: .9rem; color: rgba(255,255,255,.65);
-      line-height: 1.8; margin-bottom: 22px; max-width: 400px;
-    }
-
-    .hero-btns { display: flex; flex-direction: column; gap: 10px; }
-
-    .btn-primary {
-      display: flex; align-items: center; justify-content: center; gap: 9px;
-      padding: 14px 24px; background: #fff; color: var(--hero-bg);
-      font-family: 'Noto Sans TC', sans-serif; font-size: .94rem; font-weight: 800;
-      border-radius: 6px; text-decoration: none;
-      transition: background .18s, transform .15s;
-    }
-    .btn-primary:hover { background: var(--pgray); transform: scale(1.01); }
-
-    .btn-secondary {
-      display: flex; align-items: center; justify-content: center; gap: 9px;
-      padding: 13px 24px; background: rgba(109,109,110,.65); color: #fff;
-      font-family: 'Noto Sans TC', sans-serif; font-size: .9rem; font-weight: 500;
-      border-radius: 6px; text-decoration: none; backdrop-filter: blur(6px);
-      transition: background .18s;
-    }
-    .btn-secondary:hover { background: rgba(109,109,110,.88); }
-
-    .scroll-cue {
-      position: absolute; bottom: 128px; right: 20px; z-index: 4;
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
-      color: rgba(255,255,255,.3); font-size: .63rem; letter-spacing: .1em;
-      animation: bob 2.2s ease-in-out infinite;
-    }
-    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
-
-
-    /* ════════════════════════════
-       2. SEASON — Episode List  (light)
-    ════════════════════════════ */
-    .season-section { background: var(--bg2); padding: 32px 0 44px; }
-
-    .season-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 22px; margin-bottom: 4px;
-    }
-    .season-left { display: flex; align-items: center; gap: 10px; }
-    .season-badge {
-      font-size: .58rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
-      color: #fff; background: var(--coral);
-      padding: 3px 9px; border-radius: 3px;
-    }
-    .season-name {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 1.3rem; font-weight: 700; color: var(--text);
-    }
-    .season-count { font-size: .72rem; color: var(--text3); }
-
-    /* ── Episode toggle button ── */
-    .ep-toggle {
-      display: flex; align-items: center; justify-content: space-between;
-      width: 100%; margin: 12px 22px 0;
-      width: calc(100% - 44px);
-      padding: 14px 18px;
-      background: var(--bg); border: 1.5px solid var(--border);
-      border-radius: 10px; cursor: pointer;
-      font-family: 'Noto Serif TC', serif;
-      font-size: .95rem; font-weight: 700; color: var(--text);
-      transition: background .18s, border-color .18s;
-    }
-    .ep-toggle:hover { background: var(--bg3); border-color: rgba(0,0,0,.13); }
-    .ep-toggle .toggle-icon {
-      color: var(--text3); font-size: .75rem;
-      transition: transform .35s cubic-bezier(.4,0,.2,1);
-    }
-    .ep-toggle.open .toggle-icon { transform: rotate(180deg); }
-
-    /* ── Collapsible wrapper ── */
-    .ep-list-wrap {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height .5s cubic-bezier(.4,0,.2,1);
-    }
-    .ep-list-wrap.open { max-height: 4000px; }
-
-    .ep-list { padding: 8px 22px 0; }
-
-    .ep-row {
-      display: grid;
-      grid-template-columns: 128px 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 14px;
-      row-gap: 10px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border2);
-    }
-    .ep-row:last-child { border-bottom: none; }
-
-    /* Replace thumb: add style="background-image:url('ep1.jpg');background-size:cover;" and remove inner elements */
-    .ep-thumb {
-      grid-row: 1 / 3;
-      width: 128px; aspect-ratio: 16/9;
-      border-radius: 7px; position: relative; overflow: hidden;
-      background: var(--ec, var(--blue));
-      flex-shrink: 0;
-    }
-    .ep-thumb::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 55%);
-    }
-    .ep-thumb::after {
-      content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.15);
-    }
-    .ep-num {
-      position: absolute; bottom: 5px; left: 7px; z-index: 1;
-      font-size: .58rem; font-weight: 800; color: rgba(255,255,255,.88); letter-spacing: .08em;
-    }
-    .ep-play-sm {
-      position: absolute; top: 50%; left: 50%; z-index: 1;
-      transform: translate(-50%, -50%);
-      width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(0,0,0,.38); border: 1.5px solid rgba(255,255,255,.65);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: .55rem;
-    }
-    .ep-play-sm i { margin-left: 2px; }
-
-    .ep-row.crisis  .ep-thumb { box-shadow: 0 0 0 2px var(--coral); }
-    .ep-row.climax  .ep-thumb { box-shadow: 0 0 0 2.5px var(--coral), 0 0 10px rgba(245,110,74,.35); }
-
-    .ep-info {
-      grid-column: 2; grid-row: 1;
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
-    }
-    .ep-label {
-      font-size: .63rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--coral); margin-bottom: 3px;
-    }
-    .ep-row.mood-blue   .ep-label { color: var(--blue-d); }
-    .ep-row.mood-teal   .ep-label { color: #4A9EA8; }
-    .ep-row.mood-yellow .ep-label { color: #B89000; }
-    .ep-row.mood-salmon .ep-label { color: #C4705A; }
-
-    .ep-title {
-      font-family: 'Noto Serif TC', serif;
-      font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.45;
-    }
-    .ep-arrow { color: var(--text3); font-size: .75rem; padding-top: 2px; flex-shrink: 0; }
-
-    .ep-desc {
-      grid-column: 2 / 3; grid-row: 2;
-      font-size: .78rem; color: var(--text2); line-height: 1.65;
+      font-size: .88rem; color: var(--text2);
+      line-height: 1.75; margin-bottom: 18px; max-width: 460px;
     }
 
 
@@ -322,7 +180,7 @@
     }
     .sec-label {
       font-size: .67rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
-      color: var(--coral); display: block; margin-bottom: 3px;
+      color: var(--coral-d); display: block; margin-bottom: 3px;
     }
     .sec-title {
       font-family: 'Noto Serif TC', serif;
@@ -365,14 +223,14 @@
     .vid-ep-badge {
       position: absolute; top: 8px; left: 8px; z-index: 2;
       font-size: .6rem; font-weight: 800; letter-spacing: .1em;
-      color: var(--coral); background: rgba(255,255,255,.82);
-      padding: 2px 7px; border-radius: 3px; border: 1px solid rgba(245,110,74,.3);
+      color: var(--coral-d); background: rgba(255,255,255,.82);
+      padding: 2px 7px; border-radius: 3px; border: 1px solid rgba(244,160,130,.4);
     }
     .vid-play {
       position: absolute; z-index: 2; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 40px; height: 40px; border-radius: 50%;
-      background: rgba(255,255,255,.75); border: 1.5px solid rgba(245,110,74,.5);
+      background: rgba(255,255,255,.75); border: 1.5px solid rgba(244,160,130,.6);
       display: flex; align-items: center; justify-content: center;
       color: var(--coral); font-size: .85rem;
     }
@@ -433,69 +291,6 @@
     }
 
     /* ════════════════════════════
-       4. VOTING  (light + blue)
-    ════════════════════════════ */
-    .vote-section { background: var(--bg2); padding: 40px 0 48px; }
-    .vote-wrap { padding: 0 22px; }
-    .vote-section .sec-label { color: var(--blue-d); }
-    .vote-section .sec-title { color: var(--text); margin-bottom: 6px; }
-
-    .vote-subtitle { font-size: .88rem; color: var(--text2); margin-bottom: 18px; }
-
-    .vote-card {
-      background: var(--bg); border-radius: 12px; padding: 22px 18px;
-      border: 1px solid var(--blue-bdr);
-    }
-    .vote-hint {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .72rem; font-weight: 600; color: var(--blue-d);
-      background: var(--blue-lt); border: 1px solid var(--blue-bdr);
-      padding: 3px 11px; border-radius: 4px; margin-bottom: 14px;
-    }
-    .vote-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-    .vote-opt {
-      display: flex; align-items: center; gap: 11px;
-      padding: 12px 15px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px; background: var(--bg2);
-      color: var(--text2);
-      font-family: 'Noto Sans TC', sans-serif; font-size: .88rem; text-align: left; width: 100%; cursor: pointer;
-      transition: border-color .15s, background .15s, color .15s, opacity .15s;
-    }
-    .vote-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-lt); color: var(--text); }
-    .vote-opt.sel { border-color: var(--blue); background: var(--blue-lt); color: var(--text); font-weight: 600; }
-    .vote-opt:disabled { opacity: .28; cursor: not-allowed; }
-    .vote-opt.sel:disabled { opacity: 1; cursor: default; }
-    .v-em { font-size: 1.15rem; flex-shrink: 0; }
-
-    .submit-btn {
-      display: flex; align-items: center; justify-content: center; gap: 9px;
-      width: 100%; padding: 14px;
-      background: var(--blue); color: #fff;
-      font-family: 'Noto Sans TC', sans-serif; font-size: .92rem; font-weight: 800;
-      border-radius: 6px; border: none; cursor: pointer; letter-spacing: .03em;
-      transition: background .18s, transform .15s; box-shadow: 0 4px 16px rgba(125,171,208,.3);
-    }
-    .submit-btn:hover { background: var(--blue-d); transform: translateY(-1px); }
-    .submit-btn:disabled { opacity: .35; cursor: not-allowed; transform: none; box-shadow: none; }
-
-    .vote-results { display: none; }
-    .vote-results.show { display: block; }
-    .thank-you {
-      font-family: 'Noto Serif TC', serif; font-size: .95rem;
-      color: var(--text); background: var(--blue-lt);
-      border: 1px solid var(--blue-bdr); border-radius: 8px;
-      padding: 15px; text-align: center; margin-bottom: 20px;
-    }
-    .res-item { margin-bottom: 14px; }
-    .res-item:last-child { margin-bottom: 0; }
-    .res-label { display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: var(--text2); margin-bottom: 6px; }
-    .res-pct { font-weight: 700; color: var(--blue-d); min-width: 32px; text-align: right; }
-    .res-bar-bg { height: 7px; background: rgba(125,171,208,.15); border-radius: 999px; overflow: hidden; }
-    .res-bar { height: 100%; background: linear-gradient(90deg, var(--blue) 0%, var(--teal) 100%); border-radius: 999px; width: 0%; transition: width .9s cubic-bezier(.4,0,.2,1); }
-
-
-    /* ════════════════════════════
        5. FIND ME  (light)
     ════════════════════════════ */
     .find-section { background: var(--bg); padding: 44px 0; text-align: center; }
@@ -517,27 +312,38 @@
        6. FOOTER
     ════════════════════════════ */
     footer {
-      background: #111; color: #fff;
+      background: var(--blue); color: var(--blue-d);
       padding: 52px 0; text-align: center;
     }
     .foot-inner { max-width: 640px; margin: 0 auto; padding: 0 22px; }
-    .foot-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
-    .foot-sub { font-size: .86rem; color: rgba(255,255,255,.5); line-height: 1.7; margin-bottom: 24px; }
+    .foot-title { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--blue-d); }
+    .foot-sub { font-size: .86rem; color: rgba(57,68,126,.7); line-height: 1.7; margin-bottom: 26px; }
+    .foot-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
     .email-btn {
       display: inline-flex; align-items: center; gap: 9px;
-      padding: 12px 28px; border: 1.5px solid rgba(245,110,74,.45); color: var(--coral);
-      font-family: 'Noto Sans TC', sans-serif; font-size: .9rem; font-weight: 600;
+      padding: 12px 24px; border: none; color: var(--coral-d);
+      background: var(--coral);
+      font-family: 'Noto Sans TC', sans-serif; font-size: .88rem; font-weight: 700;
       border-radius: 6px; text-decoration: none;
-      transition: background .18s, color .18s, border-color .18s;
+      transition: background .18s, transform .15s;
+      box-shadow: 0 4px 16px rgba(244,160,130,.4);
     }
-    .email-btn:hover { background: var(--coral); color: #fff; border-color: var(--coral); }
-
-    .res-count { color: var(--text3); font-size: .72rem; font-weight: 400; margin-left: 4px; }
+    .email-btn:hover { background: #F2946F; transform: translateY(-1px); }
+    .foot-btn-outline {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 24px; border: 1.5px solid rgba(57,68,126,.35); color: var(--blue-d);
+      background: transparent;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .88rem; font-weight: 600;
+      border-radius: 6px; text-decoration: none; cursor: pointer;
+      transition: background .18s, border-color .18s;
+    }
+    .foot-btn-outline:hover { background: rgba(255,255,255,.4); border-color: var(--blue-d); }
 
     /* ════════════════════════════
        2. GROUP BUY  (light)
     ════════════════════════════ */
     .gb-section { background: var(--bg2); padding: 0 0 44px; }
+    .goods-section { background: var(--bg); padding: 0 0 44px; }
 
     /* ── Banner Carousel ── */
     .gb-banner-wrap { padding: 0 22px 24px; }
@@ -602,129 +408,10 @@
     }
     .gb-schedule-hdr i { color: var(--coral); font-size: .9rem; }
 
-    /* ── Timeline: grid [badge 56px | dot-track 24px | content 1fr] ── */
-    .gb-timeline {
-      position: relative;
-      display: flex; flex-direction: column;
-    }
-    /* Continuous vertical line: centered in dot-track column (56+12=68px from left) */
-    .gb-timeline::before {
-      content: ''; position: absolute;
-      left: 67px; top: 18px; bottom: 18px; width: 2px;
-      background: linear-gradient(to bottom, rgba(16,185,129,.7) 0%, rgba(0,0,0,.07) 100%);
-      border-radius: 2px;
-    }
-
-    .gb-row {
-      display: grid;
-      grid-template-columns: 56px 24px 1fr;
-      padding-bottom: 22px;
-      position: relative;
-    }
-    .gb-row:last-child { padding-bottom: 2px; }
-
-    /* Col 1: Badge */
-    .gb-badge-col {
-      display: flex; align-items: flex-start; justify-content: flex-end;
-      padding-right: 10px; padding-top: 2px;
-    }
-    .gb-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: .58rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
-      padding: 3px 8px; border-radius: 99px; white-space: nowrap;
-    }
-    .gb-badge.open {
-      background: #10B981; color: #fff;
-      box-shadow: 0 2px 8px rgba(16,185,129,.4);
-    }
-    .gb-badge.open::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%; background: #fff;
-      animation: blink 1.2s ease-in-out infinite; flex-shrink: 0;
-    }
-    .gb-badge.soon { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
-    .gb-badge.ended { background: rgba(0,0,0,.04); color: rgba(0,0,0,.25); font-size: .55rem; }
-
-    /* Col 2: Dot (centered over ::before line at 67px) */
-    .gb-dot-col {
-      display: flex; justify-content: center;
-      padding-top: 4px; position: relative; z-index: 1;
-    }
-    .gb-dot {
-      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
-      background: var(--bg3); border: 2px solid rgba(0,0,0,.13);
-      transition: background .2s, border-color .2s, box-shadow .2s;
-    }
-    .gb-row.is-open .gb-dot {
-      background: #10B981; border-color: #10B981;
-      box-shadow: 0 0 0 4px rgba(16,185,129,.2);
-    }
-    .gb-row.is-ended .gb-dot { background: rgba(0,0,0,.08); border-color: rgba(0,0,0,.08); }
-
-    /* Col 3: Content */
-    .gb-info { min-width: 0; padding-top: 1px; }
-    .gb-title-row {
-      display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 8px;
-      margin-bottom: 4px;
-    }
-    .gb-name {
-      font-family: 'Noto Serif TC', serif;
-      font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.4;
-      flex: 1; min-width: 0;
-    }
-    .gb-row.is-ended .gb-name { color: var(--text3); }
-    .gb-dates {
-      font-size: .66rem; color: var(--text3); font-weight: 500;
-      margin-bottom: 6px; letter-spacing: .01em;
-    }
-    .gb-urgent {
-      font-size: .72rem; font-weight: 700; color: var(--coral);
-      margin-bottom: 7px; letter-spacing: .01em;
-    }
-    .gb-marketing {
-      font-size: .74rem; color: var(--text2); line-height: 1.55;
-      margin-bottom: 8px;
-    }
-
-    /* Discount code chip */
-    .gb-code-chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 12px; border-radius: 6px;
-      background: var(--yellow-lt); color: #B89000;
-      font-size: .74rem; font-weight: 800; letter-spacing: .05em;
-      border: 1.5px dashed rgba(184,144,0,.4);
-      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
-      transition: background .15s;
-      margin-bottom: 8px;
-    }
-    .gb-code-chip:hover { background: rgba(255,223,111,.28); }
-
-    /* Action buttons (right-aligned in title row) */
-    .gb-go-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 13px; border-radius: 6px; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--coral) 0%, #E55E3A 100%);
-      color: #fff; font-size: .72rem; font-weight: 800; text-decoration: none;
-      box-shadow: 0 3px 10px rgba(245,110,74,.38);
-      transition: transform .15s, box-shadow .15s;
-      white-space: nowrap;
-      animation: pulse-go 2.5s ease-in-out infinite;
-    }
-    .gb-go-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(245,110,74,.5); animation: none; }
     @keyframes pulse-go {
-      0%,100% { box-shadow: 0 3px 10px rgba(245,110,74,.38); }
-      50%      { box-shadow: 0 3px 18px rgba(245,110,74,.6); }
+      0%,100% { box-shadow: 0 3px 10px rgba(244,160,130,.4); }
+      50%      { box-shadow: 0 3px 18px rgba(244,160,130,.65); }
     }
-    .gb-remind-btn {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 6px 11px; border-radius: 6px; flex-shrink: 0;
-      background: var(--bg); color: var(--text2);
-      font-size: .72rem; font-weight: 700; text-decoration: none;
-      border: 1.5px solid var(--border);
-      transition: background .15s, border-color .15s;
-      white-space: nowrap;
-    }
-    .gb-remind-btn:hover { background: var(--yellow-lt); border-color: rgba(184,144,0,.3); color: #B89000; }
 
     /* Copy toast */
     .gb-toast {
@@ -736,21 +423,146 @@
     }
     .gb-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ── "看看其他" collapse ── */
-    .gb-more-wrap { padding-top: 6px; }
-    .gb-more-btn {
-      display: flex; align-items: center; gap: 7px;
-      width: 100%; padding: 10px 0;
-      background: none; border: none; cursor: pointer;
-      font-family: 'Noto Sans TC', sans-serif;
-      font-size: .78rem; font-weight: 700; color: var(--text2);
-      transition: color .15s;
+    /* ── Group Buy Tabs ── */
+    .gb-tabbar { display: flex; gap: 8px; padding: 0 22px 22px; }
+    .gb-tab {
+      flex: 1; text-align: center; padding: 11px; border-radius: 8px;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .84rem; font-weight: 700;
+      cursor: pointer; border: 1.5px solid var(--border);
+      background: var(--bg); color: var(--text2);
+      transition: background .18s, color .18s, border-color .18s;
     }
-    .gb-more-btn:hover { color: var(--text); }
-    .gb-more-btn i { font-size: .7rem; transition: transform .3s; }
-    .gb-more-btn.open i { transform: rotate(180deg); }
-    .gb-hidden-rows { overflow: hidden; max-height: 0; transition: max-height .45s cubic-bezier(.4,0,.2,1); }
-    .gb-hidden-rows.open { max-height: 2000px; }
+    .gb-tab.active { background: var(--text); color: #fff; border-color: var(--text); }
+    .gb-panel { display: none; }
+    .gb-panel.active { display: block; }
+
+    /* ── Subheads ── */
+    .gb-subhead {
+      display: flex; align-items: center; gap: 7px;
+      padding: 0 22px; margin: 30px 0 14px;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1rem; font-weight: 700; color: var(--text);
+    }
+    .gb-subhead-first { margin-top: 0; }
+    .gb-empty-hint { padding: 20px 22px; color: var(--text3); font-size: .85rem; text-align: center; }
+
+    /* ── 團購卡片：雙欄格線（限定團／長久團共用） ── */
+    .gb-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 22px; }
+    .gb-card {
+      background: var(--bg); border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.04);
+      display: flex; flex-direction: column;
+    }
+    .gb-card-img { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; }
+    .gb-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gb-card-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gb-card-img-placeholder i { font-size: 1.7rem; color: rgba(0,0,0,.18); }
+    .gb-card-badge {
+      position: absolute; top: 8px; left: 8px;
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .6rem; font-weight: 800; letter-spacing: .02em;
+      padding: 3px 9px; border-radius: 99px;
+      background: rgba(255,255,255,.92); color: var(--text2);
+      box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    }
+    .gb-card-body { padding: 11px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .gb-card-title {
+      font-size: .82rem; font-weight: 700; color: var(--text);
+      line-height: 1.4; min-height: 2.3em;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .gb-card-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .66rem; color: var(--text2); background: var(--bg2);
+      padding: 3px 9px; border-radius: 99px; align-self: flex-start;
+    }
+    .gb-card-code {
+      display: inline-flex; align-items: center; gap: 5px;
+      align-self: flex-start;
+      padding: 3px 10px; border-radius: 6px;
+      background: var(--green-lt); color: var(--green-d);
+      font-size: .68rem; font-weight: 800; letter-spacing: .03em;
+      border: 1.5px dashed rgba(79,84,32,.35);
+      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .gb-card-intro-btn {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 7px; border-radius: 6px; border: 1.5px solid var(--border);
+      background: var(--bg2); color: var(--text2);
+      font-size: .68rem; font-weight: 700; text-decoration: none;
+    }
+    .gb-card-btn {
+      margin-top: auto;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px; border-radius: 8px;
+      font-size: .74rem; font-weight: 800; text-decoration: none;
+      color: var(--coral-d); background: var(--coral);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .gb-card-btn.urgent {
+      background: linear-gradient(135deg, var(--coral) 0%, #EE8C63 100%);
+      box-shadow: 0 3px 10px rgba(244,160,130,.45);
+      animation: pulse-go 2.5s ease-in-out infinite;
+    }
+    .gb-card-btn:hover { transform: translateY(-1px); }
+    .gb-card-btn.remind {
+      background: var(--blue); color: var(--blue-d); box-shadow: none; animation: none;
+    }
+
+    /* ── Calendar Tab ── */
+    .gb-cal-wrap { padding: 0 22px; }
+    .gb-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .gb-cal-nav-btn {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      border: 1.5px solid var(--border); background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text2); transition: background .15s;
+    }
+    .gb-cal-nav-btn:hover { background: var(--bg2); }
+    .gb-cal-title { font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 1.02rem; color: var(--text); }
+    .gb-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; touch-action: pan-y; }
+    .gb-cal-dow { text-align: center; font-size: .62rem; color: var(--text3); font-weight: 700; padding-bottom: 8px; }
+    .gb-cal-day {
+      aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border-radius: 8px; font-size: .78rem; color: var(--text); position: relative; gap: 3px;
+    }
+    .gb-cal-day.empty { visibility: hidden; }
+    .gb-cal-day.today { background: #FBDCCF; font-weight: 800; }
+    .gb-cal-day-bars { display: flex; gap: 2px; width: 78%; height: 3px; }
+    .gb-cal-bar { flex: 1; height: 100%; border-radius: 2px; }
+    .gb-cal-bar.open { background: var(--coral); }
+    .gb-cal-bar.soon { background: var(--blue-d); opacity: .55; }
+    .gb-cal-legend {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+      gap: 10px 18px; padding: 16px 0 4px; font-size: .72rem; color: var(--text2);
+    }
+    .gb-cal-legend-left { display: flex; gap: 16px; }
+    .gb-cal-legend-item { display: flex; align-items: center; gap: 6px; }
+    .gb-cal-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gb-cal-swipe-hint { color: var(--text3); font-size: .68rem; }
+
+    /* ── Calendar month schedule list (flat row style) ── */
+    .gb-cal-row { display: flex; align-items: flex-start; gap: 10px; padding: 13px 0; border-bottom: 1px solid var(--border2); }
+    .gb-cal-row:last-child { border-bottom: none; }
+    .gb-cal-row-dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .gb-cal-row-dot.open { background: var(--coral); }
+    .gb-cal-row-dot.soon { background: var(--blue-d); }
+    .gb-cal-row-dot.ended { background: var(--text3); }
+    .gb-cal-row-body { flex: 1; min-width: 0; }
+    .gb-cal-row-title { font-family: 'Noto Serif TC', serif; font-size: .87rem; font-weight: 700; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+    .gb-cal-row-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .gb-cal-row-date { font-size: .72rem; color: var(--text3); }
+    .gb-cal-row-date b { color: var(--coral-d); font-weight: 700; }
+    .gb-cal-row-btn {
+      flex-shrink: 0; padding: 6px 14px; border-radius: 99px;
+      font-size: .72rem; font-weight: 700; text-decoration: none; white-space: nowrap;
+    }
+    .gb-cal-row-btn.open { background: var(--coral); color: var(--coral-d); }
+    .gb-cal-row-btn.soon { background: var(--blue); color: var(--blue-d); }
   </style>
 </head>
 <body>
@@ -775,13 +587,16 @@
   </div>
 </div>
 
-<!-- ════ 1. HERO ════ -->
-<section class="hero">
-  <div class="hero-poster"></div>
+<!-- ════ 1. HERO — 短版影片 banner ════ -->
+<section class="hero-banner-section">
+  <div class="hero-video-wrap reveal">
+    <video class="hero-video" autoplay muted loop playsinline poster="img/hero-banner-poster.jpg">
+      <source src="video/hero-banner.mp4" type="video/mp4">
+    </video>
+  </div>
 
-  <div class="hero-gradient"></div>
-
-  <div class="hero-content reveal" id="h-info">
+  <div class="hero-info-card reveal" id="h-info">
+    <div class="hero-avatar"></div>
     <div class="hero-badge"><div class="dot"></div>熱播中 &nbsp;Streaming Now</div>
     <h1 class="hero-title">
       Nina
@@ -789,24 +604,14 @@
     </h1>
     <div class="hero-genres">
       <span class="genre-chip c-blue">真實故事</span>
-      <span class="genre-chip c-yellow">自傳喜劇</span>
-      <span class="genre-chip c-coral">高潮迭起</span>
+      <span class="genre-chip c-coral">自傳喜劇</span>
+      <span class="genre-chip c-green">高潮迭起</span>
     </div>
     <p class="hero-desc">
       從小到大，老天給我的考題都是魔王級。<br>
       但沒關係，我這個人就是不服輸，<br>
       而且很會把苦日子過成幽默的段子！
     </p>
-    <div class="hero-btns">
-      <a href="https://www.instagram.com/1minaday.nina" target="_blank" rel="noopener" class="btn-primary">
-        <i class="fa-solid fa-play fa-sm"></i>去 IG 追我
-      </a>
-    </div>
-  </div>
-
-  <div class="scroll-cue">
-    <span>往下滑</span>
-    <i class="fa-solid fa-chevron-down fa-xs"></i>
   </div>
 </section>
 
@@ -814,28 +619,61 @@
 <!-- ════ 2. GROUP BUY ════ -->
 <section class="gb-section" id="gbSection" style="display:none;">
   <div class="reveal" style="padding: 36px 22px 20px;">
-    <span class="sec-label" style="color:#059669;display:block;margin-bottom:3px;">限時團購</span>
+    <span class="sec-label" style="color:var(--coral-d);display:block;margin-bottom:3px;">限時團購</span>
     <h2 class="sec-title">雙胞胎媽咪好物推薦！</h2>
   </div>
 
-  <!-- Banner Carousel -->
-  <div class="gb-banner-wrap reveal" id="gbBannerWrap" style="display:none;">
-    <div class="gb-carousel-track" id="gbCarouselTrack"></div>
-    <div class="gb-carousel-dots" id="gbCarouselDots"></div>
+  <div class="gb-tabbar reveal">
+    <button class="gb-tab active" id="gbFrontTab-products" onclick="switchGbFrontTab('products')">商品</button>
+    <button class="gb-tab" id="gbFrontTab-calendar" onclick="switchGbFrontTab('calendar')">檔期日曆</button>
   </div>
 
-  <!-- Schedule Timeline -->
-  <div class="gb-schedule-wrap reveal" id="gbScheduleWrap" style="display:none;">
-    <div class="gb-schedule-hdr">
-      <i class="fa-regular fa-calendar-days"></i> SCHEDULE
+  <!-- Tab 1: 商品 -->
+  <div class="gb-panel active" id="gbFrontPanel-products">
+    <!-- Banner Carousel -->
+    <div class="gb-banner-wrap reveal" id="gbBannerWrap" style="display:none;">
+      <div class="gb-carousel-track" id="gbCarouselTrack"></div>
+      <div class="gb-carousel-dots" id="gbCarouselDots"></div>
     </div>
-    <div class="gb-timeline" id="gbScheduleList"></div>
-    <div class="gb-more-wrap" id="gbMoreWrap" style="display:none;">
-      <button class="gb-more-btn" id="gbMoreBtn" onclick="toggleGbMore()">
-        <i class="fa-solid fa-chevron-down"></i><span>看看其他活動</span>
-      </button>
-      <div class="gb-hidden-rows" id="gbHiddenRows"></div>
+
+    <div id="gbLimitedSection" style="display:none;">
+      <h3 class="gb-subhead gb-subhead-first">🔥 期間限定團</h3>
+      <div class="gb-card-grid" id="gbLimitedList"></div>
     </div>
+
+    <div id="gbOngoingSection" style="display:none;">
+      <h3 class="gb-subhead">♾️ 長久開團中</h3>
+      <div class="gb-card-grid" id="gbOngoingGrid"></div>
+    </div>
+
+    <p class="gb-empty-hint" id="gbEmptyHint" style="display:none;">目前沒有進行中的團購，敬請期待！</p>
+  </div>
+
+  <!-- Tab 2: 檔期日曆 -->
+  <div class="gb-panel" id="gbFrontPanel-calendar">
+    <div class="gb-cal-wrap reveal">
+      <div class="gb-cal-header">
+        <button class="gb-cal-nav-btn" onclick="gbCalNav(-1)" aria-label="上個月"><i class="fa-solid fa-chevron-left"></i></button>
+        <span class="gb-cal-title" id="gbCalTitle"></span>
+        <button class="gb-cal-nav-btn" onclick="gbCalNav(1)" aria-label="下個月"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="gb-cal-grid" id="gbCalGrid"></div>
+      <div class="gb-cal-legend">
+        <div class="gb-cal-legend-left">
+          <span class="gb-cal-legend-item"><span class="gb-cal-legend-dot" style="background:var(--coral)"></span>開團中</span>
+          <span class="gb-cal-legend-item"><span class="gb-cal-legend-dot" style="background:var(--blue-d)"></span>即將開團</span>
+        </div>
+        <span class="gb-cal-swipe-hint">← 左右滑動切換月份 →</span>
+      </div>
+    </div>
+
+    <div class="gb-schedule-wrap reveal" id="gbScheduleWrap" style="margin-top:26px;display:none;">
+      <div class="gb-schedule-hdr">
+        <i class="fa-regular fa-calendar-days"></i> <span id="gbCalListLabel">本月檔期</span>
+      </div>
+      <div id="gbScheduleList"></div>
+    </div>
+    <p class="gb-empty-hint" id="gbCalEmptyHint" style="display:none;">這個月沒有團購檔期</p>
   </div>
 </section>
 
@@ -843,7 +681,18 @@
 <div class="gb-toast" id="gbToast">已複製！</div>
 
 
-<!-- ════ 3. VIDEOS ════ -->
+<!-- ════ 3. 好物推薦 ════ -->
+<section class="goods-section" id="goodsSection" style="display:none;">
+  <div class="reveal" style="padding: 36px 22px 18px;">
+    <span class="sec-label" style="color:var(--green-d);display:block;margin-bottom:3px;">私心愛用</span>
+    <h2 class="sec-title">好物推薦</h2>
+  </div>
+  <div class="gb-card-grid reveal" id="goodsGrid"></div>
+</section>
+
+
+
+<!-- ════ 4. VIDEOS ════ -->
 <section class="vid-section">
 
   <!-- Row 1: 那些我拍下來的時刻 -->
@@ -882,28 +731,6 @@
 </section>
 
 
-<!-- ════ 4. VOTING ════ -->
-<section class="vote-section">
-  <div class="vote-wrap reveal">
-    <span class="sec-label">互動特輯</span>
-    <h2 class="sec-title">你決定下一集</h2>
-    <p class="vote-subtitle">你的票，決定我下一支影片 👇</p>
-
-    <div class="vote-card">
-      <div id="votePanel">
-        <p class="vote-hint"><i class="fa-regular fa-hand-pointer"></i>&nbsp; 最多選 2 個</p>
-        <div class="vote-opts" id="voteOptions"></div>
-        <button class="submit-btn" id="submitVote" disabled>送出投票</button>
-      </div>
-      <div class="vote-results" id="voteResults">
-        <div class="thank-you">謝謝你！我會優先做你投的主題 💛</div>
-        <div id="resultBars"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 <!-- ════ 5. FIND ME ════ -->
 <section class="find-section">
   <div class="reveal" style="padding:0 22px;">
@@ -921,9 +748,17 @@
   <div class="foot-inner">
     <p class="foot-title">廠商合作洽詢</p>
     <p class="foot-sub">如果你想與我合作，歡迎來信聊聊 🤝</p>
-    <a href="mailto:nina.inren@gmail.com" class="email-btn">
-      <i class="fa-regular fa-envelope"></i>寫信給我
-    </a>
+    <div class="foot-btns">
+      <a href="mailto:nina.inren@gmail.com" class="email-btn">
+        <i class="fa-regular fa-envelope"></i>寫信給我
+      </a>
+      <button class="foot-btn-outline" onclick="copyFooterEmail(this)">
+        <i class="fa-regular fa-copy"></i>複製 email
+      </button>
+      <a href="media-kit.html" class="foot-btn-outline">
+        <i class="fa-regular fa-file-lines"></i>合作資料
+      </a>
+    </div>
   </div>
 </footer>
 
@@ -990,84 +825,6 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeIg(); });
 
 
-  /* ── VOTING ── */
-  const KEY   = 'nina_1minaday_voted_v2';
-  let MAX     = 2;
-  let LABELS  = ['🍼 雙胞胎極早產育兒紀錄','💪 早產寶寶成長追蹤','🏠 帶娃真實日常','💡 保母／外傭踩雷心得','📝 媽媽身心恢復的過程','🎥 自媒體 & 接業配幕後'];
-  let VOTE_NS = 'nina1minaday';
-
-  const subBtn  = document.getElementById('submitVote');
-  const panel   = document.getElementById('votePanel');
-  const results = document.getElementById('voteResults');
-  const bars    = document.getElementById('resultBars');
-
-  function hasVoted() { try { return localStorage.getItem(KEY) === '1'; } catch(_) { return false; } }
-  function markVoted() { try { localStorage.setItem(KEY, '1'); } catch(_) {} }
-
-  async function fetchVoteCount(idx) {
-    try {
-      const r = await fetch(`https://api.counterapi.dev/v1/${VOTE_NS}/vote-${idx}/`);
-      if (!r.ok) return 0;
-      const j = await r.json();
-      return j.count || 0;
-    } catch { return 0; }
-  }
-
-  function renderBars(counts) {
-    const total = counts.reduce((a,b) => a+b, 0) || 1;
-    bars.innerHTML = counts.map((c, i) => {
-      const pct = Math.round((c / total) * 100);
-      return `<div class="res-item">
-        <div class="res-label">
-          <span>${LABELS[i] || ''}</span>
-          <span class="res-pct">${pct}%<span class="res-count">(${c} 票)</span></span>
-        </div>
-        <div class="res-bar-bg"><div class="res-bar" data-pct="${pct}"></div></div>
-      </div>`;
-    }).join('');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      document.querySelectorAll('.res-bar').forEach(b => b.style.width = b.dataset.pct + '%');
-    }));
-  }
-
-  async function showVoteResults() {
-    panel.style.display = 'none';
-    results.classList.add('show');
-    bars.innerHTML = '<div style="color:#9CA3AF;font-size:.85rem;padding:10px 0;text-align:center"><i class="fa-solid fa-spinner fa-spin"></i> 統計中...</div>';
-    const counts = await Promise.all(LABELS.map((_, i) => fetchVoteCount(i)));
-    renderBars(counts);
-  }
-
-  let sel = new Set();
-  function bindVoteListeners() {
-    sel = new Set();
-    const optBtns = document.querySelectorAll('.vote-opt');
-    optBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const i = +btn.dataset.idx;
-        if (sel.has(i)) { sel.delete(i); btn.classList.remove('sel'); }
-        else { if (sel.size >= MAX) return; sel.add(i); btn.classList.add('sel'); }
-        const full = sel.size >= MAX;
-        optBtns.forEach(b => { b.disabled = full && !sel.has(+b.dataset.idx); });
-        subBtn.disabled = sel.size === 0;
-      });
-    });
-    subBtn.onclick = () => {
-      // 立刻切換到結果畫面，顯示 loading
-      panel.style.display = 'none';
-      results.classList.add('show');
-      bars.innerHTML = '<div style="color:#9CA3AF;font-size:.85rem;padding:10px 0;text-align:center"><i class="fa-solid fa-spinner fa-spin"></i> 統計中...</div>';
-      // 送票 + 讀取結果（同時進行）
-      const selectedIdxs = Array.from(sel);
-      Promise.all(selectedIdxs.map(i =>
-        fetch(`https://api.counterapi.dev/v1/${VOTE_NS}/vote-${i}/up/`).catch(()=>{})
-      )).then(() => {
-        markVoted();
-        return Promise.all(LABELS.map((_, i) => fetchVoteCount(i)));
-      }).then(counts => renderBars(counts));
-    };
-  }
-
   /* ── CONTENT INIT (loads from NINA_DATA in content.js) ── */
   (function() {
     const D = window.NINA_DATA;
@@ -1115,32 +872,6 @@
       if (hg) hg.innerHTML = H.genres.map(g=>`<span class="genre-chip ${g.cls}">${g.text}</span>`).join('');
     }
 
-    // Season count
-    const pubEps = (D.episodes||[]).filter(e=>e.published);
-    const countEl = document.querySelector('.season-count');
-    if (countEl) countEl.textContent = pubEps.length + ' 個關鍵時刻';
-
-    // Render episodes
-    const epContainer = document.getElementById('epListContainer');
-    if (epContainer) {
-      epContainer.innerHTML = pubEps.map(ep => `
-        <div class="ep-row ${[ep.mood, ep.special].filter(Boolean).join(' ')}">
-          <div class="ep-thumb" style="--ec:${ep.color};background-image:url('${ep.thumb}');background-size:cover;background-position:center;">
-            <span class="ep-num">${ep.num}</span>
-            <div class="ep-play-sm"><i class="fa-solid fa-play fa-xs"></i></div>
-          </div>
-          <div class="ep-info">
-            <div>
-              <p class="ep-label">${ep.label}</p>
-              <h3 class="ep-title">${ep.title}</h3>
-            </div>
-            <i class="fa-solid fa-chevron-right ep-arrow"></i>
-          </div>
-          <p class="ep-desc">${ep.desc}</p>
-        </div>
-      `).join('');
-    }
-
     // Render video sections
     if (D.videoSections) {
       D.videoSections.forEach(sec => {
@@ -1173,40 +904,16 @@
       });
     }
 
-    // Update voting options
-    const V = D.voting || {};
-    if (V.options) {
-      MAX = V.maxSelect || 2;
-      LABELS = V.options.map(o => o.emoji + ' ' + o.text);
-      const voteOpts = document.getElementById('voteOptions');
-      if (voteOpts) {
-        voteOpts.innerHTML = V.options.map((o,i) =>
-          `<button class="vote-opt" data-idx="${i}"><span class="v-em">${o.emoji}</span><span>${o.text}</span></button>`
-        ).join('');
-      }
-      const hint = document.querySelector('.vote-hint');
-      if (hint) hint.innerHTML = '<i class="fa-regular fa-hand-pointer"></i>&nbsp; 最多選 ' + MAX + ' 個';
-      const tyEl = document.querySelector('.thank-you');
-      if (tyEl && V.thankYou) tyEl.textContent = V.thankYou;
-    }
-    if (V.question) {
-      const vq = document.querySelector('.vote-section .sec-title');
-      if (vq) vq.textContent = V.question;
-    }
-    if (V.subtitle) {
-      const vs = document.querySelector('.vote-subtitle');
-      if (vs) vs.textContent = V.subtitle;
-    }
-
     // ── GROUP BUY ──
     const GB = D.groupBuy;
     if (GB && ((GB.schedules && GB.schedules.length) || (GB.banners && GB.banners.length) || (GB.pinnedBanner && GB.pinnedBanner.enabled))) {
       document.getElementById('gbSection').style.display = '';
 
-      function gbStatus(s, e) {
+      function gbStatus(item) {
+        if (item.type === 'ongoing') return 'open';
         const now = new Date(); now.setHours(0,0,0,0);
-        const sd = new Date(s); sd.setHours(0,0,0,0);
-        const ed = new Date(e); ed.setHours(23,59,59,999);
+        const sd = new Date(item.startDate); sd.setHours(0,0,0,0);
+        const ed = new Date(item.endDate); ed.setHours(23,59,59,999);
         if (now > ed) return 'ended';
         if (now >= sd) return 'open';
         return 'soon';
@@ -1263,83 +970,241 @@
         document.getElementById('gbBannerWrap').style.display = '';
       }
 
-      // Schedule timeline — 依開團日升冪排列
-      const schedules = (GB.schedules||[]).slice().sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
-      if (schedules.length) {
-        const listEl   = document.getElementById('gbScheduleList');
-        const wrapEl   = document.getElementById('gbScheduleWrap');
-        const moreWrap = document.getElementById('gbMoreWrap');
-        const hiddenEl = document.getElementById('gbHiddenRows');
-        const LIMIT = 5;
+      // ── Tab 1: 商品（期間限定團 + 長久團，雙欄卡片） ──
+      const allSchedules = GB.schedules || [];
+      const limitedItems = allSchedules.filter(it => it.type !== 'ongoing');
+      const ongoingItems = allSchedules.filter(it => it.type === 'ongoing');
 
-        function buildRow(item) {
-          const st = gbStatus(item.startDate, item.endDate);
-          const badgeLabel = st === 'open' ? 'OPEN' : st === 'soon' ? 'SOON' : 'END';
-          const dateStr = `${fmtDate(item.startDate)}(00:00) ～ ${fmtDate(item.endDate)}(00:00)`;
+      function buildCardCode(item) {
+        if (!item.code) return '';
+        const safe = item.code.replace(/'/g, "\\'");
+        return `<button class="gb-card-code" onclick="copyGbCode(this,'${safe}')"><i class="fa-solid fa-tag fa-xs"></i>${item.code}</button>`;
+      }
+      function buildCardImg(it, fallbackIcon) {
+        return it.image
+          ? `<img src="${it.image}" alt="${it.title}" loading="lazy">`
+          : `<div class="gb-card-img-placeholder"><i class="fa-solid ${fallbackIcon}"></i></div>`;
+      }
 
-          // Urgency: within 3 days of end
-          const now = new Date(); now.setHours(0,0,0,0);
-          const ed = new Date(item.endDate); ed.setHours(0,0,0,0);
+      const activeLimited = limitedItems.filter(it => gbStatus(it) !== 'ended');
+      if (activeLimited.length) {
+        // 開團中優先，剩餘天數少的排前面；即將開團依開團日排序
+        const now = new Date(); now.setHours(0,0,0,0);
+        const ranked = activeLimited.map(it => {
+          const st = gbStatus(it);
+          const ed = new Date(it.endDate); ed.setHours(0,0,0,0);
+          const sd = new Date(it.startDate); sd.setHours(0,0,0,0);
           const daysLeft = Math.round((ed - now) / 86400000);
-          const urgentHtml = (st === 'open' && daysLeft <= 3 && daysLeft >= 0)
-            ? `<p class="gb-urgent">⚡ ${daysLeft === 0 ? '今天結團！' : `還剩 ${daysLeft} 天，`}即將結團，趕快把握！</p>` : '';
+          const daysUntilStart = Math.round((sd - now) / 86400000);
+          const sortKey = st === 'open' ? daysLeft : daysUntilStart + 1e13;
+          return { it, st, daysLeft, daysUntilStart, sortKey };
+        }).sort((a,b) => a.sortKey - b.sortKey);
 
-          // Marketing / discount — OPEN 才顯示
-          let extraHtml = '';
+        document.getElementById('gbLimitedList').innerHTML = ranked.map(({it, st, daysLeft, daysUntilStart}) => {
+          const imgHtml = buildCardImg(it, 'fa-bag-shopping');
+          const codeHtml = st === 'open' ? buildCardCode(it) : '';
+          const introHtml = it.introLink
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
+
+          let chipHtml, btnHtml;
           if (st === 'open') {
-            if (item.discountCode) {
-              const safe = item.discountCode.replace(/'/g, "\\'");
-              extraHtml = `<button class="gb-code-chip" onclick="copyGbCode(this,'${safe}')"><i class="fa-solid fa-tag fa-xs"></i>${item.discountCode}<i class="fa-regular fa-copy fa-xs"></i></button>`;
-            } else if (item.marketingText) {
-              extraHtml = `<p class="gb-marketing">${item.marketingText}</p>`;
-            }
+            const urgent = daysLeft <= 3 && daysLeft >= 0;
+            chipHtml = `<span class="gb-card-chip"><i class="fa-regular fa-clock"></i>${fmtDate(it.endDate)} 截止</span>`;
+            const label = urgent
+              ? (daysLeft === 0 ? '今天結團！前往購買' : `最後${daysLeft}天！前往購買`)
+              : '前往購買';
+            btnHtml = it.link
+              ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn${urgent?' urgent':''}">${label}<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+          } else {
+            chipHtml = `<span class="gb-card-chip"><i class="fa-regular fa-clock"></i>${daysUntilStart}天後開團</span>`;
+            btnHtml = `<a href="${gcalUrl(it)}" target="_blank" rel="noopener" class="gb-card-btn remind">🔔 提醒我</a>`;
           }
 
-          // Action button — right side of title row
-          let actionBtn = '';
-          if (st === 'open' && item.link) {
-            actionBtn = `<a href="${item.link}" target="_blank" rel="noopener" class="gb-go-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>`;
-          } else if (st === 'soon') {
-            actionBtn = `<a href="${gcalUrl(item)}" target="_blank" rel="noopener" class="gb-remind-btn">🔔 提醒我</a>`;
-          }
-
-          return `<div class="gb-row is-${st}">
-            <div class="gb-badge-col"><span class="gb-badge ${st}">${badgeLabel}</span></div>
-            <div class="gb-dot-col"><div class="gb-dot"></div></div>
-            <div class="gb-info">
-              <div class="gb-title-row">
-                <p class="gb-name">${item.title}</p>
-                ${actionBtn}
-              </div>
-              <p class="gb-dates">${dateStr}</p>
-              ${urgentHtml}${extraHtml}
+          return `<div class="gb-card">
+            <div class="gb-card-img">${imgHtml}</div>
+            <div class="gb-card-body">
+              <p class="gb-card-title">${it.title}</p>
+              ${chipHtml}
+              ${codeHtml}
+              ${introHtml}
+              ${btnHtml}
             </div>
           </div>`;
+        }).join('');
+        document.getElementById('gbLimitedSection').style.display = '';
+      }
+
+      if (ongoingItems.length) {
+        document.getElementById('gbOngoingGrid').innerHTML = ongoingItems.map(it => {
+          const imgHtml = buildCardImg(it, 'fa-infinity');
+          const codeHtml = buildCardCode(it);
+          const introHtml = it.introLink
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
+          const btnHtml = it.link
+            ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+          return `<div class="gb-card">
+            <div class="gb-card-img">
+              ${imgHtml}
+              <span class="gb-card-badge">♾️ 常駐優惠</span>
+            </div>
+            <div class="gb-card-body">
+              <p class="gb-card-title">${it.title}</p>
+              ${codeHtml}
+              ${introHtml}
+              ${btnHtml}
+            </div>
+          </div>`;
+        }).join('');
+        document.getElementById('gbOngoingSection').style.display = '';
+      }
+
+      if (!activeLimited.length && !ongoingItems.length) {
+        document.getElementById('gbEmptyHint').style.display = '';
+      }
+
+      // ── Tab 2: 檔期日曆 ──
+      function buildScheduleRow(item) {
+        const st = gbStatus(item);
+        const dateStr = `${fmtDate(item.startDate)} – ${fmtDate(item.endDate)}`;
+        const now = new Date(); now.setHours(0,0,0,0);
+        const ed = new Date(item.endDate); ed.setHours(0,0,0,0);
+        const daysLeft = Math.round((ed - now) / 86400000);
+        const daysLeftHtml = (st === 'open' && daysLeft >= 0)
+          ? ` · <b>${daysLeft === 0 ? '今天結團' : `剩 ${daysLeft} 天`}</b>` : '';
+
+        let actionBtn = '';
+        if (st === 'open' && item.link) {
+          actionBtn = `<a href="${item.link}" target="_blank" rel="noopener" class="gb-cal-row-btn open">前往購買</a>`;
+        } else if (st === 'soon') {
+          actionBtn = `<a href="${gcalUrl(item)}" target="_blank" rel="noopener" class="gb-cal-row-btn soon">🔔 提醒我</a>`;
         }
 
-        const active  = schedules.filter(it => gbStatus(it.startDate, it.endDate) !== 'ended');
-        const visible = active.slice(0, LIMIT);
-        const hidden  = active.slice(LIMIT);
-        listEl.innerHTML = visible.map(buildRow).join('');
-        if (hidden.length) {
-          hiddenEl.innerHTML = hidden.map(buildRow).join('');
-          moreWrap.style.display = '';
-        }
-        wrapEl.style.display = '';
+        return `<div class="gb-cal-row">
+          <span class="gb-cal-row-dot ${st}"></span>
+          <div class="gb-cal-row-body">
+            <p class="gb-cal-row-title">${item.title}</p>
+            <div class="gb-cal-row-meta">
+              <span class="gb-cal-row-date">${dateStr}${daysLeftHtml}</span>
+              ${actionBtn}
+            </div>
+          </div>
+        </div>`;
       }
+
+      const today = new Date();
+      let gbCalYear = today.getFullYear();
+      let gbCalMonth = today.getMonth(); // 0-indexed
+
+      function renderGbCalendar() {
+        const titleEl = document.getElementById('gbCalTitle');
+        const gridEl  = document.getElementById('gbCalGrid');
+        if (!titleEl || !gridEl) return;
+        titleEl.textContent = `${gbCalYear} 年 ${gbCalMonth + 1} 月`;
+
+        const firstDow = new Date(gbCalYear, gbCalMonth, 1).getDay();
+        const daysInMonth = new Date(gbCalYear, gbCalMonth + 1, 0).getDate();
+        const dowLabels = ['日','一','二','三','四','五','六'];
+
+        let cellsHtml = dowLabels.map(l => `<div class="gb-cal-dow">${l}</div>`).join('');
+        for (let i = 0; i < firstDow; i++) cellsHtml += `<div class="gb-cal-day empty"></div>`;
+
+        const isCurrentMonth = gbCalYear === today.getFullYear() && gbCalMonth === today.getMonth();
+        for (let d = 1; d <= daysInMonth; d++) {
+          const dayDate = new Date(gbCalYear, gbCalMonth, d);
+          const bars = [];
+          limitedItems.forEach(it => {
+            const sd = new Date(it.startDate); sd.setHours(0,0,0,0);
+            const ed = new Date(it.endDate); ed.setHours(0,0,0,0);
+            if (dayDate >= sd && dayDate <= ed) {
+              const st = gbStatus(it);
+              if (st === 'open' || st === 'soon') bars.push(st);
+            }
+          });
+          const isToday = isCurrentMonth && d === today.getDate();
+          const barsHtml = bars.length ? `<div class="gb-cal-day-bars">${bars.slice(0,3).map(s=>`<span class="gb-cal-bar ${s}"></span>`).join('')}</div>` : '';
+          cellsHtml += `<div class="gb-cal-day${isToday?' today':''}"><span>${d}</span>${barsHtml}</div>`;
+        }
+        gridEl.innerHTML = cellsHtml;
+
+        // 本月檔期清單：與當月有重疊的限定團
+        const monthStart = new Date(gbCalYear, gbCalMonth, 1);
+        const monthEnd = new Date(gbCalYear, gbCalMonth + 1, 0, 23, 59, 59);
+        const monthItems = limitedItems.filter(it => {
+          const sd = new Date(it.startDate);
+          const ed = new Date(it.endDate);
+          return sd <= monthEnd && ed >= monthStart;
+        }).sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
+
+        const listWrap = document.getElementById('gbScheduleWrap');
+        const listEl = document.getElementById('gbScheduleList');
+        const emptyHint = document.getElementById('gbCalEmptyHint');
+        if (monthItems.length) {
+          listEl.innerHTML = monthItems.map(buildScheduleRow).join('');
+          listWrap.style.display = '';
+          emptyHint.style.display = 'none';
+        } else {
+          listWrap.style.display = 'none';
+          emptyHint.style.display = '';
+        }
+      }
+
+      window.gbCalNav = function(delta) {
+        gbCalMonth += delta;
+        if (gbCalMonth < 0) { gbCalMonth = 11; gbCalYear--; }
+        if (gbCalMonth > 11) { gbCalMonth = 0; gbCalYear++; }
+        renderGbCalendar();
+      };
+
+      // Swipe support (mobile)
+      const calGrid = document.getElementById('gbCalGrid');
+      if (calGrid) {
+        let touchStartX = null;
+        calGrid.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        calGrid.addEventListener('touchend', e => {
+          if (touchStartX === null) return;
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(dx) > 40) gbCalNav(dx > 0 ? -1 : 1);
+          touchStartX = null;
+        }, { passive: true });
+      }
+
+      window.switchGbFrontTab = function(tab) {
+        ['products','calendar'].forEach(t => {
+          document.getElementById('gbFrontTab-'+t).classList.toggle('active', t===tab);
+          document.getElementById('gbFrontPanel-'+t).classList.toggle('active', t===tab);
+        });
+        if (tab === 'calendar') renderGbCalendar();
+      };
+
+      renderGbCalendar();
+    }
+
+    // ── 好物推薦 ──
+    const goodsPicks = (D.goodsPicks || []).filter(g => g.published && g.title);
+    if (goodsPicks.length) {
+      document.getElementById('goodsGrid').innerHTML = goodsPicks.map(g => {
+        const imgHtml = g.image
+          ? `<img src="${g.image}" alt="${g.title}" loading="lazy">`
+          : `<div class="gb-card-img-placeholder"><i class="fa-solid fa-star"></i></div>`;
+        const btnHtml = g.link
+          ? `<a href="${g.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+        return `<div class="gb-card">
+          <div class="gb-card-img">${imgHtml}</div>
+          <div class="gb-card-body">
+            <p class="gb-card-title">${g.title}</p>
+            ${btnHtml}
+          </div>
+        </div>`;
+      }).join('');
+      document.getElementById('goodsSection').style.display = '';
     }
 
     // Footer email
+    window.NINA_EMAIL = S.email || 'nina.inren@gmail.com';
     if (S.email) {
       const emailBtn = document.querySelector('.email-btn');
       if (emailBtn) emailBtn.href = 'mailto:' + S.email;
     }
-
-    // Share NS with voting module
-    VOTE_NS = NS;
-
-    // Re-bind vote listeners after dynamic render
-    bindVoteListeners();
 
     // Re-init video card modal listeners + click tracking
     document.querySelectorAll('.vid-card').forEach(card => {
@@ -1361,10 +1226,6 @@
     });
   })();
 
-  // Init vote on page load
-  if (hasVoted()) showVoteResults();
-  else if (!window.NINA_DATA) bindVoteListeners();
-
   function copyGbCode(btn, code) {
     navigator.clipboard.writeText(code).catch(() => {
       const ta = document.createElement('textarea');
@@ -1378,13 +1239,20 @@
     setTimeout(() => toast.classList.remove('show'), 2000);
   }
 
-  function toggleGbMore() {
-    const btn = document.getElementById('gbMoreBtn');
-    const rows = document.getElementById('gbHiddenRows');
-    const isOpen = rows.classList.toggle('open');
-    btn.classList.toggle('open', isOpen);
-    btn.querySelector('span') && (btn.querySelector('span').textContent = isOpen ? '收起' : '看看其他活動');
+  function copyFooterEmail(btn) {
+    const email = window.NINA_EMAIL || 'nina.inren@gmail.com';
+    navigator.clipboard.writeText(email).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = email; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
+    const toast = document.getElementById('gbToast');
+    toast.textContent = '已複製：' + email;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
   }
+
 </script>
 
 <script>
