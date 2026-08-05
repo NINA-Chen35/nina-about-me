@@ -19,14 +19,22 @@ window.NINA_DATA = {
       },
       {
         "text": "自傳喜劇",
-        "cls": "c-yellow"
+        "cls": "c-coral"
       },
       {
         "text": "高潮迭起",
-        "cls": "c-coral"
+        "cls": "c-green"
       }
     ],
     "desc": "從小到大，老天給我的考題都是魔王級。<br>但沒關係，我這個人就是不服輸，<br>而且很會把苦日子過成幽默的段子！"
+  },
+  "stats": {
+    "followers": "12.3K",
+    "maxViews": "89萬",
+    "engagementRate": "6.8%",
+    "monthlyReach": "45萬",
+    "campaignCount": "12",
+    "updatedAt": "2026.07"
   },
   "season": {
     "badge": "Season 01",
@@ -240,216 +248,184 @@ window.NINA_DATA = {
       {
         "id": "gb1782269898329",
         "title": "Cofit 一對一營養師控醣分析｜優惠碼 NINA14 只要 $450",
-        "startDate": "2026-06-23",
-        "endDate": "2026-07-23",
-        "link": "https://hi.cofit.me/wDsbb",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
         "type": "limited",
         "image": "",
         "tagline": "",
         "ninaNote": "",
-        "code": "",
-        "introLink": ""
+        "startDate": "2026-06-23",
+        "endDate": "2026-07-23",
+        "link": "https://hi.cofit.me/wDsbb",
+        "code": "NINA14",
+        "introLink": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1781023716515",
         "title": "one-meter 小冰磚手持風扇",
         "type": "limited",
-        "startDate": "2026-06-24",
-        "endDate": "2026-09-30",
         "image": "img/uploads/1785954570815-IMG_4630.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-06-24",
+        "endDate": "2026-09-30",
         "link": "https://onemeter01.1shop-app.com/o7gzop",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1780678699010",
         "title": "韓國 Bebenuvo 幼兒睡袋組",
-        "startDate": "2026-07-01",
-        "endDate": "2026-07-31",
-        "link": "https://gbf.tw/n3obr",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
         "type": "limited",
         "image": "",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-07-01",
+        "endDate": "2026-07-31",
+        "link": "https://gbf.tw/n3obr",
         "code": "",
-        "introLink": ""
+        "introLink": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1781023781737",
         "title": "Oolab 良杯製作",
-        "startDate": "2026-07-14",
-        "endDate": "2026-07-20",
-        "link": "https://oolabtw.co/1minadaynina",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
         "type": "limited",
         "image": "",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-07-14",
+        "endDate": "2026-07-20",
+        "link": "https://oolabtw.co/1minadaynina",
         "code": "",
-        "introLink": ""
+        "introLink": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1780678700001",
         "title": "All:ba 韓國醫療級白金矽膠蓮蓬頭",
-        "startDate": "2026-07-22",
-        "endDate": "2026-07-28",
-        "link": "https://yhwakr.pse.is/9cvt85",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
         "type": "limited",
         "image": "",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-07-22",
+        "endDate": "2026-07-28",
+        "link": "https://yhwakr.pse.is/9cvt85",
         "code": "",
-        "introLink": ""
+        "introLink": "",
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1785183498524",
         "title": "喜光護眼檯燈",
         "type": "limited",
-        "startDate": "2026-08-01",
-        "endDate": "2026-08-31",
-        "image": "img/uploads/1785954772642-截圖2026-08-06凌晨23240.png",
+        "image": "img/uploads/1785954772642-截圖2026-08-06凌晨23240.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-08-01",
+        "endDate": "2026-08-31",
         "link": "https://www.sylstarled.com.tw/hidden/1minaday.nina",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1781023821684",
         "title": "澳洲 Learn&Grow 磁力片",
         "type": "limited",
-        "startDate": "2026-08-04",
-        "endDate": "2026-08-10",
-        "image": "img/uploads/1785954815103-IMG_4521.heic",
+        "image": "img/uploads/1785954815103-IMG_4521.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-08-04",
+        "endDate": "2026-08-10",
         "link": "https://gbf.tw/wtdjz",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1781710381956",
         "title": "[快閃團] Finicky stuff. 韓國機能質感媽媽包",
         "type": "limited",
-        "startDate": "2026-08-11",
-        "endDate": "2026-08-14",
-        "image": "img/uploads/1785954916386-222A0605.jpeg",
+        "image": "img/uploads/1785954916386-222A0605.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-08-11",
+        "endDate": "2026-08-14",
         "link": "",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1780678651647",
         "title": "🇹🇼zoodi 守護隊3件組｜防蚊 × 防曬 × 補水｜台灣製造｜無動物實驗｜純素",
         "type": "limited",
-        "startDate": "2026-08-18",
-        "endDate": "2026-08-24",
-        "image": "img/uploads/1785954975223-yes.webp",
+        "image": "img/uploads/1785954975223-yes.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-08-18",
+        "endDate": "2026-08-24",
         "link": "",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1785485692996",
         "title": "🇰🇷 Rieti 韓星同款平價墨鏡",
         "type": "limited",
-        "startDate": "2026-08-25",
-        "endDate": "2026-08-31",
         "image": "img/uploads/1785955005006-6367475f5c11445eb5d9c173899cda64.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-08-25",
+        "endDate": "2026-08-31",
         "link": "",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       },
       {
         "id": "gb1785485762963",
         "title": "Happy Hours 生機纖果飲",
         "type": "limited",
-        "startDate": "2026-09-01",
-        "endDate": "2026-09-07",
-        "image": "img/uploads/1785955080232-截圖2026-08-06凌晨23736.png",
+        "image": "img/uploads/1785955080232-截圖2026-08-06凌晨23736.jpg",
         "tagline": "",
         "ninaNote": "",
+        "startDate": "2026-09-01",
+        "endDate": "2026-09-07",
         "link": "",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！"
+        "calNote": "Nina 限定團購優惠，記得把握時間！",
+        "cardStyle": "full"
       }
     ]
   },
-  "voting": {
-    "question": "你決定下一集",
-    "subtitle": "你的票，決定我下一支影片 👇",
-    "maxSelect": 2,
-    "thankYou": "謝謝你！我會優先做你投的主題 💛",
-    "options": [
-      {
-        "id": "v0",
-        "emoji": "🍼",
-        "text": "雙胞胎極早產育兒紀錄"
-      },
-      {
-        "id": "v1",
-        "emoji": "💪",
-        "text": "早產寶寶成長追蹤（體重、發展里程碑）"
-      },
-      {
-        "id": "v2",
-        "emoji": "🏠",
-        "text": "帶娃真實日常（不假掰版）"
-      },
-      {
-        "id": "v3",
-        "emoji": "💡",
-        "text": "保母／外傭／托育踩雷與選擇心得"
-      },
-      {
-        "id": "v4",
-        "emoji": "📝",
-        "text": "媽媽身心恢復的過程"
-      },
-      {
-        "id": "v5",
-        "emoji": "🎥",
-        "text": "自媒體創作 & 接業配的幕後"
-      }
-    ]
-  },
+  "goodsPicks": [
+    {
+      "id": "goods1780678700100",
+      "title": "",
+      "image": "",
+      "link": "",
+      "published": false
+    }
+  ],
   "github": {
     "owner": "NINA-Chen35",
     "repo": "nina-about-me",
     "branch": "main",
     "path": "deploy/content.js",
     "siteurl": "https://nina-about-me.vercel.app"
-  },
-  "goodsPicks": []
-};
-
-// 頭像連點 5 下進入後台
-(function(){
-  function init(){
-    var el=document.getElementById('topAvatar');
-    if(!el)return;
-    var clicks=0,timer;
-    function tap(e){e.preventDefault();clicks++;clearTimeout(timer);if(clicks>=5){clicks=0;window.location.href='admin.html';}else{timer=setTimeout(function(){clicks=0;},2000);}}
-    el.addEventListener('touchend',tap,{passive:false});
-    el.addEventListener('click',tap);
   }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
-})();
+};

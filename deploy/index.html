@@ -447,7 +447,7 @@
     .gb-empty-hint { padding: 20px 22px; color: var(--text3); font-size: .85rem; text-align: center; }
 
     /* ── 團購卡片：雙欄格線（限定團／長久團共用） ── */
-    .gb-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 22px; }
+    .gb-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 22px; align-items: start; }
     .gb-card {
       background: var(--bg); border-radius: 14px; overflow: hidden;
       border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,.04);
@@ -468,6 +468,19 @@
       padding: 3px 9px; border-radius: 99px;
       background: rgba(255,255,255,.92); color: var(--text2);
       box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    }
+    /* 還沒開團（SOON）：圖片壓淡 */
+    .gb-card.is-soon .gb-card-img img,
+    .gb-card.is-soon .gb-card-img-placeholder {
+      opacity: .5; filter: saturate(.7);
+    }
+    /* 縮小的無圖卡片 */
+    .gb-card.no-image .gb-card-body { padding: 12px; }
+    .gb-card-badge-inline {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .62rem; font-weight: 800; align-self: flex-start;
+      padding: 3px 9px; border-radius: 99px;
+      background: var(--green-lt); color: var(--green-d);
     }
     .gb-card-body { padding: 11px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
     .gb-card-title {
@@ -524,18 +537,24 @@
     }
     .gb-cal-nav-btn:hover { background: var(--bg2); }
     .gb-cal-title { font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 1.02rem; color: var(--text); }
-    .gb-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; touch-action: pan-y; }
-    .gb-cal-dow { text-align: center; font-size: .62rem; color: var(--text3); font-weight: 700; padding-bottom: 8px; }
-    .gb-cal-day {
-      aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      border-radius: 8px; font-size: .78rem; color: var(--text); position: relative; gap: 3px;
+    .gb-cal-grid { touch-action: pan-y; }
+    .gb-gantt-dow { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 4px; }
+    .gb-gantt-dow span { text-align: center; font-size: .62rem; color: var(--text3); font-weight: 700; }
+    .gb-gantt-week { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid var(--border2); }
+    .gb-gantt-week:last-child { border-bottom: none; }
+    .gb-gantt-daynums { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 4px; }
+    .gb-gantt-daynum { display: flex; align-items: center; justify-content: center; font-size: .72rem; color: var(--text2); padding: 2px 0; }
+    .gb-gantt-daynum.empty { visibility: hidden; }
+    .gb-gantt-daynum .num-circle { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+    .gb-gantt-daynum.today .num-circle { background: var(--coral); color: var(--coral-d); font-weight: 800; }
+    .gb-gantt-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px 0; min-height: 4px; }
+    .gb-gantt-bar {
+      display: flex; align-items: center;
+      font-size: .6rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      border-radius: 4px; padding: 4px 6px; margin: 0 1px; line-height: 1.2;
     }
-    .gb-cal-day.empty { visibility: hidden; }
-    .gb-cal-day.today { background: #FBDCCF; font-weight: 800; }
-    .gb-cal-day-bars { display: flex; gap: 2px; width: 78%; height: 3px; }
-    .gb-cal-bar { flex: 1; height: 100%; border-radius: 2px; }
-    .gb-cal-bar.open { background: var(--coral); }
-    .gb-cal-bar.soon { background: var(--blue-d); opacity: .55; }
+    .gb-gantt-bar.open { background: var(--coral); color: var(--coral-d); }
+    .gb-gantt-bar.soon { background: var(--blue); color: var(--blue-d); }
     .gb-cal-legend {
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
       gap: 10px 18px; padding: 16px 0 4px; font-size: .72rem; color: var(--text2);
@@ -986,22 +1005,19 @@
           : `<div class="gb-card-img-placeholder"><i class="fa-solid ${fallbackIcon}"></i></div>`;
       }
 
+      // 顯示順序＝後台拖曳排好的陣列順序（不再自動依日期/緊急度排序）
       const activeLimited = limitedItems.filter(it => gbStatus(it) !== 'ended');
       if (activeLimited.length) {
-        // 開團中優先，剩餘天數少的排前面；即將開團依開團日排序
         const now = new Date(); now.setHours(0,0,0,0);
-        const ranked = activeLimited.map(it => {
+
+        document.getElementById('gbLimitedList').innerHTML = activeLimited.map(it => {
           const st = gbStatus(it);
           const ed = new Date(it.endDate); ed.setHours(0,0,0,0);
           const sd = new Date(it.startDate); sd.setHours(0,0,0,0);
           const daysLeft = Math.round((ed - now) / 86400000);
           const daysUntilStart = Math.round((sd - now) / 86400000);
-          const sortKey = st === 'open' ? daysLeft : daysUntilStart + 1e13;
-          return { it, st, daysLeft, daysUntilStart, sortKey };
-        }).sort((a,b) => a.sortKey - b.sortKey);
-
-        document.getElementById('gbLimitedList').innerHTML = ranked.map(({it, st, daysLeft, daysUntilStart}) => {
-          const imgHtml = buildCardImg(it, 'fa-bag-shopping');
+          const isCompact = it.cardStyle === 'compact';
+          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-bag-shopping')}</div>`;
           const codeHtml = st === 'open' ? buildCardCode(it) : '';
           const introHtml = it.introLink
             ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
@@ -1020,8 +1036,8 @@
             btnHtml = `<a href="${gcalUrl(it)}" target="_blank" rel="noopener" class="gb-card-btn remind">🔔 提醒我</a>`;
           }
 
-          return `<div class="gb-card">
-            <div class="gb-card-img">${imgHtml}</div>
+          return `<div class="gb-card${st==='soon'?' is-soon':''}${isCompact?' no-image':''}">
+            ${imgHtml}
             <div class="gb-card-body">
               <p class="gb-card-title">${it.title}</p>
               ${chipHtml}
@@ -1036,19 +1052,18 @@
 
       if (ongoingItems.length) {
         document.getElementById('gbOngoingGrid').innerHTML = ongoingItems.map(it => {
-          const imgHtml = buildCardImg(it, 'fa-infinity');
+          const isCompact = it.cardStyle === 'compact';
+          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge">♾️ 常駐優惠</span></div>`;
           const codeHtml = buildCardCode(it);
           const introHtml = it.introLink
             ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
           const btnHtml = it.link
             ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
-          return `<div class="gb-card">
-            <div class="gb-card-img">
-              ${imgHtml}
-              <span class="gb-card-badge">♾️ 常駐優惠</span>
-            </div>
+          return `<div class="gb-card${isCompact?' no-image':''}">
+            ${imgHtml}
             <div class="gb-card-body">
               <p class="gb-card-title">${it.title}</p>
+              ${isCompact?'<span class="gb-card-badge-inline">♾️ 常駐優惠</span>':''}
               ${codeHtml}
               ${introHtml}
               ${btnHtml}
@@ -1095,6 +1110,20 @@
       let gbCalYear = today.getFullYear();
       let gbCalMonth = today.getMonth(); // 0-indexed
 
+      function fmtDateShort(d) { return `${d.getMonth()+1}/${d.getDate()}`; }
+
+      function assignGanttLanes(items) {
+        // items sorted by startCell; greedy interval-scheduling lane assignment (same lane kept across weeks)
+        const lanes = [];
+        items.sort((a,b) => a.startCell - b.startCell).forEach(item => {
+          let laneIdx = lanes.findIndex(endCell => endCell < item.startCell);
+          if (laneIdx === -1) { laneIdx = lanes.length; lanes.push(item.endCell); }
+          else lanes[laneIdx] = item.endCell;
+          item.lane = laneIdx;
+        });
+        return items;
+      }
+
       function renderGbCalendar() {
         const titleEl = document.getElementById('gbCalTitle');
         const gridEl  = document.getElementById('gbCalGrid');
@@ -1104,27 +1133,54 @@
         const firstDow = new Date(gbCalYear, gbCalMonth, 1).getDay();
         const daysInMonth = new Date(gbCalYear, gbCalMonth + 1, 0).getDate();
         const dowLabels = ['日','一','二','三','四','五','六'];
-
-        let cellsHtml = dowLabels.map(l => `<div class="gb-cal-dow">${l}</div>`).join('');
-        for (let i = 0; i < firstDow; i++) cellsHtml += `<div class="gb-cal-day empty"></div>`;
-
         const isCurrentMonth = gbCalYear === today.getFullYear() && gbCalMonth === today.getMonth();
-        for (let d = 1; d <= daysInMonth; d++) {
-          const dayDate = new Date(gbCalYear, gbCalMonth, d);
-          const bars = [];
-          limitedItems.forEach(it => {
-            const sd = new Date(it.startDate); sd.setHours(0,0,0,0);
-            const ed = new Date(it.endDate); ed.setHours(0,0,0,0);
-            if (dayDate >= sd && dayDate <= ed) {
-              const st = gbStatus(it);
-              if (st === 'open' || st === 'soon') bars.push(st);
-            }
-          });
-          const isToday = isCurrentMonth && d === today.getDate();
-          const barsHtml = bars.length ? `<div class="gb-cal-day-bars">${bars.slice(0,3).map(s=>`<span class="gb-cal-bar ${s}"></span>`).join('')}</div>` : '';
-          cellsHtml += `<div class="gb-cal-day${isToday?' today':''}"><span>${d}</span>${barsHtml}</div>`;
+
+        const monthFirst = new Date(gbCalYear, gbCalMonth, 1); monthFirst.setHours(0,0,0,0);
+        const monthLast = new Date(gbCalYear, gbCalMonth, daysInMonth); monthLast.setHours(0,0,0,0);
+
+        // 每筆檔期換算成整月的「格子座標」(0-indexed，含前面空白格)，同一筆檔期跨週也維持同一 lane
+        const ganttItems = assignGanttLanes(
+          limitedItems
+            .filter(it => { const st = gbStatus(it); return st === 'open' || st === 'soon'; })
+            .map(it => {
+              let sd = new Date(it.startDate); sd.setHours(0,0,0,0);
+              let ed = new Date(it.endDate); ed.setHours(0,0,0,0);
+              if (sd < monthFirst) sd = monthFirst;
+              if (ed > monthLast) ed = monthLast;
+              return { it, st: gbStatus(it), startCell: firstDow + sd.getDate() - 1, endCell: firstDow + ed.getDate() - 1 };
+            })
+            .filter(g => g.endCell >= 0 && g.startCell < firstDow + daysInMonth)
+        );
+
+        const totalWeeks = Math.ceil((firstDow + daysInMonth) / 7);
+        let html = `<div class="gb-gantt-dow">${dowLabels.map(l=>`<span>${l}</span>`).join('')}</div>`;
+
+        for (let w = 0; w < totalWeeks; w++) {
+          const weekStartCell = w * 7, weekEndCell = w * 7 + 6;
+
+          const daynumsHtml = Array.from({length:7}, (_, i) => {
+            const cell = weekStartCell + i;
+            const d = cell - firstDow + 1;
+            if (d < 1 || d > daysInMonth) return `<span class="gb-gantt-daynum empty"><span class="num-circle">-</span></span>`;
+            const isToday = isCurrentMonth && d === today.getDate();
+            return `<span class="gb-gantt-daynum${isToday?' today':''}"><span class="num-circle">${d}</span></span>`;
+          }).join('');
+
+          const weekItems = ganttItems.filter(g => g.endCell >= weekStartCell && g.startCell <= weekEndCell);
+          const barsHtml = weekItems.map(g => {
+            const localStart = Math.max(g.startCell, weekStartCell) - weekStartCell;
+            const localEnd = Math.min(g.endCell, weekEndCell) - weekStartCell;
+            const label = `${fmtDateShort(new Date(g.it.startDate))}-${fmtDateShort(new Date(g.it.endDate))} ${g.it.title}`;
+            return `<span class="gb-gantt-bar ${g.st}" style="grid-column:${localStart+1}/${localEnd+2};grid-row:${g.lane+1};" title="${g.it.title}">${label}</span>`;
+          }).join('');
+          const maxLane = weekItems.length ? Math.max(...weekItems.map(g=>g.lane)) + 1 : 0;
+
+          html += `<div class="gb-gantt-week">
+            <div class="gb-gantt-daynums">${daynumsHtml}</div>
+            <div class="gb-gantt-bars" style="grid-template-rows:repeat(${maxLane},22px);">${barsHtml}</div>
+          </div>`;
         }
-        gridEl.innerHTML = cellsHtml;
+        gridEl.innerHTML = html;
 
         // 本月檔期清單：與當月有重疊的限定團
         const monthStart = new Date(gbCalYear, gbCalMonth, 1);

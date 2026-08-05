@@ -135,6 +135,13 @@
     .btn-edit:hover{background:rgba(125,171,208,.28);}
     .btn-del{background:rgba(239,68,68,.1);color:var(--red);}
     .btn-del:hover{background:rgba(239,68,68,.2);}
+    .gb-drag-row{transition:opacity .15s;}
+    .gb-drag-row.dragging{opacity:.35;}
+    .gb-drag-handle{
+      cursor:grab; color:var(--text3); flex-shrink:0; padding:4px;
+      touch-action:none;
+    }
+    .gb-drag-handle:active{cursor:grabbing;}
     .btn-refresh{
       display:inline-flex;align-items:center;gap:6px;
       padding:7px 14px;background:#fff;color:var(--text2);
@@ -659,6 +666,15 @@
           <i class="fa-solid fa-download"></i> 下載 content.js
         </button>
       </div>
+
+      <!-- 重新載入雲端最新資料 -->
+      <div class="deploy-steps" style="margin-top:16px;">
+        <h3>🔄 這台裝置的資料跟網站上的不一致？</h3>
+        <p style="font-size:.84rem;color:var(--text2);margin-bottom:12px;">後台編輯的內容會先存在「這台瀏覽器」裡，跟其他裝置或網站上實際發布的版本可能不同步。如果覺得畫面跟網站對不起來，可以捨棄這台裝置暫存的內容，重新抓一次網站目前真正上線的資料。</p>
+        <button class="btn-secondary" style="width:100%;padding:12px;border-radius:8px;font-size:.88rem;font-weight:700;background:var(--bg3);color:var(--text);border:1.5px solid var(--border);cursor:pointer;" onclick="resyncFromLive()">
+          <i class="fa-solid fa-cloud-arrow-down"></i> 捨棄本機暫存，重抓網站最新資料
+        </button>
+      </div>
     </section>
 
   </main>
@@ -822,6 +838,13 @@
       <div class="form-group"><label>團購連結（開團後填入）</label><input type="url" id="gb-m-link" placeholder="https://..."></div>
       <div class="form-group"><label>優惠碼</label><input type="text" id="gb-m-code" placeholder="例：NINA14"></div>
       <div class="form-group" id="gb-m-introlink-wrap"><label>介紹影片／精選限動連結（長久團專用）</label><input type="url" id="gb-m-introlink" placeholder="https://..."></div>
+      <div class="form-group">
+        <label>前台卡片呈現</label>
+        <select id="gb-m-cardstyle">
+          <option value="full">完整卡片（含圖片）</option>
+          <option value="compact">縮小卡片（不顯示圖片）</option>
+        </select>
+      </div>
       <div class="form-group"><label>行事曆備註</label><input type="text" id="gb-m-calnote" placeholder="Nina 限定團購優惠，記得把握時間！"></div>
     </div>
     <div class="modal-footer">
@@ -1284,6 +1307,7 @@ function ensureGroupBuy(){
     if(it.ninaNote===undefined) it.ninaNote = '';
     if(it.code===undefined) it.code = '';
     if(it.introLink===undefined) it.introLink = '';
+    if(!it.cardStyle) it.cardStyle = 'full';
   });
 }
 
@@ -1309,21 +1333,53 @@ function gbItemStatus(item){
   return now>e?'ended': now>=s?'open':'soon';
 }
 
-function buildGbRow(item, i){
+function buildGbRow(item, i, draggableRow){
   const st = gbItemStatus(item);
   const stLabel = item.type==='ongoing' ? '長久' : st==='open'?'OPEN':st==='soon'?'SOON':'END';
   const stColor = st==='open'?'#059669':st==='soon'?'#9CA3AF':'#D1D5DB';
   const typeLabel = item.type==='ongoing' ? '♾️ 長久團' : '🔥 限定團';
   const dateStr = item.type==='ongoing' ? '不限時間' : `${item.startDate} ～ ${item.endDate}`;
-  return `<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
+  const styleLabel = item.cardStyle==='compact' ? ' · 縮小卡片' : '';
+  const handleHtml = draggableRow
+    ? `<span class="gb-drag-handle" title="拖曳調整順序"><i class="fa-solid fa-grip-vertical"></i></span>` : '';
+  const dragAttrs = draggableRow
+    ? `draggable="true" ondragstart="gbDragStart(event,${i})" ondragover="gbDragOverRow(event)" ondrop="gbDropRow(event,${i})" ondragend="gbDragEndRow(event)"` : '';
+  return `<div class="gb-drag-row" ${dragAttrs} data-idx="${i}" style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">
+    ${handleHtml}
     <span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:3px;background:${stColor}22;color:${stColor};border:1px solid ${stColor}44;min-width:38px;text-align:center">${stLabel}</span>
     <div style="flex:1;min-width:0">
       <p style="font-size:.82rem;font-weight:700;color:var(--text)">${item.title}</p>
-      <p style="font-size:.7rem;color:var(--text3)">${typeLabel} · ${dateStr}</p>
+      <p style="font-size:.7rem;color:var(--text3)">${typeLabel} · ${dateStr}${styleLabel}</p>
     </div>
-    <button class="btn-icon" onclick="openGbModal(${i})" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
-    <button class="btn-icon btn-icon-del" onclick="deleteGbItem(${i})" title="刪除"><i class="fa-solid fa-trash"></i></button>
+    <button class="btn-icon btn-edit" onclick="openGbModal(${i})" title="編輯"><i class="fa-solid fa-pen-to-square"></i></button>
+    <button class="btn-icon btn-del" onclick="deleteGbItem(${i})" title="刪除"><i class="fa-solid fa-trash"></i></button>
   </div>`;
+}
+
+let _gbDragIdx = null;
+function gbDragStart(e, idx){
+  _gbDragIdx = idx;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.classList.add('dragging');
+}
+function gbDragOverRow(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+function gbDropRow(e, targetIdx){
+  e.preventDefault();
+  if(_gbDragIdx===null || _gbDragIdx===targetIdx) return;
+  const arr = CONTENT.groupBuy.schedules;
+  const [moved] = arr.splice(_gbDragIdx,1);
+  arr.splice(targetIdx,0,moved);
+  _gbDragIdx = null;
+  saveContent(CONTENT);
+  renderGroupBuy();
+  showToast('排序已更新');
+}
+function gbDragEndRow(e){
+  e.currentTarget.classList.remove('dragging');
+  _gbDragIdx = null;
 }
 
 let _gbCurrentTab = 'active';
@@ -1350,7 +1406,7 @@ function renderGroupBuy(){
   document.getElementById('gb-banner-link').value = pb.link||'';
   document.getElementById('gb-banner-tags').value = (pb.tags||[]).map(t=>t.text+':'+t.color).join(',');
 
-  CONTENT.groupBuy.schedules.sort((a,b) => new Date(a.startDate) - new Date(b.startDate));
+  // 順序＝手動拖曳排好的陣列順序，不再自動依日期排序
   const items = CONTENT.groupBuy.schedules;
   const activeItems = items.filter((_,i) => gbItemStatus(items[i]) !== 'ended');
   const endedItems  = items.filter((_,i) => gbItemStatus(items[i]) === 'ended');
@@ -1358,10 +1414,11 @@ function renderGroupBuy(){
   const list = document.getElementById('gbScheduleList');
   const endedList = document.getElementById('gbEndedList');
   list.innerHTML = activeItems.length
-    ? activeItems.map(item => buildGbRow(item, items.indexOf(item))).join('')
+    ? `<div class="form-hint" style="margin-bottom:8px;"><i class="fa-solid fa-grip-vertical"></i> 拖曳左側把手可調整前台顯示順序</div>` +
+      activeItems.map(item => buildGbRow(item, items.indexOf(item), true)).join('')
     : '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未有進行中或即將開始的活動</p>';
   endedList.innerHTML = endedItems.length
-    ? endedItems.map(item => buildGbRow(item, items.indexOf(item))).join('')
+    ? endedItems.map(item => buildGbRow(item, items.indexOf(item), false)).join('')
     : '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚無已結束的活動</p>';
 
   switchGbTab(_gbCurrentTab);
@@ -1392,7 +1449,7 @@ function openGbModal(idx){
   const isNew = idx===null;
   document.getElementById('gb-modal-title').textContent = isNew?'新增團購活動':'編輯團購活動';
   document.getElementById('gb-modal-id').value = isNew?'':idx;
-  const item = isNew ? {title:'',type:'limited',image:'',tagline:'',ninaNote:'',startDate:'',endDate:'',link:'',code:'',introLink:'',calNote:'Nina 限定團購優惠，記得把握時間！'} : CONTENT.groupBuy.schedules[idx];
+  const item = isNew ? {title:'',type:'limited',image:'',tagline:'',ninaNote:'',startDate:'',endDate:'',link:'',code:'',introLink:'',cardStyle:'full',calNote:'Nina 限定團購優惠，記得把握時間！'} : CONTENT.groupBuy.schedules[idx];
   document.getElementById('gb-m-title').value = item.title||'';
   document.getElementById('gb-m-type').value = item.type||'limited';
   document.getElementById('gb-m-start').value = item.startDate||'';
@@ -1403,6 +1460,7 @@ function openGbModal(idx){
   document.getElementById('gb-m-link').value = item.link||'';
   document.getElementById('gb-m-code').value = item.code||'';
   document.getElementById('gb-m-introlink').value = item.introLink||'';
+  document.getElementById('gb-m-cardstyle').value = item.cardStyle||'full';
   document.getElementById('gb-m-calnote').value = item.calNote||'Nina 限定團購優惠，記得把握時間！';
   toggleGbTypeFields();
   document.getElementById('gbModal').classList.add('open');
@@ -1434,6 +1492,7 @@ function saveGbItem(){
     link: document.getElementById('gb-m-link').value.trim(),
     code: document.getElementById('gb-m-code').value.trim(),
     introLink: document.getElementById('gb-m-introlink').value.trim(),
+    cardStyle: document.getElementById('gb-m-cardstyle').value,
     calNote: document.getElementById('gb-m-calnote').value.trim()
   };
   const idxStr = document.getElementById('gb-modal-id').value;
@@ -1738,19 +1797,53 @@ function fileToBase64(file) {
   });
 }
 
+function readFileAsImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('這張照片這個瀏覽器無法讀取（常見於 iPhone 的 HEIC 格式）。請到手機「設定→相機→格式」改成「最相容」，或用「共享」功能存成 JPEG 後再上傳。'));
+    };
+    img.src = url;
+  });
+}
+
+async function compressImageFile(file, maxDim, quality) {
+  maxDim = maxDim || 1600;
+  quality = quality || 0.85;
+  const img = await readFileAsImage(file);
+  let width = img.naturalWidth, height = img.naturalHeight;
+  if (width > maxDim || height > maxDim) {
+    const scale = maxDim / Math.max(width, height);
+    width = Math.round(width * scale);
+    height = Math.round(height * scale);
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = width; canvas.height = height;
+  canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+  if (!blob) throw new Error('圖片轉換失敗，請換一張照片試試');
+  return blob;
+}
+
 async function uploadImageFile(file) {
   const s = loadGhSettings();
   if (!s.owner || !s.repo || !s.token) {
     throw new Error('請先到「設定」頁完成 GitHub 自動發布設定（用戶名／Repo／Token）');
   }
-  if (!file.type.startsWith('image/')) throw new Error('請選擇圖片檔案');
-  if (file.size > 8 * 1024 * 1024) throw new Error('圖片太大，請控制在 8MB 以內');
+  if (!file.type.startsWith('image/') && !/\.(heic|heif)$/i.test(file.name)) throw new Error('請選擇圖片檔案');
+  if (file.size > 20 * 1024 * 1024) throw new Error('圖片太大，請控制在 20MB 以內');
 
-  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+  // 統一轉成 JPEG：順便處理 HEIC（若瀏覽器支援解碼）、自動壓縮大檔案
+  const blob = await compressImageFile(file);
   const safeName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9一-龥_-]/g, '').slice(0, 40) || 'image';
-  const path = `img/uploads/${Date.now()}-${safeName}.${ext}`;
+  // 檔案路徑要跟 content.js 放在同一個資料夾底下（例如 deploy/），不是 repo 根目錄
+  const baseDir = (s.path || 'deploy/content.js').replace(/\/[^/]*$/, '') || 'deploy';
+  const path = `${baseDir}/img/uploads/${Date.now()}-${safeName}.jpg`;
 
-  const base64 = await fileToBase64(file);
+  const base64 = await fileToBase64(blob);
   const headers = {
     'Authorization': `Bearer ${s.token}`,
     'Accept': 'application/vnd.github+json',
@@ -1766,7 +1859,8 @@ async function uploadImageFile(file) {
     const err = await putResp.json().catch(() => ({}));
     throw new Error(err.message || `HTTP ${putResp.status}`);
   }
-  return path;
+  // 回傳相對於網站根目錄（即 baseDir）的路徑，讓 <img src="img/uploads/...."> 能正確找到檔案
+  return path.replace(new RegExp('^' + baseDir + '/'), '');
 }
 
 function bindImageUpload(fileInputId, urlInputId, statusId) {
@@ -1860,6 +1954,28 @@ function downloadContentJs(){
   a.download = 'content.js';
   a.click();
   showToast('content.js 下載中...');
+}
+
+function resyncFromLive(){
+  const s = loadGhSettings();
+  const base = (s.siteurl || '').replace(/\/$/, '');
+  if(!base){ showToast('請先在「設定」頁填寫前台網址'); showSection('settings'); return; }
+  if(!confirm('確定要捨棄這台裝置上還沒發布的編輯內容，改用網站目前真正上線的最新資料嗎？這個動作無法復原。')) return;
+  const script = document.createElement('script');
+  script.src = base + '/content.js?_=' + Date.now();
+  script.onload = () => {
+    document.body.removeChild(script);
+    if(!window.NINA_DATA){ showToast('讀取失敗，請確認前台網址是否正確'); return; }
+    CONTENT = JSON.parse(JSON.stringify(window.NINA_DATA));
+    saveContent(CONTENT);
+    initApp();
+    showToast('已改用網站最新資料 ✅');
+  };
+  script.onerror = () => {
+    document.body.removeChild(script);
+    showToast('讀取失敗，請確認前台網址是否正確，或檢查網路連線');
+  };
+  document.body.appendChild(script);
 }
 
 // ═══════════════════════════════════════════
