@@ -837,7 +837,7 @@
       <div class="form-group"><label>Nina 真心話</label><textarea id="gb-m-ninanote" rows="2" placeholder="我自己實際使用的心得..."></textarea></div>
       <div class="form-group"><label>團購連結（開團後填入）</label><input type="url" id="gb-m-link" placeholder="https://..."></div>
       <div class="form-group"><label>優惠碼</label><input type="text" id="gb-m-code" placeholder="例：NINA14"></div>
-      <div class="form-group" id="gb-m-introlink-wrap"><label>介紹影片／精選限動連結（長久團專用）</label><input type="url" id="gb-m-introlink" placeholder="https://..."></div>
+      <div class="form-group" id="gb-m-introlink-wrap"><label>介紹影片／精選限動連結</label><input type="url" id="gb-m-introlink" placeholder="https://..."><div class="form-hint">會顯示成卡片圖片上的按鈕，連到 IG Reel／限時動態精選等介紹影片</div></div>
       <div class="form-group">
         <label>前台卡片呈現</label>
         <select id="gb-m-cardstyle">
@@ -848,6 +848,9 @@
       <div class="form-group"><label>行事曆備註</label><input type="text" id="gb-m-calnote" placeholder="Nina 限定團購優惠，記得把握時間！"></div>
     </div>
     <div class="modal-footer">
+      <button class="btn-secondary" style="margin-right:auto;" onclick="setGbItemAsBanner()" title="把商品名稱／圖片／連結直接套用到頁面最上方的置頂 Banner，不用自己複製貼上">
+        <i class="fa-solid fa-thumbtack"></i> 設成置頂 Banner
+      </button>
       <button class="btn-secondary" onclick="closeGbModal()">取消</button>
       <button class="btn-primary" onclick="saveGbItem()"><i class="fa-solid fa-check"></i> 儲存</button>
     </div>
@@ -1441,7 +1444,6 @@ function saveGbBanner(){
 function toggleGbTypeFields(){
   const isOngoing = document.getElementById('gb-m-type').value === 'ongoing';
   document.getElementById('gb-m-date-row').style.display = isOngoing ? 'none' : '';
-  document.getElementById('gb-m-introlink-wrap').style.display = isOngoing ? '' : 'none';
 }
 
 function openGbModal(idx){
@@ -1506,6 +1508,21 @@ function saveGbItem(){
   renderGroupBuy();
   closeGbModal();
   showToast('團購活動已儲存');
+}
+
+function setGbItemAsBanner(){
+  ensureGroupBuy();
+  const title = document.getElementById('gb-m-title').value.trim();
+  if(!title){ showToast('請先填寫商品名稱'); return; }
+  const pb = CONTENT.groupBuy.pinnedBanner;
+  pb.enabled = true;
+  pb.title = title;
+  pb.subtitle = document.getElementById('gb-m-tagline').value.trim();
+  pb.image = document.getElementById('gb-m-image').value.trim();
+  pb.link = document.getElementById('gb-m-link').value.trim();
+  saveContent(CONTENT);
+  renderGroupBuy();
+  showToast('已套用到置頂 Banner ✅（記得也按「儲存」存這筆活動）');
 }
 
 function deleteGbItem(idx){

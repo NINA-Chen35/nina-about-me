@@ -469,6 +469,16 @@
       background: rgba(255,255,255,.92); color: var(--text2);
       box-shadow: 0 1px 4px rgba(0,0,0,.1);
     }
+    /* 圖片上的介紹影片／限動精選按鈕（偏下） */
+    .gb-card-img-video-btn {
+      position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 1;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 7px; border-radius: 7px;
+      background: rgba(0,0,0,.55); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+      color: #fff; font-size: .68rem; font-weight: 700; text-decoration: none;
+      transition: background .15s;
+    }
+    .gb-card-img-video-btn:hover { background: rgba(0,0,0,.7); }
     /* 還沒開團（SOON）：圖片壓淡 */
     .gb-card.is-soon .gb-card-img img,
     .gb-card.is-soon .gb-card-img-placeholder {
@@ -501,12 +511,6 @@
       font-size: .68rem; font-weight: 800; letter-spacing: .03em;
       border: 1.5px dashed rgba(79,84,32,.35);
       cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
-    }
-    .gb-card-intro-btn {
-      display: flex; align-items: center; justify-content: center; gap: 5px;
-      padding: 7px; border-radius: 6px; border: 1.5px solid var(--border);
-      background: var(--bg2); color: var(--text2);
-      font-size: .68rem; font-weight: 700; text-decoration: none;
     }
     .gb-card-btn {
       margin-top: auto;
@@ -672,7 +676,7 @@
   <div class="gb-panel" id="gbFrontPanel-calendar">
     <div class="gb-cal-wrap reveal">
       <div class="gb-cal-header">
-        <button class="gb-cal-nav-btn" onclick="gbCalNav(-1)" aria-label="上個月"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="gb-cal-nav-btn" id="gbCalPrevBtn" onclick="gbCalNav(-1)" aria-label="上個月"><i class="fa-solid fa-chevron-left"></i></button>
         <span class="gb-cal-title" id="gbCalTitle"></span>
         <button class="gb-cal-nav-btn" onclick="gbCalNav(1)" aria-label="下個月"><i class="fa-solid fa-chevron-right"></i></button>
       </div>
@@ -1017,10 +1021,11 @@
           const daysLeft = Math.round((ed - now) / 86400000);
           const daysUntilStart = Math.round((sd - now) / 86400000);
           const isCompact = it.cardStyle === 'compact';
-          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-bag-shopping')}</div>`;
+          const dateRangeBadge = `<span class="gb-card-badge">${fmtDateShort(sd)}-${fmtDateShort(ed)}</span>`;
+          const videoBtnHtml = it.introLink
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
+          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-bag-shopping')}${dateRangeBadge}${videoBtnHtml}</div>`;
           const codeHtml = st === 'open' ? buildCardCode(it) : '';
-          const introHtml = it.introLink
-            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
 
           let chipHtml, btnHtml;
           if (st === 'open') {
@@ -1042,7 +1047,6 @@
               <p class="gb-card-title">${it.title}</p>
               ${chipHtml}
               ${codeHtml}
-              ${introHtml}
               ${btnHtml}
             </div>
           </div>`;
@@ -1053,10 +1057,10 @@
       if (ongoingItems.length) {
         document.getElementById('gbOngoingGrid').innerHTML = ongoingItems.map(it => {
           const isCompact = it.cardStyle === 'compact';
-          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge">♾️ 常駐優惠</span></div>`;
+          const videoBtnHtml = it.introLink
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
+          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge">♾️ 常駐優惠</span>${videoBtnHtml}</div>`;
           const codeHtml = buildCardCode(it);
-          const introHtml = it.introLink
-            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-intro-btn"><i class="fa-solid fa-circle-play fa-xs"></i>詳細介紹</a>` : '';
           const btnHtml = it.link
             ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
           return `<div class="gb-card${isCompact?' no-image':''}">
@@ -1065,7 +1069,6 @@
               <p class="gb-card-title">${it.title}</p>
               ${isCompact?'<span class="gb-card-badge-inline">♾️ 常駐優惠</span>':''}
               ${codeHtml}
-              ${introHtml}
               ${btnHtml}
             </div>
           </div>`;
@@ -1107,8 +1110,30 @@
       }
 
       const today = new Date();
-      let gbCalYear = today.getFullYear();
-      let gbCalMonth = today.getMonth(); // 0-indexed
+      const gbCalFloorYear = today.getFullYear();
+      const gbCalFloorMonth = today.getMonth(); // 不可導覽到比這個更早的月份
+      let gbCalYear = gbCalFloorYear;
+      let gbCalMonth = gbCalFloorMonth; // 0-indexed
+
+      function gbMonthHasSchedule(year, month) {
+        const mFirst = new Date(year, month, 1); mFirst.setHours(0,0,0,0);
+        const mLast = new Date(year, month + 1, 0); mLast.setHours(23,59,59,999);
+        return limitedItems.some(it => {
+          const st = gbStatus(it);
+          if (st !== 'open' && st !== 'soon') return false;
+          const sd = new Date(it.startDate), ed = new Date(it.endDate);
+          return sd <= mLast && ed >= mFirst;
+        });
+      }
+
+      // 預設直接跳到「當月或之後」第一個有排團購的月份，不要停在空月份
+      if (!gbMonthHasSchedule(gbCalYear, gbCalMonth)) {
+        for (let i = 1; i <= 24; i++) {
+          let y = gbCalFloorYear, m = gbCalFloorMonth + i;
+          y += Math.floor(m / 12); m = ((m % 12) + 12) % 12;
+          if (gbMonthHasSchedule(y, m)) { gbCalYear = y; gbCalMonth = m; break; }
+        }
+      }
 
       function fmtDateShort(d) { return `${d.getMonth()+1}/${d.getDate()}`; }
 
@@ -1129,6 +1154,13 @@
         const gridEl  = document.getElementById('gbCalGrid');
         if (!titleEl || !gridEl) return;
         titleEl.textContent = `${gbCalYear} 年 ${gbCalMonth + 1} 月`;
+        const prevBtn = document.getElementById('gbCalPrevBtn');
+        if (prevBtn) {
+          const atFloor = gbCalYear === gbCalFloorYear && gbCalMonth === gbCalFloorMonth;
+          prevBtn.disabled = atFloor;
+          prevBtn.style.opacity = atFloor ? '.35' : '';
+          prevBtn.style.cursor = atFloor ? 'default' : '';
+        }
 
         const firstDow = new Date(gbCalYear, gbCalMonth, 1).getDay();
         const daysInMonth = new Date(gbCalYear, gbCalMonth + 1, 0).getDate();
@@ -1139,17 +1171,19 @@
         const monthLast = new Date(gbCalYear, gbCalMonth, daysInMonth); monthLast.setHours(0,0,0,0);
 
         // 每筆檔期換算成整月的「格子座標」(0-indexed，含前面空白格)，同一筆檔期跨週也維持同一 lane
+        // 重要：先判斷是否真的跟這個月重疊，不重疊的完全排除，不要硬裁進來
         const ganttItems = assignGanttLanes(
           limitedItems
             .filter(it => { const st = gbStatus(it); return st === 'open' || st === 'soon'; })
             .map(it => {
               let sd = new Date(it.startDate); sd.setHours(0,0,0,0);
               let ed = new Date(it.endDate); ed.setHours(0,0,0,0);
+              if (ed < monthFirst || sd > monthLast) return null; // 跟這個月完全沒重疊
               if (sd < monthFirst) sd = monthFirst;
               if (ed > monthLast) ed = monthLast;
               return { it, st: gbStatus(it), startCell: firstDow + sd.getDate() - 1, endCell: firstDow + ed.getDate() - 1 };
             })
-            .filter(g => g.endCell >= 0 && g.startCell < firstDow + daysInMonth)
+            .filter(Boolean)
         );
 
         const totalWeeks = Math.ceil((firstDow + daysInMonth) / 7);
@@ -1205,9 +1239,11 @@
       }
 
       window.gbCalNav = function(delta) {
-        gbCalMonth += delta;
-        if (gbCalMonth < 0) { gbCalMonth = 11; gbCalYear--; }
-        if (gbCalMonth > 11) { gbCalMonth = 0; gbCalYear++; }
+        let m = gbCalMonth + delta, y = gbCalYear;
+        if (m < 0) { m = 11; y--; }
+        if (m > 11) { m = 0; y++; }
+        if (y < gbCalFloorYear || (y === gbCalFloorYear && m < gbCalFloorMonth)) return; // 不能回到過去的月份
+        gbCalMonth = m; gbCalYear = y;
         renderGbCalendar();
       };
 
