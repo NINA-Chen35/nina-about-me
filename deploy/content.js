@@ -272,7 +272,7 @@ window.NINA_DATA = {
         "link": "https://onemeter01.1shop-app.com/o7gzop",
         "code": "",
         "introLink": "",
-        "cardStyle": "compact",
+        "cardStyle": "full",
         "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
