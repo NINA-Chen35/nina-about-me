@@ -237,12 +237,12 @@ window.NINA_DATA = {
   ],
   "groupBuy": {
     "pinnedBanner": {
-      "enabled": true,
+      "enabled": false,
       "tags": [],
-      "title": "澳洲 Learn&Grow 磁力片",
+      "title": "",
       "subtitle": "",
-      "image": "img/uploads/1785954815103-IMG_4521.jpg",
-      "link": "https://gbf.tw/wtdjz"
+      "image": "",
+      "link": ""
     },
     "schedules": [
       {
