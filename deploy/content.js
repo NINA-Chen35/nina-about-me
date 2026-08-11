@@ -354,16 +354,16 @@ window.NINA_DATA = {
         "id": "gb1781710381956",
         "title": "[快閃團] Finicky stuff. 韓國機能質感媽媽包",
         "type": "limited",
+        "startDate": "2026-08-11",
+        "endDate": "2026-08-14",
         "image": "img/uploads/1785954916386-222A0605.jpg",
         "tagline": "",
         "ninaNote": "",
-        "startDate": "2026-08-11",
-        "endDate": "2026-08-14",
-        "link": "",
+        "link": "https://reurl.cc/xe9q5z",
         "code": "",
         "introLink": "",
-        "calNote": "Nina 限定團購優惠，記得把握時間！",
-        "cardStyle": "full"
+        "cardStyle": "full",
+        "calNote": "Nina 限定團購優惠，記得把握時間！"
       },
       {
         "id": "gb1780678651647",
