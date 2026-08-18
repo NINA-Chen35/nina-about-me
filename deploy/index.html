@@ -855,6 +855,12 @@
     const S = D.settings || {};
     const NS = S.counterNs || 'nina1minaday';
 
+    // 計數追蹤：走 /api/count 中繼（金鑰放在 Vercel 環境變數，不會出現在前端原始碼）
+    function trackCount(key) {
+      fetch('/api/count?key=' + encodeURIComponent(key) + '&action=up&ns=' + encodeURIComponent(NS)).catch(()=>{});
+    }
+    window.trackGb = trackCount; // 團購／好物點擊追蹤，供後台「數據總覽」統計成效
+
     // Google Analytics 4
     if (S.ga4Id) {
       const sc = document.createElement('script');
@@ -865,7 +871,7 @@
     }
 
     // Page view tracking
-    fetch('https://api.counterapi.dev/v1/' + NS + '/pageview/up').catch(()=>{});
+    trackCount('pageview');
 
     // Update top bar
     if (S.igHandle) {
@@ -1001,7 +1007,7 @@
       function buildCardCode(item) {
         if (!item.code) return '';
         const safe = item.code.replace(/'/g, "\\'");
-        return `<button class="gb-card-code" onclick="copyGbCode(this,'${safe}')"><i class="fa-solid fa-tag fa-xs"></i>${item.code}</button>`;
+        return `<button class="gb-card-code" onclick="copyGbCode(this,'${safe}');trackGb('gb-code-${item.id}')"><i class="fa-solid fa-tag fa-xs"></i>${item.code}</button>`;
       }
       function buildCardImg(it, fallbackIcon) {
         return it.image
@@ -1023,7 +1029,7 @@
           const isCompact = it.cardStyle === 'compact';
           const dateRangeBadge = `<span class="gb-card-badge">${fmtDateShort(sd)}-${fmtDateShort(ed)}</span>`;
           const videoBtnHtml = it.introLink
-            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn" onclick="trackGb('gb-video-${it.id}')"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
           const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-bag-shopping')}${dateRangeBadge}${videoBtnHtml}</div>`;
           const codeHtml = st === 'open' ? buildCardCode(it) : '';
 
@@ -1035,10 +1041,10 @@
               ? (daysLeft === 0 ? '今天結團！前往購買' : `最後${daysLeft}天！前往購買`)
               : '前往購買';
             btnHtml = it.link
-              ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn${urgent?' urgent':''}">${label}<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+              ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn${urgent?' urgent':''}" onclick="trackGb('gb-buy-${it.id}')">${label}<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
           } else {
             chipHtml = `<span class="gb-card-chip"><i class="fa-regular fa-clock"></i>${daysUntilStart}天後開團</span>`;
-            btnHtml = `<a href="${gcalUrl(it)}" target="_blank" rel="noopener" class="gb-card-btn remind">🔔 提醒我</a>`;
+            btnHtml = `<a href="${gcalUrl(it)}" target="_blank" rel="noopener" class="gb-card-btn remind" onclick="trackGb('gb-remind-${it.id}')">🔔 提醒我</a>`;
           }
 
           return `<div class="gb-card${st==='soon'?' is-soon':''}${isCompact?' no-image':''}">
@@ -1058,11 +1064,11 @@
         document.getElementById('gbOngoingGrid').innerHTML = ongoingItems.map(it => {
           const isCompact = it.cardStyle === 'compact';
           const videoBtnHtml = it.introLink
-            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
+            ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn" onclick="trackGb('gb-video-${it.id}')"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
           const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge">♾️ 常駐優惠</span>${videoBtnHtml}</div>`;
           const codeHtml = buildCardCode(it);
           const btnHtml = it.link
-            ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+            ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn" onclick="trackGb('gb-buy-${it.id}')">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
           return `<div class="gb-card${isCompact?' no-image':''}">
             ${imgHtml}
             <div class="gb-card-body">
@@ -1266,6 +1272,7 @@
           document.getElementById('gbFrontPanel-'+t).classList.toggle('active', t===tab);
         });
         if (tab === 'calendar') renderGbCalendar();
+        trackGb('gbtab-' + tab);
       };
 
       renderGbCalendar();
@@ -1279,7 +1286,7 @@
           ? `<img src="${g.image}" alt="${g.title}" loading="lazy">`
           : `<div class="gb-card-img-placeholder"><i class="fa-solid fa-star"></i></div>`;
         const btnHtml = g.link
-          ? `<a href="${g.link}" target="_blank" rel="noopener" class="gb-card-btn">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+          ? `<a href="${g.link}" target="_blank" rel="noopener" class="gb-card-btn" onclick="trackGb('goods-buy-${g.id}')">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
         return `<div class="gb-card">
           <div class="gb-card-img">${imgHtml}</div>
           <div class="gb-card-body">
@@ -1303,7 +1310,7 @@
       card.addEventListener('click', () => {
         const url = card.dataset.ig;
         const id = card.dataset.id;
-        if (id) fetch('https://api.counterapi.dev/v1/' + NS + '/vid-' + id + '/up').catch(()=>{});
+        if (id) trackCount('vid-' + id);
         if (!url) return;
         if (isMobile()) window.open(url, '_blank', 'noopener,noreferrer');
         else openIg(url);
@@ -1313,7 +1320,7 @@
     // IG button click tracking
     document.querySelectorAll('.ig-btn, .ig-big, .top-bar-cta').forEach(el => {
       el.addEventListener('click', () => {
-        fetch('https://api.counterapi.dev/v1/' + NS + '/igclick/up').catch(()=>{});
+        trackCount('igclick');
       });
     });
   })();

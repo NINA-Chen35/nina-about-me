@@ -465,6 +465,21 @@
           <a href="https://analytics.google.com" target="_blank">前往查看完整報表 →</a>
         </div>
       </div>
+
+      <div class="analytics-card" style="margin-bottom:16px">
+        <h3>團購成效 <span class="hint">（「前往購買」／「提醒我」被點擊的次數，依成效由高到低排序，含已結束的活動方便回顧）</span></h3>
+        <div id="gb-analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+      </div>
+
+      <div class="analytics-card" style="margin-bottom:16px" id="goods-analytics-card">
+        <h3>好物推薦成效 <span class="hint">（「前往購買」被點擊的次數）</span></h3>
+        <div id="goods-analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>團購頁籤使用比例 <span class="hint">（訪客比較常看「商品」還是「檔期日曆」）</span></h3>
+        <div id="gbtab-analytics"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+      </div>
     </section>
 
     <!-- Videos -->
@@ -997,7 +1012,7 @@ function showSection(name){
 // ═══════════════════════════════════════════
 async function fetchCount(key){
   try{
-    const r = await fetch(`https://api.counterapi.dev/v1/${COUNTER_NS}/${key}/`,{signal:AbortSignal.timeout(4000)});
+    const r = await fetch(`/api/count?key=${encodeURIComponent(key)}&action=get&ns=${encodeURIComponent(COUNTER_NS)}`,{signal:AbortSignal.timeout(4000)});
     if(!r.ok) return 0;
     const j = await r.json();
     return j.count || 0;
@@ -1034,6 +1049,67 @@ async function loadAnalytics(){
   const ga4 = CONTENT.settings?.ga4Id;
   const gaNote = document.getElementById('ga-note');
   if(ga4){ gaNote.style.display='block'; } else { gaNote.style.display='none'; }
+
+  // 團購成效（含已結束，方便回顧歷史檔期）
+  const gbTableEl = document.getElementById('gb-analytics-table');
+  const schedules = (CONTENT.groupBuy && CONTENT.groupBuy.schedules) || [];
+  if(schedules.length){
+    gbTableEl.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
+    const gbCounts = await Promise.all(schedules.map(async it => {
+      const [buy, remind] = await Promise.all([fetchCount('gb-buy-'+it.id), fetchCount('gb-remind-'+it.id)]);
+      return buy + remind;
+    }));
+    const gbMax = Math.max(...gbCounts, 1);
+    const ranked = schedules.map((it,i)=>({it, count:gbCounts[i]})).sort((a,b)=>b.count-a.count);
+    const rankedMax = Math.max(...ranked.map(r=>r.count), 1);
+    gbTableEl.innerHTML = ranked.map(({it,count})=>`
+      <div class="analytics-row">
+        <div class="analytics-thumb" style="background-image:url('${it.image||''}');background-color:#eee"></div>
+        <span class="analytics-title">${it.title}</span>
+        <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(count/rankedMax*100)}%"></div></div>
+        <span class="analytics-count">${count}</span>
+      </div>
+    `).join('');
+  } else {
+    gbTableEl.innerHTML = '<div class="loading">尚未新增團購活動</div>';
+  }
+
+  // 好物推薦成效
+  const goodsEl = document.getElementById('goods-analytics-table');
+  const goods = CONTENT.goodsPicks || [];
+  if(goods.length){
+    goodsEl.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
+    const goodsCounts = await Promise.all(goods.map(g=>fetchCount('goods-buy-'+g.id)));
+    const ranked = goods.map((g,i)=>({g, count:goodsCounts[i]})).sort((a,b)=>b.count-a.count);
+    const goodsMax = Math.max(...goodsCounts, 1);
+    goodsEl.innerHTML = ranked.map(({g,count})=>`
+      <div class="analytics-row">
+        <div class="analytics-thumb" style="background-image:url('${g.image||''}');background-color:#eee"></div>
+        <span class="analytics-title">${g.title||'（未命名）'}</span>
+        <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(count/goodsMax*100)}%"></div></div>
+        <span class="analytics-count">${count}</span>
+      </div>
+    `).join('');
+  } else {
+    goodsEl.innerHTML = '<div class="loading">尚未新增好物推薦</div>';
+  }
+
+  // 團購頁籤使用比例
+  const tabEl = document.getElementById('gbtab-analytics');
+  const [productsCount, calendarCount] = await Promise.all([fetchCount('gbtab-products'), fetchCount('gbtab-calendar')]);
+  const tabTotal = productsCount + calendarCount || 1;
+  tabEl.innerHTML = `
+    <div class="analytics-row">
+      <span class="analytics-title">🛍️ 商品</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(productsCount/tabTotal*100)}%"></div></div>
+      <span class="analytics-count">${productsCount}</span>
+    </div>
+    <div class="analytics-row">
+      <span class="analytics-title">📅 檔期日曆</span>
+      <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(calendarCount/tabTotal*100)}%"></div></div>
+      <span class="analytics-count">${calendarCount}</span>
+    </div>
+  `;
 }
 
 // ═══════════════════════════════════════════
