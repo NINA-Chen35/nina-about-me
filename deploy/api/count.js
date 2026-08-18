@@ -36,8 +36,11 @@ module.exports = async function handler(req, res) {
     });
     const data = await upstream.json().catch(() => null);
     const count = data && data.data ? (data.data.up_count || 0) : 0;
-    return res.status(200).json({ count, configured: true });
+    const debugInfo = req.query.debug
+      ? { upstreamStatus: upstream.status, upstreamBody: data, ns, keyLen: apiKey.length }
+      : undefined;
+    return res.status(200).json({ count, configured: true, ...(debugInfo ? { debug: debugInfo } : {}) });
   } catch (e) {
-    return res.status(200).json({ count: 0, configured: true, error: 'upstream_failed' });
+    return res.status(200).json({ count: 0, configured: true, error: 'upstream_failed', message: String(e) });
   }
 }
