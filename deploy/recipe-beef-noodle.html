@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>高壓鍋紅燒牛肉麵｜食譜</title>
+<meta name="description" content="用高壓鍋 35 分鐘煮出軟嫩紅燒牛肉麵，材料、步驟一頁看完。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:    #F4A082;
+    --coral-d:  #8A3A1E;
+    --blue:     #D2DCF6;
+    --blue-d:   #39447E;
+    --blue-bdr: rgba(57,68,126,.22);
+    --green:    #D4DCA4;
+    --green-d:  #4F5420;
+    --green-lt: rgba(212,220,164,.35);
+    --bg:       #FFFFFF;
+    --bg2:      #ECEEDE;
+    --text:     #1C1C1C;
+    --text2:    rgba(28,28,28,.55);
+    --text3:    rgba(28,28,28,.28);
+    --border:   rgba(0,0,0,.08);
+    --serif:'Noto Serif TC', serif;
+    --sans:'Noto Sans TC', sans-serif;
+    --shadow:0 12px 30px rgba(43,42,38,.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);color-scheme:light}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:60px 22px 64px}
+
+  /* 右上角頭像 chip（同 showerhead-colors，但連回站內首頁） */
+  .profile-chip{
+    position:fixed;
+    top:14px;
+    right:14px;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:5px 14px 5px 5px;
+    box-shadow:var(--shadow);
+    text-decoration:none;
+    color:var(--text);
+    max-width:calc(100vw - 28px);
+  }
+  .profile-chip img{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    flex:none;
+  }
+  .profile-chip span{
+    font-size:12px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+
+  /* 招牌 */
+  .hero{display:flex;align-items:flex-end;gap:20px;padding:44px 0 30px}
+  .hero-text{flex:1;padding-bottom:6px}
+  .hero-text p{margin:0;color:var(--text2);font-size:15px;line-height:1.9}
+  .hero-text .lead{color:var(--text);font-size:17px;margin-bottom:14px}
+  .signboard{
+    margin:0;
+    writing-mode:vertical-rl;
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(38px,11vw,52px);
+    letter-spacing:.14em;
+    line-height:1;
+    color:var(--blue-d);
+    border-right:3px solid var(--blue);
+    padding-right:14px;
+  }
+  .seal{
+    display:inline-block;margin-top:16px;
+    background:var(--coral);color:var(--coral-d);
+    font-family:var(--sans);font-weight:700;
+    font-size:13px;letter-spacing:.16em;
+    padding:6px 10px 6px 12px;border-radius:4px;
+  }
+
+  /* 數據列 */
+  .facts{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    background:var(--bg2);border-radius:14px;
+  }
+  .facts div{padding:16px 8px;text-align:center}
+  .facts div+div{border-left:1px solid var(--border)}
+  .facts b{display:block;font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.3;color:var(--blue-d)}
+  .facts span{font-size:13px;color:var(--text2)}
+
+  h2{
+    font-family:var(--serif);font-weight:700;
+    font-size:25px;letter-spacing:.06em;
+    margin:46px 0 6px;
+  }
+  .sub{margin:0 0 22px;color:var(--text2);font-size:14px}
+
+  /* 材料 */
+  .group{margin-bottom:26px}
+  .group h3{
+    font-family:var(--serif);font-size:17px;font-weight:600;
+    color:var(--green-d);margin:0 0 8px;letter-spacing:.08em;
+  }
+  ul{list-style:none;margin:0;padding:0}
+  .item{display:flex;gap:11px;align-items:flex-start;padding:7px 0;cursor:pointer}
+  .item input{position:absolute;opacity:0;width:0;height:0}
+  .box{
+    flex:none;width:20px;height:20px;margin-top:4px;
+    border:1.5px solid var(--text3);border-radius:6px;
+    background:var(--bg);position:relative;transition:background .12s,border-color .12s;
+  }
+  .box::after{
+    content:"";position:absolute;left:6px;top:2px;
+    width:5px;height:10px;border:solid var(--green-d);border-width:0 2px 2px 0;
+    transform:rotate(45deg) scale(0);transition:transform .12s;
+  }
+  .item input:checked ~ .box{background:var(--green);border-color:var(--green)}
+  .item input:checked ~ .box::after{transform:rotate(45deg) scale(1)}
+  .item input:checked ~ .txt{color:var(--text3);text-decoration:line-through}
+  .item input:focus-visible ~ .box{outline:2px solid var(--blue-d);outline-offset:2px}
+  .txt{flex:1;line-height:1.6;padding-top:1px}
+  .txt em{font-style:normal;color:var(--text2);font-size:14px}
+  .buy{
+    display:inline-block;margin:2px 0 6px 31px;
+    background:var(--coral);color:#fff;text-decoration:none;
+    font-size:14px;font-weight:700;letter-spacing:.04em;
+    padding:8px 16px;border-radius:999px;
+    transition:background .15s;
+  }
+  .buy:hover{background:#E55E3A}
+  .buy:focus-visible{outline:2px solid var(--coral-d);outline-offset:2px}
+  .reset{
+    display:none;background:none;border:none;padding:6px 0;
+    font-family:var(--sans);font-size:14px;color:var(--green-d);
+    text-decoration:underline;cursor:pointer;
+  }
+  .reset.on{display:inline-block}
+
+  /* 步驟 */
+  .step{display:flex;gap:16px;padding:22px 0;border-top:1px solid var(--border)}
+  .step:last-of-type{border-bottom:1px solid var(--border)}
+  .num{
+    flex:none;width:34px;height:34px;border-radius:50%;
+    background:var(--blue);color:var(--blue-d);
+    font-family:var(--serif);font-size:18px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step-body{flex:1;min-width:0}
+  .step-body h3{font-family:var(--serif);font-size:19px;font-weight:700;margin:3px 0 8px}
+  .step-body p{margin:0}
+
+  .tabs{display:flex;gap:8px;margin:14px 0 12px;flex-wrap:wrap}
+  .tab{
+    font-family:var(--sans);font-size:15px;
+    padding:8px 14px;border-radius:999px;cursor:pointer;
+    border:1.5px solid var(--border);background:var(--bg);color:var(--text2);
+  }
+  .tab[aria-selected="true"]{background:var(--blue);border-color:var(--blue-bdr);color:var(--blue-d);font-weight:700}
+  .tab:focus-visible{outline:2px solid var(--blue-d);outline-offset:2px}
+  .panel[hidden]{display:none}
+  .panel{
+    background:var(--bg2);border-left:3px solid var(--blue-d);
+    padding:14px 16px;border-radius:0 10px 10px 0;
+  }
+  .panel p{margin:0}
+  .panel b{color:var(--blue-d)}
+  .warn{color:var(--coral-d);font-size:14px;margin:10px 0 0}
+  .tip{
+    margin-top:14px;padding:14px 16px;
+    background:var(--green-lt);border-radius:10px;font-size:16px;
+  }
+  .tip b{color:var(--green-d)}
+
+  .note{margin-top:34px;font-size:16px;color:var(--text2);line-height:1.85}
+
+  footer{margin-top:52px;padding-top:24px;border-top:1px solid var(--border);text-align:center}
+  footer p{margin:0 0 14px;color:var(--text2);font-size:15px}
+  .ig{
+    display:inline-block;background:var(--coral);color:#fff;
+    text-decoration:none;font-size:16px;font-weight:700;
+    padding:13px 26px;border-radius:999px;
+    box-shadow:0 4px 16px rgba(245,110,74,.28);
+    transition:background .18s;
+  }
+  .ig:hover{background:#E55E3A}
+  .ig:focus-visible{outline:2px solid var(--coral-d);outline-offset:3px}
+  .disclosure{margin:20px 0 0;font-size:12px;color:var(--text3);line-height:1.7}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media print{
+    body{background:#fff;font-size:12pt}
+    .profile-chip,.reset,.ig,footer{display:none}
+    .panel[hidden]{display:block!important}
+    .tabs{display:none}
+    .step{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<a class="profile-chip" href="index.html">
+  <img src="img/avatar.jpg" alt="Nina">
+  <span>1minaday.nina</span>
+</a>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-text">
+      <p class="lead">丟進高壓鍋，35 分鐘就有一鍋軟嫩到用筷子夾得斷的牛腱心。</p>
+      <p>調味只用一瓶冰糖紅滷，不用備滷包、不用調豆瓣醬，湯頭靠番茄和蔬菜自然回甜。</p>
+      <span class="seal">免顧火</span>
+    </div>
+    <h1 class="signboard">紅燒牛肉麵</h1>
+  </header>
+
+  <div class="facts">
+    <div><b>4</b><span>人份</span></div>
+    <div><b>35</b><span>分鐘高壓</span></div>
+    <div><b>1</b><span>瓶醬搞定</span></div>
+  </div>
+
+  <h2>準備食材</h2>
+  <p class="sub">點一下可以打勾，買菜的時候邊逛邊點。</p>
+
+  <div class="group">
+    <h3>主料</h3>
+    <ul>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">牛腱心 2 條 <em>約 800–1000g，整條或切大厚塊</em></span></label></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>辛香料</h3>
+    <ul>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">青蔥 3 支 <em>切段</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">薑片 6 片</span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蒜頭 8 瓣 <em>拍扁</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">洋蔥 1/2 顆 <em>切塊</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">辣椒 1 根 <em>依辣度自選</em></span></label></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>蔬菜配料（增甜）</h3>
+    <ul>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">牛番茄 1 顆 <em>切塊</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">白蘿蔔或紅蘿蔔 1 根 <em>切大塊</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">馬鈴薯 1–2 顆 <em>切大塊；想吃到完整形狀就等洩壓後再放，煮 10 分鐘</em></span></label></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>調味</h3>
+    <ul>
+      <li>
+        <label class="item"><input type="checkbox"><span class="box"></span><span class="txt">淬釀中式釀造醬油—冰糖紅滷 約 200 ml <em>整鍋的鹹和甜都靠它，不用再放滷包、豆瓣醬、冰糖</em></span></label>
+        <a class="buy" href="https://s.shopee.tw/60RHA5w2nR" target="_blank" rel="noopener sponsored">我用的這瓶</a>
+      </li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">米酒 60 ml <em>小孩要吃就不加</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">水 約 1000–1200 ml <em>視鍋型，蓋過食材即可</em></span></label></li>
+    </ul>
+    <button class="reset" id="reset" type="button">清空勾選</button>
+  </div>
+
+  <h2>料理步驟</h2>
+  <p class="sub">前面三步在爐上做完，剩下的交給高壓鍋。</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="step-body">
+      <h3>牛腱心冷水汆燙</h3>
+      <p>牛腱心洗淨後冷水入鍋，加入 2 片薑（可再加 1 匙米酒去腥，小孩要吃就省略）。煮滾後轉中小火續煮 3–5 分鐘撈出血水雜質，撈起用冷水沖洗乾淨、瀝乾備用。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="step-body">
+      <h3>爆香辛香料</h3>
+      <p>高壓鍋內加入 1 大匙油，下蔥段、薑片、蒜頭、洋蔥炒到邊緣微焦、香氣出來。接著加入番茄塊拌炒到軟塌出汁，湯頭的甜味從這裡來。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="step-body">
+      <h3>下紅滷醬煮滾</h3>
+      <p>沿鍋邊倒入冰糖紅滷約 200 ml 嗆出醬香（要用米酒的話這時一起下），接著加清水約 1000–1200 ml、白蘿蔔、馬鈴薯和處理好的牛腱心，水量蓋過食材就好，大火煮滾。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="step-body">
+      <h3>高壓燉煮與燜入味</h3>
+      <p>你用的是哪一種鍋？</p>
+      <div class="tabs" role="tablist">
+        <button class="tab" type="button" role="tab" id="tab-e" aria-controls="p-e" aria-selected="true">電子壓力鍋</button>
+        <button class="tab" type="button" role="tab" id="tab-g" aria-controls="p-g" aria-selected="false">傳統瓦斯爐快鍋</button>
+      </div>
+      <div class="panel" id="p-e" role="tabpanel" aria-labelledby="tab-e">
+        <p>蓋上密封閥，選擇「牛肉／豆類」模式，設定 <b>35 分鐘</b>，行程結束後讓它<b>自然洩壓</b>。</p>
+      </div>
+      <div class="panel" id="p-g" role="tabpanel" aria-labelledby="tab-g" hidden>
+        <p>加蓋鎖緊開中大火，等配重閥升起、發出唧唧聲後轉小火計時 <b>25–30 分鐘</b>，關火待<b>完全自然洩壓</b>。</p>
+      </div>
+      <p class="warn">務必等浮子閥完全落下後再開蓋。</p>
+      <div class="tip"><b>入味關鍵：</b>洩壓開蓋後，讓牛腱在滷汁中浸泡 20–30 分鐘，肉質會更入味多汁。</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">5</div>
+    <div class="step-body">
+      <h3>組裝牛肉麵</h3>
+      <p>撈出牛腱心切片（若剛出鍋太軟，可稍放涼 5 分鐘再切更不易散開）。另起一鍋滾水煮熟麵條與青江菜，撈入碗中，鋪上厚切牛腱肉、蘿蔔塊，淋上熱騰騰的紅燒牛肉湯，撒上蔥花即可上桌。</p>
+    </div>
+  </div>
+
+  <p class="note">湯頭偏濃或偏鹹，用少許熱水調整就好；不夠味就再補一點紅滷醬，起鍋前試味道最準。想切出漂亮薄片，把整條牛腱取出放涼後冷藏再切，熱湯沖下去筋膜就會瞬間軟化。</p>
+
+  <footer>
+    <p>這份食譜想送給每個晚餐時間永遠不夠用的爸媽。<br>煮好了拍給我看，我會很開心。</p>
+    <a class="ig" href="https://www.instagram.com/1minaday.nina/" target="_blank" rel="noopener">到 IG 找 Nina</a>
+    <p class="disclosure">頁面中的購買連結為分潤連結，價格一樣，我會收到一點回饋。</p>
+  </footer>
+
+</div>
+
+<script>
+  // 材料勾選
+  var boxes = document.querySelectorAll('.item input');
+  var reset = document.getElementById('reset');
+  function sync(){
+    var any = false;
+    boxes.forEach(function(b){ if(b.checked) any = true; });
+    reset.classList.toggle('on', any);
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', sync); });
+  reset.addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    sync();
+  });
+
+  // 鍋具切換
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(o){
+        var panel = document.getElementById(o.getAttribute('aria-controls'));
+        var on = (o === t);
+        o.setAttribute('aria-selected', on ? 'true' : 'false');
+        panel.hidden = !on;
+      });
+    });
+  });
+</script>
+</body>
+</html>
