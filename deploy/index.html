@@ -714,6 +714,16 @@
 </section>
 
 
+<!-- ════ 3.5 食譜分享 ════ -->
+<section class="goods-section" id="recipesSection" style="display:none;">
+  <div class="reveal" style="padding: 36px 22px 18px;">
+    <span class="sec-label" style="color:var(--coral-d);display:block;margin-bottom:3px;">媽咪私房菜</span>
+    <h2 class="sec-title">食譜分享</h2>
+  </div>
+  <div class="gb-card-grid reveal" id="recipesGrid"></div>
+</section>
+
+
 
 <!-- ════ 4. VIDEOS ════ -->
 <section class="vid-section">
@@ -1296,6 +1306,30 @@
         </div>`;
       }).join('');
       document.getElementById('goodsSection').style.display = '';
+    }
+
+    // ── 食譜分享 ──
+    const recipes = (D.recipes || []).filter(r => r.published && r.title);
+    if (recipes.length) {
+      document.getElementById('recipesGrid').innerHTML = recipes.map(r => {
+        const imgHtml = r.image
+          ? `<img src="${r.image}" alt="${r.title}" loading="lazy">`
+          : `<div class="gb-card-img-placeholder"><i class="fa-solid fa-utensils"></i></div>`;
+        const isExternal = /^https?:\/\//.test(r.link || '');
+        const btnHtml = r.link
+          ? `<a href="${r.link}"${isExternal ? ' target="_blank" rel="noopener"' : ''} class="gb-card-btn" onclick="trackGb('recipe-view-${r.id}')">看食譜<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
+        const descHtml = r.desc
+          ? `<p style="font-size:.78rem;color:var(--text2);margin:4px 0 0;line-height:1.5;">${r.desc}</p>` : '';
+        return `<div class="gb-card">
+          <div class="gb-card-img">${imgHtml}</div>
+          <div class="gb-card-body">
+            <p class="gb-card-title">${r.title}</p>
+            ${descHtml}
+            ${btnHtml}
+          </div>
+        </div>`;
+      }).join('');
+      document.getElementById('recipesSection').style.display = '';
     }
 
     // Footer email

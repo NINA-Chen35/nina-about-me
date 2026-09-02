@@ -421,6 +421,16 @@ window.NINA_DATA = {
       "published": false
     }
   ],
+  "recipes": [
+    {
+      "id": "recipe1756800000000",
+      "title": "高壓鍋紅燒牛肉麵",
+      "desc": "35 分鐘軟嫩牛腱心，一瓶冰糖紅滷搞定，免顧火。",
+      "image": "",
+      "link": "recipe-beef-noodle.html",
+      "published": true
+    }
+  ],
   "github": {
     "owner": "NINA-Chen35",
     "repo": "nina-about-me",

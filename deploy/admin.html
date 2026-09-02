@@ -418,6 +418,9 @@
       <button class="nav-item" onclick="showSection('goods')" data-s="goods">
         <i class="fa-solid fa-star"></i><span>好物推薦</span>
       </button>
+      <button class="nav-item" onclick="showSection('recipes')" data-s="recipes">
+        <i class="fa-solid fa-utensils"></i><span>食譜分享</span>
+      </button>
       <div class="nav-sep"></div>
       <button class="nav-item" onclick="showSection('settings')" data-s="settings">
         <i class="fa-solid fa-gear"></i><span>設定</span>
@@ -474,6 +477,11 @@
       <div class="analytics-card" style="margin-bottom:16px" id="goods-analytics-card">
         <h3>好物推薦成效 <span class="hint">（「前往購買」被點擊的次數）</span></h3>
         <div id="goods-analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
+      </div>
+
+      <div class="analytics-card" style="margin-bottom:16px" id="recipes-analytics-card">
+        <h3>食譜點擊成效 <span class="hint">（「看食譜」被點擊的次數）</span></h3>
+        <div id="recipes-analytics-table"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div></div>
       </div>
 
       <div class="analytics-card">
@@ -551,6 +559,16 @@
       </div>
       <div class="form-hint" style="margin-bottom:14px;">跟團購檔期分開，適合放蝦皮酷碰分潤連結這類長期陳列、沒有時效性的推薦商品。</div>
       <div id="goodsList"></div>
+    </section>
+
+    <!-- Recipes -->
+    <section id="sec-recipes" class="section">
+      <div class="section-header">
+        <h1>食譜分享</h1>
+        <button class="btn-primary" onclick="openRecipeModal(null)"><i class="fa-solid fa-plus"></i> 新增食譜</button>
+      </div>
+      <div class="form-hint" style="margin-bottom:14px;">顯示在首頁「食譜分享」區。連結填站內食譜頁檔名（例：recipe-beef-noodle.html），分潤連結放在食譜頁裡面。新的食譜頁請 Claude 幫你做好推上 GitHub 後，再來這裡新增卡片。</div>
+      <div id="recipesList"></div>
     </section>
 
     <!-- Settings -->
@@ -908,6 +926,46 @@
   </div>
 </div>
 
+<div id="recipeModal" class="modal">
+  <div class="modal-overlay" onclick="closeRecipeModal()"></div>
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <h3 id="recipe-modal-title">新增食譜</h3>
+      <button class="modal-close" onclick="closeRecipeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="recipe-m-id">
+      <div class="form-group"><label>食譜名稱 *</label><input type="text" id="recipe-m-title" placeholder="例：高壓鍋紅燒牛肉麵"></div>
+      <div class="form-group"><label>一句話介紹</label><input type="text" id="recipe-m-desc" placeholder="例：35 分鐘軟嫩牛腱心，一瓶醬搞定"></div>
+      <div class="form-group">
+        <label>成品照片</label>
+        <input type="url" id="recipe-m-image" placeholder="https://... 或直接上傳圖片">
+        <div class="img-upload-row">
+          <label class="btn-secondary img-upload-btn">
+            <i class="fa-solid fa-upload"></i> 上傳圖片
+            <input type="file" id="recipe-m-image-file" accept="image/*" style="display:none;">
+          </label>
+          <span id="recipe-m-image-status" class="form-hint" style="margin:0;"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>食譜頁連結 *</label>
+        <input type="text" id="recipe-m-link" placeholder="recipe-beef-noodle.html">
+        <div class="form-hint">站內頁填檔名就好；也可以填完整網址（會開新分頁）</div>
+      </div>
+      <div class="toggle-row">
+        <span style="font-size:.8rem;font-weight:600;color:var(--text2);">上架狀態</span>
+        <label class="toggle"><input type="checkbox" id="recipe-m-published" checked><span class="toggle-slider"></span></label>
+        <span id="recipe-m-pub-label" style="font-size:.78rem;color:var(--text2)">已上架</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeRecipeModal()">取消</button>
+      <button class="btn-primary" onclick="saveRecipeItem()"><i class="fa-solid fa-check"></i> 儲存</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── Confirm Modal ── -->
 <div id="confirmModal" class="modal">
   <div class="modal-overlay" onclick="closeConfirm()"></div>
@@ -972,7 +1030,14 @@ function loadContent(){
   // 沒有 localStorage 才 fallback 到 content.js（初次部署的預設值）
   try {
     const s = localStorage.getItem(CONTENT_KEY);
-    if(s) return JSON.parse(s);
+    if(s){
+      const c = JSON.parse(s);
+      // 舊版 localStorage 快照沒有 recipes 欄位時，從 content.js 補回來，避免發布時把食譜區蓋掉
+      if(!c.recipes && window.NINA_DATA && window.NINA_DATA.recipes){
+        c.recipes = JSON.parse(JSON.stringify(window.NINA_DATA.recipes));
+      }
+      return c;
+    }
   } catch(_){}
   if(window.NINA_DATA) return JSON.parse(JSON.stringify(window.NINA_DATA));
   return getDefaultContent();
@@ -1004,6 +1069,7 @@ function showSection(name){
   if(name==='settings') { renderSettings(); renderGhSettings(); }
   if(name==='groupbuy') renderGroupBuy();
   if(name==='goods') renderGoods();
+  if(name==='recipes') renderRecipes();
   if(name==='deploy') renderDeploy();
 }
 
@@ -1092,6 +1158,26 @@ async function loadAnalytics(){
     `).join('');
   } else {
     goodsEl.innerHTML = '<div class="loading">尚未新增好物推薦</div>';
+  }
+
+  // 食譜點擊成效
+  const recipesEl = document.getElementById('recipes-analytics-table');
+  const recipeItems = CONTENT.recipes || [];
+  if(recipeItems.length){
+    recipesEl.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
+    const recipeCounts = await Promise.all(recipeItems.map(r=>fetchCount('recipe-view-'+r.id)));
+    const recipeRanked = recipeItems.map((r,i)=>({r, count:recipeCounts[i]})).sort((a,b)=>b.count-a.count);
+    const recipeMax = Math.max(...recipeCounts, 1);
+    recipesEl.innerHTML = recipeRanked.map(({r,count})=>`
+      <div class="analytics-row">
+        <div class="analytics-thumb" style="background-image:url('${r.image||''}');background-color:#eee"></div>
+        <span class="analytics-title">${r.title||'（未命名）'}</span>
+        <div class="analytics-bar-wrap"><div class="analytics-bar" style="width:${Math.round(count/recipeMax*100)}%"></div></div>
+        <span class="analytics-count">${count}</span>
+      </div>
+    `).join('');
+  } else {
+    recipesEl.innerHTML = '<div class="loading">尚未新增食譜</div>';
   }
 
   // 團購頁籤使用比例
@@ -1704,6 +1790,101 @@ function deleteGoodsItem(idx){
 }
 
 // ═══════════════════════════════════════════
+//  RECIPES
+// ═══════════════════════════════════════════
+function ensureRecipes(){
+  if(!CONTENT.recipes) CONTENT.recipes = [];
+}
+
+function renderRecipes(){
+  ensureRecipes();
+  const list = document.getElementById('recipesList');
+  if(!CONTENT.recipes.length){
+    list.innerHTML = '<p style="color:var(--text3);font-size:.85rem;padding:8px 0;">尚未新增食譜</p>';
+    return;
+  }
+  list.innerHTML = CONTENT.recipes.map((r,i)=>`
+    <div class="content-card" id="rc-${r.id}">
+      <div class="card-thumb" style="background-image:url('${r.image}');background:${r.image?'':'#eee'}"></div>
+      <div class="card-body">
+        <div class="card-title">${r.title||'（未命名）'}</div>
+        <div class="card-desc">${r.desc||r.link||''}</div>
+      </div>
+      <div class="card-actions">
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" ${r.published?'checked':''} onchange="toggleRecipePublished(${i},this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label">${r.published?'上架':'下架'}</span>
+        </div>
+        <button class="btn-icon btn-edit" onclick="openRecipeModal(${i})"><i class="fa-solid fa-pen"></i></button>
+        <button class="btn-icon btn-del" onclick="confirmDelete('刪除這個食譜卡片？（食譜頁本身不會被刪除）',()=>deleteRecipeItem(${i}))"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleRecipePublished(idx, published){
+  CONTENT.recipes[idx].published = published;
+  saveContent(CONTENT);
+  renderRecipes();
+  showToast(published?'已上架':'已下架');
+}
+
+function openRecipeModal(idx){
+  ensureRecipes();
+  const isNew = idx===null;
+  document.getElementById('recipe-modal-title').textContent = isNew?'新增食譜':'編輯食譜';
+  document.getElementById('recipe-m-id').value = isNew?'':idx;
+  const r = isNew ? {title:'',desc:'',image:'',link:'',published:true} : CONTENT.recipes[idx];
+  document.getElementById('recipe-m-title').value = r.title||'';
+  document.getElementById('recipe-m-desc').value = r.desc||'';
+  document.getElementById('recipe-m-image').value = r.image||'';
+  document.getElementById('recipe-m-link').value = r.link||'';
+  document.getElementById('recipe-m-published').checked = r.published!==false;
+  document.getElementById('recipe-m-pub-label').textContent = r.published!==false?'已上架':'已下架';
+  document.getElementById('recipe-m-published').onchange = function(){
+    document.getElementById('recipe-m-pub-label').textContent = this.checked?'已上架':'已下架';
+  };
+  document.getElementById('recipeModal').classList.add('open');
+}
+function closeRecipeModal(){ document.getElementById('recipeModal').classList.remove('open'); }
+
+function saveRecipeItem(){
+  ensureRecipes();
+  const title = document.getElementById('recipe-m-title').value.trim();
+  const link = document.getElementById('recipe-m-link').value.trim();
+  if(!title || !link){ showToast('請填寫食譜名稱和連結'); return; }
+  const item = {
+    id: 'recipe'+Date.now(),
+    title,
+    desc: document.getElementById('recipe-m-desc').value.trim(),
+    image: document.getElementById('recipe-m-image').value.trim(),
+    link,
+    published: document.getElementById('recipe-m-published').checked
+  };
+  const idxStr = document.getElementById('recipe-m-id').value;
+  if(idxStr===''){
+    CONTENT.recipes.push(item);
+  } else {
+    item.id = CONTENT.recipes[+idxStr].id;
+    CONTENT.recipes[+idxStr] = item;
+  }
+  saveContent(CONTENT);
+  renderRecipes();
+  closeRecipeModal();
+  showToast('食譜已儲存');
+}
+
+function deleteRecipeItem(idx){
+  CONTENT.recipes.splice(idx,1);
+  saveContent(CONTENT);
+  renderRecipes();
+  showToast('食譜已刪除');
+}
+
+// ═══════════════════════════════════════════
 //  SETTINGS
 // ═══════════════════════════════════════════
 function renderSettings(){
@@ -1979,6 +2160,7 @@ function bindImageUpload(fileInputId, urlInputId, statusId) {
 
 bindImageUpload('gb-m-image-file', 'gb-m-image', 'gb-m-image-status');
 bindImageUpload('goods-m-image-file', 'goods-m-image', 'goods-m-image-status');
+bindImageUpload('recipe-m-image-file', 'recipe-m-image', 'recipe-m-image-status');
 
 async function publishToGitHub() {
   const s = loadGhSettings();
@@ -2130,7 +2312,8 @@ function getDefaultContent(){
       ]}
     ],
     groupBuy:{pinnedBanner:{enabled:false,tags:[],title:"",subtitle:"",image:"",link:""},schedules:[]},
-    goodsPicks:[]
+    goodsPicks:[],
+    recipes:[]
   };
 }
 </script>
