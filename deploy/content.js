@@ -421,6 +421,13 @@ window.NINA_DATA = {
       "published": false
     }
   ],
+  "github": {
+    "owner": "NINA-Chen35",
+    "repo": "nina-about-me",
+    "branch": "main",
+    "path": "deploy/content.js",
+    "siteurl": "https://nina-about-me.vercel.app"
+  },
   "recipes": [
     {
       "id": "recipe1756800000000",
@@ -430,14 +437,7 @@ window.NINA_DATA = {
       "link": "recipe-beef-noodle.html",
       "published": true
     }
-  ],
-  "github": {
-    "owner": "NINA-Chen35",
-    "repo": "nina-about-me",
-    "branch": "main",
-    "path": "deploy/content.js",
-    "siteurl": "https://nina-about-me.vercel.app"
-  }
+  ]
 };
 
 // 頭像連點 5 下進入後台
