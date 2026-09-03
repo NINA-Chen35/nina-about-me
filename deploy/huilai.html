@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>會來尖石溫泉渡假村・費用與規則總整理｜Nina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:    #F4A082;
+    --coral-lt: rgba(244,160,130,.18);
+    --coral-d:  #8A3A1E;
+    --yellow:   #FFDF6F;
+    --blue:     #D2DCF6;
+    --blue-d:   #39447E;
+    --blue-lt:  rgba(210,220,246,.35);
+    --blue-bdr: rgba(57,68,126,.22);
+    --green:    #D4DCA4;
+    --green-d:  #4F5420;
+    --green-lt: rgba(212,220,164,.35);
+
+    --bg:   #FFFFFF;
+    --bg2:  #ECEEDE;
+    --bg3:  #EEECEA;
+    --text: #1C1C1C;
+    --text2: rgba(28,28,28,.55);
+    --text3: rgba(28,28,28,.28);
+    --border: rgba(0,0,0,.08);
+
+    --hero-bg: #141414;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg2);
+    color:var(--text);
+    font-family:'Noto Sans TC',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+  }
+  .sheet{max-width:440px;margin:0 auto;background:var(--bg)}
+
+  /* ── hero（比照網站：唯一的深色區塊）── */
+  .hero{background:var(--hero-bg);color:#fff;padding:34px 24px 30px}
+  .hero .venue{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;font-size:15px;letter-spacing:.16em;
+    color:var(--green);margin-bottom:20px;
+  }
+  .hero h1{
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;font-size:clamp(28px,8.4vw,36px);
+    line-height:1.3;letter-spacing:.02em;
+  }
+  .hero h1 span{color:var(--coral)}
+  .hero p{font-size:14px;color:rgba(255,255,255,.62);margin-top:16px;line-height:1.8}
+
+  main{padding:26px 24px 30px}
+  section{margin-bottom:26px}
+  h2{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;font-size:17px;
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:12px;
+  }
+  .band{display:inline-block;width:5px;height:19px;border-radius:3px;background:var(--green)}
+  .band.b{background:var(--blue)}
+
+  .card{background:var(--green-lt);border-radius:8px;padding:16px 18px}
+  .card.b{background:var(--blue-lt)}
+
+  .group+.group{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+  .group-name{font-size:13px;font-weight:500;color:var(--green-d);margin-bottom:4px}
+
+  .line{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:15px}
+  .line .what{flex:0 1 auto}
+  .line .lead{flex:1 1 auto;min-width:12px;border-bottom:1px dotted var(--text3);transform:translateY(-4px)}
+  .line .amt{flex:0 0 auto;font-weight:500;font-variant-numeric:tabular-nums}
+  .line .amt s{color:var(--text3);font-weight:300;margin-right:6px}
+  .line.sub{font-size:13px;color:var(--text2);padding:1px 0 3px 2px}
+  .line.free .amt{color:var(--coral-d);font-weight:700}
+
+  .flag{
+    display:block;margin-top:12px;padding:10px 13px;
+    background:var(--coral-lt);border-radius:6px;
+    font-size:14px;line-height:1.75;
+  }
+  .flag b{color:var(--coral-d);font-weight:500}
+
+  .note{display:flex;gap:12px;padding:8px 0;font-size:14.5px;border-bottom:1px solid var(--border)}
+  .note:last-child{border-bottom:0;padding-bottom:0}
+  .note dt{flex:0 0 74px;color:var(--blue-d);font-weight:500;font-size:13.5px}
+  .note dd{flex:1}
+
+  /* ── 訂房 CTA ── */
+  .book{
+    display:block;
+    background:var(--coral);
+    border-radius:8px;
+    padding:16px 18px;
+    text-decoration:none;
+    color:var(--text);
+    text-align:center;
+  }
+  .book .go{
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;font-size:18px;letter-spacing:.04em;
+  }
+  .book .url{
+    display:block;font-size:12.5px;color:var(--coral-d);
+    margin-top:6px;letter-spacing:.03em;word-break:break-all;
+  }
+  .book:focus-visible{outline:2px solid var(--coral-d);outline-offset:3px}
+
+  /* ── signoff ── */
+  .signoff{background:var(--bg3);padding:26px 24px;text-align:center}
+  .signoff .by{font-size:12px;letter-spacing:.14em;color:var(--text2);margin-bottom:10px}
+  .signoff .handle{
+    display:inline-block;
+    font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;
+    color:var(--text);text-decoration:none;
+    border-bottom:2px solid var(--coral);padding-bottom:2px;
+  }
+  .signoff .handle:focus-visible{outline:2px solid var(--coral-d);outline-offset:4px}
+  .signoff .bio{font-size:13.5px;color:var(--text2);line-height:1.85;margin-top:14px}
+
+  footer{padding:20px 24px 30px;font-size:12px;color:var(--text2);line-height:1.9;background:var(--bg3);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="hero">
+    <p class="venue">會來尖石溫泉渡假村</p>
+    <h1>未滿 110 公分<br><span>免費入場</span></h1>
+    <p>帶小小孩來，最大的一筆錢是省下來的。完整費用與規則整理在這，出發前對一次就好。</p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2><i class="band"></i>露營車住宿</h2>
+      <div class="card">
+        <div class="line"><span class="what">平日</span><span class="lead"></span><span class="amt">$5,500</span></div>
+        <div class="line"><span class="what">假日</span><span class="lead"></span><span class="amt">$6,800</span></div>
+        <div class="line sub">每車最多 4 人・附獨立衛浴・全區共 10 台</div>
+        <span class="flag">附贈<b>一日泡湯券</b>，住戶可用 <b>$190</b> 升級雙人湯屋。三個月前開放訂房，想去要早點揪。</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>溫泉大眾池</h2>
+      <div class="card">
+        <div class="line free"><span class="what">未滿 110cm 孩童</span><span class="lead"></span><span class="amt">免費</span></div>
+        <div class="line"><span class="what">成人</span><span class="lead"></span><span class="amt"><s>$400</s>平日 $350</span></div>
+        <div class="line"><span class="what">兒童</span><span class="lead"></span><span class="amt"><s>$300</s>平日 $250</span></div>
+        <div class="line"><span class="what">敬老（65 歲以上）</span><span class="lead"></span><span class="amt"><s>$300</s>平日 $250</span></div>
+        <div class="line"><span class="what">愛心票</span><span class="lead"></span><span class="amt"><s>$300</s>平日 $250</span></div>
+        <div class="line sub">敬老與愛心票須現場出示證件或手冊</div>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>雙人湯屋</h2>
+      <div class="card">
+        <div class="line"><span class="what">2 人</span><span class="lead"></span><span class="amt">$990</span></div>
+        <div class="line"><span class="what">第 3、4 位（滿 110cm）</span><span class="lead"></span><span class="amt">+$400 / 人</span></div>
+        <div class="line"><span class="what">使用時間</span><span class="lead"></span><span class="amt">平日 90 分 / 假日 60 分</span></div>
+        <div class="line"><span class="what">逾時</span><span class="lead"></span><span class="amt">$400 / 30 分</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>經典套房</h2>
+      <div class="card">
+        <div class="line sub" style="padding-left:0">按人頭計價</div>
+        <div class="line"><span class="what">平日・兩人</span><span class="lead"></span><span class="amt">$4,000</span></div>
+        <div class="line"><span class="what">假日・兩人</span><span class="lead"></span><span class="amt">$5,200</span></div>
+        <div class="line"><span class="what">加人｜3 歲以上未滿 110cm</span><span class="lead"></span><span class="amt">+$800</span></div>
+        <div class="line"><span class="what">加人｜滿 110cm 以上</span><span class="lead"></span><span class="amt">+$1,200</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>餐飲</h2>
+      <div class="card">
+        <div class="group">
+          <p class="group-name">早餐</p>
+          <div class="line"><span class="what">訂房時加購</span><span class="lead"></span><span class="amt">$300 / 人</span></div>
+          <div class="line"><span class="what">現場購買</span><span class="lead"></span><span class="amt">$320 / 人</span></div>
+        </div>
+        <div class="group">
+          <p class="group-name">桐聚鍋物</p>
+          <div class="line"><span class="what">單客</span><span class="lead"></span><span class="amt">$380 – $500</span></div>
+          <div class="line sub">住戶享 9 折</div>
+        </div>
+        <div class="group">
+          <p class="group-name">烤肉（訂房頁面加購）</p>
+          <div class="line"><span class="what">2 人份</span><span class="lead"></span><span class="amt">$1,200</span></div>
+          <div class="line"><span class="what">4 人份</span><span class="lead"></span><span class="amt">$2,200</span></div>
+          <div class="line"><span class="what">10 人份</span><span class="lead"></span><span class="amt">$4,200</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band b"></i>出發前要知道的事</h2>
+      <div class="card b">
+        <dl>
+          <div class="note"><dt>入住退房</dt><dd>露營車 16:00 進 / 12:00 退・客房 15:00 進 / 11:00 退</dd></div>
+          <div class="note"><dt>提早到</dt><dd>可先到櫃檯辦入住，進房前免費使用大眾池</dd></div>
+          <div class="note"><dt>距離</dt><dd>住宿區到泡湯區約 70 公尺，走過一座吊橋就到</dd></div>
+          <div class="note"><dt>要帶</dt><dd>大眾池需泳裝、泳帽、拖鞋</dd></div>
+          <div class="note"><dt>位置</dt><dd>新竹尖石，內灣老街開車約 5 分鐘</dd></div>
+          <div class="note"><dt>訂房</dt><dd>三個月前開放預訂，露營車全區只有 10 台</dd></div>
+          <div class="note"><dt>官網</dt><dd><a href="https://www.hui-lai.com.tw" target="_blank" rel="noopener" style="color:var(--coral-d)">www.hui-lai.com.tw</a></dd></div>
+          <div class="note"><dt>沒體驗</dt><dd>湯屋與小木屋我們這次沒住到，所以不介紹</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <a class="book" href="https://www.hui-lai.com.tw" target="_blank" rel="noopener">
+        <span class="go">到官網看房型・訂房</span>
+        <span class="url">www.hui-lai.com.tw</span>
+      </a>
+    </section>
+
+  </main>
+
+  <div class="signoff">
+    <p class="by">整理｜Nina</p>
+    <a class="handle" href="https://www.instagram.com/1minaday.nina/">@1minaday.nina</a>
+    <p class="bio">那個帶兩個孩子還能讓你笑出來的媽媽<br>更多帶小小孩出門的實測，都在 IG</p>
+  </div>
+
+  <footer>
+    金額由會來提供，園區規定引自官網。價格與規則可能調整，訂房前請以官方公告為準。<br>
+    本次為 會來尖石溫泉渡假村 邀請體驗，內容為實際入住後的個人心得。
+  </footer>
+
+</div>
+</body>
+</html>
