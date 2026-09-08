@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="robots" content="noindex">
+<title>樹洞｜Nina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light only;
+    --cream:   #F7EFE4;   /* 頁面底：暖奶油 */
+    --paper:   #FFFBF5;   /* 卡片與信紙 */
+    --paper2:  #F3E6D6;   /* 輸入框底 */
+    --clay:    #C96F4E;   /* 陶土橘：主按鈕、重點 */
+    --clay-d:  #9E4E33;
+    --clay-lt: rgba(201,111,78,.14);
+    --rose:    #E9BBA6;   /* 淡玫瑰：裝飾 */
+    --honey:   #EFC46B;   /* 蜂蜜黃：專線框 */
+    --sage:    #A9B99A;   /* 鼠尾草綠：小標 */
+    --ink:     #3A2E28;   /* 暖深棕文字 */
+    --ink2:    rgba(58,46,40,.62);
+    --ink3:    rgba(58,46,40,.34);
+    --line:    rgba(58,46,40,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--cream);
+    background-image:
+      radial-gradient(60% 40% at 15% 0%, rgba(233,187,166,.35), transparent 70%),
+      radial-gradient(50% 35% at 100% 100%, rgba(169,185,154,.22), transparent 70%);
+    color:var(--ink);
+    font-family:'Noto Sans TC',sans-serif;font-weight:300;line-height:1.8;
+  }
+  .sheet{max-width:460px;margin:0 auto;padding:0 18px 40px;min-height:100vh}
+
+  /* ── 標題區：暖色、不用黑底 ── */
+  .hero{padding:44px 8px 10px;text-align:center}
+  .hero .leaf{width:56px;height:56px;margin:0 auto 14px;display:block}
+  .hero .kicker{font-size:12.5px;letter-spacing:.24em;color:var(--clay-d);margin-bottom:12px}
+  .hero h1{
+    font-family:'Noto Serif TC',serif;font-weight:700;
+    font-size:clamp(30px,8.8vw,38px);line-height:1.35;letter-spacing:.02em;color:var(--ink);
+  }
+  .hero h1 span{color:var(--clay);position:relative;display:inline-block}
+  .hero h1 span::after{
+    content:"";position:absolute;left:-2px;right:-2px;bottom:4px;height:10px;
+    background:var(--rose);opacity:.55;border-radius:6px;z-index:-1;
+  }
+  .hero p{font-size:15px;color:var(--ink2);margin:18px auto 0;max-width:320px;line-height:1.9}
+
+  main{padding:22px 0 10px}
+  section{margin-bottom:22px}
+
+  .intro{
+    background:var(--paper);border-radius:18px;padding:20px 20px 18px;
+    box-shadow:0 10px 30px rgba(120,80,60,.08);
+    font-size:15px;line-height:1.95;
+  }
+  .intro p+p{margin-top:10px}
+  .intro b{font-weight:500;color:var(--clay-d)}
+
+  form{
+    background:var(--paper);border-radius:18px;padding:22px 20px 20px;
+    box-shadow:0 10px 30px rgba(120,80,60,.08);
+  }
+  .field .lbl{
+    font-family:'Noto Serif TC',serif;font-weight:600;font-size:17px;
+    display:flex;align-items:center;gap:9px;margin-bottom:12px;
+  }
+  .band{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--clay)}
+  textarea{
+    width:100%;min-height:180px;resize:vertical;
+    font:inherit;font-size:15.5px;line-height:1.85;color:var(--ink);
+    padding:16px;border:1.5px solid transparent;border-radius:14px;background:var(--paper2);
+    outline:none;transition:border-color .15s, background .15s;
+  }
+  textarea:focus{border-color:var(--rose);background:#fff}
+  textarea::placeholder{color:var(--ink3)}
+  .meta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink2);margin-top:8px}
+  .meta .count.over{color:var(--clay-d);font-weight:500}
+
+  .consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13.5px;color:var(--ink2);line-height:1.75}
+  .consent input{margin-top:6px;accent-color:var(--clay)}
+
+  .hp{position:absolute;left:-9999px;top:-9999px;height:0;width:0;opacity:0}
+
+  .btn{
+    display:block;width:100%;margin-top:18px;
+    background:var(--clay);border:0;border-radius:999px;padding:16px 18px;
+    font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;letter-spacing:.08em;color:#fff;
+    cursor:pointer;box-shadow:0 8px 20px rgba(201,111,78,.28);
+    transition:transform .1s;
+  }
+  .btn:active{transform:scale(.985)}
+  .btn:disabled{opacity:.55;cursor:default;box-shadow:none}
+  .btn:focus-visible{outline:2px solid var(--clay-d);outline-offset:3px}
+
+  .err{margin-top:12px;padding:11px 14px;background:var(--clay-lt);border-radius:10px;font-size:14px;color:var(--clay-d);display:none}
+  .err.show{display:block}
+
+  /* ── 等信 ── */
+  .waiting{display:none;margin-top:18px;padding:22px 18px;background:var(--paper);border-radius:18px;text-align:center;box-shadow:0 10px 30px rgba(120,80,60,.08)}
+  .waiting.show{display:block}
+  .waiting .line{font-family:'Noto Serif TC',serif;font-size:16px;color:var(--clay-d);min-height:1.8em}
+  .dots{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--rose);margin:10px 3px 0;animation:b 1.2s infinite}
+  .dots:nth-child(2){animation-delay:.2s}.dots:nth-child(3){animation-delay:.4s}
+  @keyframes b{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+  /* ── 信 ── */
+  .letter{display:none;margin-top:6px}
+  .letter.show{display:block}
+  .letter .paper{
+    background:var(--paper);border-radius:18px;
+    padding:30px 24px 26px;position:relative;
+    box-shadow:0 14px 40px rgba(120,80,60,.12);
+    background-image:repeating-linear-gradient(transparent 0 31px, rgba(58,46,40,.045) 31px 32px);
+    background-position:0 26px;
+  }
+  .letter .seal{
+    position:absolute;top:-14px;right:22px;width:34px;height:34px;border-radius:50%;
+    background:var(--clay);box-shadow:0 4px 10px rgba(201,111,78,.35);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-family:'Noto Serif TC',serif;font-weight:700;
+  }
+  .letter .from{font-size:12px;letter-spacing:.2em;color:var(--sage);margin-bottom:14px}
+  .letter .body{font-family:'Noto Serif TC',serif;font-size:16.5px;line-height:2;white-space:pre-wrap;color:var(--ink)}
+  .crisis{margin-top:16px;padding:12px 14px;background:var(--honey);border-radius:10px;font-size:14px;line-height:1.8;color:var(--ink)}
+  .crisis b{font-weight:700}
+  .letter .tools{display:flex;gap:10px;margin-top:14px}
+  .letter .tools button{
+    flex:1;background:var(--paper);border:1.5px solid var(--rose);border-radius:999px;padding:11px;
+    font:inherit;font-size:13.5px;color:var(--clay-d);cursor:pointer;
+  }
+  .letter .again{display:block;text-align:center;margin:20px auto 0;font-size:13.5px;color:var(--ink2);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px;font-family:inherit}
+
+  .honest{margin-top:20px;padding:14px 16px;background:rgba(255,251,245,.7);border:1px dashed var(--rose);border-radius:14px;font-size:12.5px;line-height:1.9;color:var(--ink2)}
+  .honest b{color:var(--ink);font-weight:500}
+
+  .signoff{padding:30px 10px 8px;text-align:center}
+  .signoff .by{font-size:12px;letter-spacing:.2em;color:var(--ink2);margin-bottom:10px}
+  .signoff .handle{display:inline-block;font-family:'Noto Serif TC',serif;font-weight:700;font-size:21px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--clay);padding-bottom:2px}
+  .signoff .bio{font-size:13.5px;color:var(--ink2);line-height:1.9;margin-top:14px}
+  footer{padding:16px 10px 0;font-size:12px;color:var(--ink2);line-height:1.9;text-align:center}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="hero">
+    <svg class="leaf" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+      <path d="M28 50c9-6 16-14 16-24 0-10-7-18-16-22C19 8 12 16 12 26c0 10 7 18 16 24z" fill="#E9BBA6"/>
+      <path d="M28 49V14" stroke="#C96F4E" stroke-width="2" stroke-linecap="round"/>
+      <path d="M28 30c-4-2-8-4-10-9M28 24c3-2 6-4 8-8M28 38c-4-2-9-5-12-11M28 34c4-2 8-5 11-10" stroke="#C96F4E" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <p class="kicker">一萬人的回禮</p>
+    <h1>把最難的那件事<br><span>丟進來</span></h1>
+    <p>不用留名字，不用寫得漂亮。寫完按下去，你會收到一封我寫給你的信。</p>
+  </header>
+
+  <main>
+    <section class="intro" id="intro">
+      <p>這個帳號一萬人的時候，我想送一個只有我能送的東西。</p>
+      <p>我在最爛的那一年最希望有人給我的，不是建議，是有人聽完之後說：<b>我也是，然後我們一起笑一下。</b></p>
+      <p>所以這裡是樹洞。你現在卡在什麼、被什麼打倒、今天哭了幾次，都可以丟。我不會叫你加油。</p>
+    </section>
+
+    <form id="form" novalidate>
+      <label class="field" for="msg">
+        <span class="lbl"><span class="band"></span>你現在遇到最困難的事</span>
+        <textarea id="msg" name="message" maxlength="600" placeholder="從哪裡開始都可以。例如：老公說他有在幫忙，但⋯"></textarea>
+      </label>
+      <div class="meta">
+        <span>匿名，我看不到你是誰</span>
+        <span class="count" id="count">0 / 600</span>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="canuse" checked>
+        <span>這則可以匿名變成 Nina 之後影片的靈感。不會出現你的名字，也不會貼你的原文，只會變成一個主題。</span>
+      </label>
+
+      <div class="hp" aria-hidden="true"><label>website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+      <button class="btn" type="submit" id="send">丟進樹洞</button>
+      <div class="err" id="err"></div>
+    </form>
+
+    <div class="waiting" id="waiting">
+      <div class="line" id="wline">Nina 在讀⋯</div>
+      <span class="dots"></span><span class="dots"></span><span class="dots"></span>
+    </div>
+
+    <section class="letter" id="letter">
+      <div class="paper">
+        <div class="seal">N</div>
+        <div class="from">FROM NINA</div>
+        <div class="body" id="lbody"></div>
+        <div class="crisis" id="crisis" hidden>
+          <b>如果你現在有傷害自己的念頭：</b>安心專線 <b>1925</b>（24 小時）、生命線 <b>1995</b>。有立即危險請打 <b>119</b>。這不是客套，是我真的希望你打。
+        </div>
+      </div>
+      <div class="tools">
+        <button type="button" id="copy">複製這封信</button>
+        <button type="button" id="shot">截圖存起來</button>
+      </div>
+      <button type="button" class="again" id="again">再丟一則</button>
+    </section>
+
+    <div class="honest">
+      <b>老實說：</b>這封信是我先把想講的話、我的故事、我的語氣交給 AI 小幫手，它依你寫的內容替我寫成的。每一則樹洞我都會親自讀，讀到想拍的會做成影片（匿名）。樹洞不存名字、不存 IP。
+    </div>
+  </main>
+
+  <div class="signoff">
+    <p class="by">寫信的人</p>
+    <a class="handle" href="https://www.instagram.com/1minaday.nina/" target="_blank" rel="noopener">@1minaday.nina</a>
+    <p class="bio">創業失敗・試管・雙寶 898g/890g 極早產<br>一年多遇到這些，我還是笑得出來哈哈<br>這不是什麼勵志故事，因為這就是我</p>
+  </div>
+  <footer>樹洞不是醫療或心理諮商。發展和身體的事請問你的主治或治療師；需要有人接電話的時候，1925 安心專線 24 小時都在。</footer>
+</div>
+
+<script>
+(function(){
+  var API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000/api/public/shudong'
+    : 'https://creator-income-nine.vercel.app/api/public/shudong';
+
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $('form'), msg = $('msg'), count = $('count'), send = $('send'), err = $('err');
+  var waiting = $('waiting'), wline = $('wline'), letter = $('letter'), lbody = $('lbody'), crisis = $('crisis');
+
+  msg.addEventListener('input', function(){
+    var n = msg.value.length;
+    count.textContent = n + ' / 600';
+    count.classList.toggle('over', n >= 600);
+  });
+
+  var LINES = ['Nina 在讀⋯', '先在原地爆哭一回⋯', '好，擦一擦⋯', '拍拍屁股站起來⋯', '寫給你⋯'];
+  var timer = null;
+  function startWaiting(){
+    var i = 0; wline.textContent = LINES[0];
+    waiting.classList.add('show');
+    timer = setInterval(function(){ i = (i + 1) % LINES.length; wline.textContent = LINES[i]; }, 2200);
+  }
+  function stopWaiting(){ clearInterval(timer); waiting.classList.remove('show'); }
+
+  function showErr(t){ err.textContent = t; err.classList.add('show'); }
+  function hideErr(){ err.classList.remove('show'); }
+
+  function showLetter(text, risk){
+    lbody.textContent = text;
+    crisis.hidden = risk !== 'crisis';
+    letter.classList.add('show');
+    form.style.display = 'none';
+    $('intro').style.display = 'none';
+    letter.scrollIntoView({behavior:'smooth', block:'start'});
+    try { localStorage.setItem('shudong_last', JSON.stringify({text:text, risk:risk, at:Date.now()})); } catch(e){}
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    hideErr();
+    var text = msg.value.trim();
+    if (text.length < 5) { showErr('再多寫一點，至少五個字。'); return; }
+    send.disabled = true;
+    startWaiting();
+    try {
+      var r = await fetch(API, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          message: text,
+          can_use: $('canuse').checked,
+          website: form.elements['website'].value
+        })
+      });
+      var j = null;
+      try { j = await r.json(); } catch(e2) {}
+      if (!r.ok || !j || !j.ok) {
+        showErr((j && j.error) || '樹洞暫時打不開，等一下再試。');
+        return;
+      }
+      showLetter(j.letter, j.risk);
+    } catch(e3) {
+      showErr('網路好像斷了。你寫的先別關掉，等一下再按一次。');
+    } finally {
+      stopWaiting();
+      send.disabled = false;
+    }
+  });
+
+  $('copy').addEventListener('click', function(){
+    var t = lbody.textContent + '\n\n— Nina @1minaday.nina';
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(function(){ $('copy').textContent = '複製好了'; });
+  });
+  $('shot').addEventListener('click', function(){
+    $('shot').textContent = '長按或用手機截圖就好';
+  });
+  $('again').addEventListener('click', function(){
+    letter.classList.remove('show');
+    form.style.display = '';
+    $('intro').style.display = '';
+    msg.value = ''; count.textContent = '0 / 600';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // 重新整理不會弄丟剛收到的信（只存在這支手機的瀏覽器裡）
+  try {
+    var last = JSON.parse(localStorage.getItem('shudong_last') || 'null');
+    if (last && last.text && Date.now() - last.at < 6*60*60*1000) {
+      showLetter(last.text, last.risk);
+    }
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
