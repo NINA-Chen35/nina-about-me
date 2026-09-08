@@ -511,6 +511,14 @@
     <!-- Group Buy -->
     <section id="sec-groupbuy" class="section">
       <div class="section-header"><h1>團購管理</h1></div>
+      <div class="settings-section" style="border-left:4px solid var(--coral);background:#fff7f3">
+        <p style="margin:0;font-size:.9rem;line-height:1.6">
+          <b>📅 期間限定團以 Google 行事曆為準。</b>在行事曆建 <code>🛍️ [團購] 名稱</code>（日期＝檔期），
+          說明欄可加 <code>連結:</code>、<code>優惠碼:</code>、<code>圖片:</code>、<code>怎麼買:</code>，一小時內自動出現在網站。<br>
+          這裡的「期間限定團」項目只用來<b>補圖片／連結／優惠碼</b>（用同名比對，行事曆沒寫的欄位才會用這裡的）；
+          行事曆上沒有的限定團<b>不會顯示</b>。「長久開團」不在行事曆上，仍由這裡管理。
+        </p>
+      </div>
 
       <!-- Pinned Banner -->
       <div class="settings-section">
@@ -1076,13 +1084,26 @@ function showSection(name){
 // ═══════════════════════════════════════════
 //  ANALYTICS
 // ═══════════════════════════════════════════
-async function fetchCount(key){
+// 計數改存自己的 Supabase（收入網站 /api/public/track），一次把全部 key 拿回來快取
+const TRACK_API = (CONTENT.settings && CONTENT.settings.trackApi) || 'https://creator-income-nine.vercel.app/api/public/track';
+const GB_API    = (CONTENT.settings && CONTENT.settings.groupBuyApi) || 'https://creator-income-nine.vercel.app/api/public/group-buys';
+let _statsCache = null;
+async function loadStats(){
+  if(_statsCache) return _statsCache;
   try{
-    const r = await fetch(`/api/count?key=${encodeURIComponent(key)}&action=get&ns=${encodeURIComponent(COUNTER_NS)}`,{signal:AbortSignal.timeout(4000)});
-    if(!r.ok) return 0;
-    const j = await r.json();
-    return j.count || 0;
-  } catch{ return 0; }
+    const r = await fetch(TRACK_API+'?all=1',{signal:AbortSignal.timeout(8000)});
+    const j = r.ok ? await r.json() : null;
+    _statsCache = (j && j.ok && j.counts) ? j.counts : {};
+  } catch{ _statsCache = {}; }
+  return _statsCache;
+}
+async function fetchCount(key){
+  const c = await loadStats();
+  return (c[key] && c[key].total) || 0;
+}
+async function fetchCount7(key){
+  const c = await loadStats();
+  return (c[key] && c[key].d7) || 0;
 }
 
 async function loadAnalytics(){
@@ -1091,10 +1112,13 @@ async function loadAnalytics(){
   });
   document.getElementById('analytics-table').innerHTML='<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
 
+  _statsCache = null; // 每次進頁面重抓
   const pv = await fetchCount('pageview');
   const ig = await fetchCount('igclick');
-  document.getElementById('stat-pv').textContent = pv.toLocaleString();
-  document.getElementById('stat-ig').textContent = ig.toLocaleString();
+  const pv7 = await fetchCount7('pageview');
+  const ig7 = await fetchCount7('igclick');
+  document.getElementById('stat-pv').innerHTML = pv.toLocaleString() + `<small style="font-size:.6em;color:#888;margin-left:6px">近7天 ${pv7}</small>`;
+  document.getElementById('stat-ig').innerHTML = ig.toLocaleString() + `<small style="font-size:.6em;color:#888;margin-left:6px">近7天 ${ig7}</small>`;
 
   // Per-video counts
   const allVids = CONTENT.videoSections.flatMap(s=>s.videos);
@@ -1118,7 +1142,16 @@ async function loadAnalytics(){
 
   // 團購成效（含已結束，方便回顧歷史檔期）
   const gbTableEl = document.getElementById('gb-analytics-table');
-  const schedules = (CONTENT.groupBuy && CONTENT.groupBuy.schedules) || [];
+  let schedules = ((CONTENT.groupBuy && CONTENT.groupBuy.schedules) || []).slice();
+  // 行事曆同步過來、後台沒有同名項目的檔期也列進來（id 是 sync-…）
+  try{
+    const r = await fetch(GB_API,{signal:AbortSignal.timeout(6000)});
+    const j = r.ok ? await r.json() : null;
+    const norm = s => String(s||'').replace(/[^\p{L}\p{N}]/gu,'').toLowerCase();
+    (j && j.ok && j.schedules || []).forEach(a=>{
+      if(!schedules.some(l=>norm(l.title)===norm(a.title))) schedules.push({id:a.id, title:'📅 '+a.title, image:a.image});
+    });
+  }catch{}
   if(schedules.length){
     gbTableEl.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> 載入中...</div>';
     const gbCounts = await Promise.all(schedules.map(async it => {
