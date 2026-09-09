@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>蒜蒜屋懶人料理 7 天｜食譜</title>
+<meta name="description" content="一罐蒜醬、一瓶醬油、一包海藻，七天七道晚餐再加碼兩道，每道動手不超過 10 分鐘。給聰明但懶惰的爸媽。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:    #F4A082;
+    --coral-d:  #8A3A1E;
+    --blue:     #D2DCF6;
+    --blue-d:   #39447E;
+    --blue-bdr: rgba(57,68,126,.22);
+    --green:    #D4DCA4;
+    --green-d:  #4F5420;
+    --green-lt: rgba(212,220,164,.35);
+    --bg:       #FFFFFF;
+    --bg2:      #ECEEDE;
+    --text:     #1C1C1C;
+    --text2:    rgba(28,28,28,.55);
+    --text3:    rgba(28,28,28,.28);
+    --border:   rgba(0,0,0,.08);
+    --serif:'Noto Serif TC', serif;
+    --sans:'Noto Sans TC', sans-serif;
+    --shadow:0 12px 30px rgba(43,42,38,.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);color-scheme:light;scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:60px 22px 64px}
+
+  .profile-chip{
+    position:fixed;top:14px;right:14px;z-index:50;
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border:1px solid var(--border);border-radius:999px;
+    padding:5px 14px 5px 5px;box-shadow:var(--shadow);
+    text-decoration:none;color:var(--text);max-width:calc(100vw - 28px);
+  }
+  .profile-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;display:block;flex:none}
+  .profile-chip span{font-size:12px;font-weight:600;white-space:nowrap}
+
+  /* 招牌 */
+  .hero{display:flex;align-items:flex-end;gap:20px;padding:44px 0 30px}
+  .hero-text{flex:1;padding-bottom:6px}
+  .hero-text p{margin:0;color:var(--text2);font-size:15px;line-height:1.9}
+  .hero-text .lead{color:var(--text);font-size:17px;margin-bottom:14px}
+  .signboard{
+    margin:0;writing-mode:vertical-rl;
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(34px,10vw,48px);letter-spacing:.14em;line-height:1;
+    color:var(--blue-d);border-right:3px solid var(--blue);padding-right:14px;
+  }
+  .seal{
+    display:inline-block;margin-top:16px;
+    background:var(--coral);color:var(--coral-d);
+    font-family:var(--sans);font-weight:700;
+    font-size:13px;letter-spacing:.16em;
+    padding:6px 10px 6px 12px;border-radius:4px;
+  }
+
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg2);border-radius:14px}
+  .facts div{padding:16px 8px;text-align:center}
+  .facts div+div{border-left:1px solid var(--border)}
+  .facts b{display:block;font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.3;color:var(--blue-d)}
+  .facts span{font-size:13px;color:var(--text2)}
+
+  h2{font-family:var(--serif);font-weight:700;font-size:25px;letter-spacing:.06em;margin:46px 0 6px}
+  .sub{margin:0 0 22px;color:var(--text2);font-size:14px}
+
+  /* 三樣主角 */
+  .pantry{display:grid;gap:12px}
+  .pantry-item{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--bg2);border-radius:14px;padding:16px 18px;
+  }
+  .pantry-item .ico{
+    flex:none;width:42px;height:42px;border-radius:12px;
+    background:var(--bg);display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+  }
+  .pantry-item h3{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 4px;color:var(--blue-d)}
+  .pantry-item p{margin:0;font-size:15px;color:var(--text2);line-height:1.7}
+  .pantry-item .use{color:var(--text);font-size:14px;margin-top:6px}
+  .pantry-item .use b{color:var(--green-d);font-weight:700}
+  .buy{
+    display:inline-block;margin-top:12px;
+    background:var(--coral);color:#fff;text-decoration:none;
+    font-size:14px;font-weight:700;letter-spacing:.04em;
+    padding:9px 18px;border-radius:999px;transition:background .15s;
+  }
+  .buy:hover{background:#E55E3A}
+  .buy:focus-visible{outline:2px solid var(--coral-d);outline-offset:2px}
+
+  /* 七天索引 */
+  .week{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .week a{
+    display:flex;align-items:center;gap:12px;
+    text-decoration:none;color:var(--text);
+    padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;
+    transition:border-color .15s,background .15s;
+  }
+  .week a:hover{border-color:var(--blue-bdr);background:var(--bg2)}
+  .week .d{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    background:var(--blue);color:var(--blue-d);
+    font-family:var(--serif);font-weight:700;font-size:13px;line-height:1.15;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .week .d small{font-size:10px;font-weight:600;letter-spacing:.08em}
+  .week .d.extra{background:var(--coral);color:var(--coral-d)}
+  .recipe-head .day.extra{background:var(--green);color:var(--green-d)}
+  .week .t{flex:1;min-width:0}
+  .week .t b{display:block;font-size:16px;line-height:1.4}
+  .week .t span{display:block;font-size:13px;color:var(--text2);line-height:1.5}
+  .week .m{flex:none;font-size:12px;color:var(--green-d);font-weight:700;letter-spacing:.04em;white-space:nowrap}
+
+  /* 單道食譜 */
+  .recipe{margin-top:56px;padding-top:8px;scroll-margin-top:72px}
+  .recipe-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .recipe-head .day{
+    font-family:var(--serif);font-weight:700;font-size:13px;letter-spacing:.16em;
+    color:var(--coral-d);background:var(--coral);padding:4px 10px;border-radius:4px;
+  }
+  .recipe h2{margin:0}
+  .recipe .why{margin:8px 0 18px;color:var(--text2);font-size:15px;line-height:1.85}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .chip{
+    font-size:13px;font-weight:700;letter-spacing:.04em;
+    padding:5px 12px;border-radius:999px;
+    background:var(--green-lt);color:var(--green-d);
+  }
+  .chip.blue{background:var(--blue);color:var(--blue-d)}
+
+  .group{margin-bottom:22px}
+  .group h3{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--green-d);margin:0 0 6px;letter-spacing:.08em}
+  ul{list-style:none;margin:0;padding:0}
+  .item{display:flex;gap:11px;align-items:flex-start;padding:6px 0;cursor:pointer}
+  .item input{position:absolute;opacity:0;width:0;height:0}
+  .box{
+    flex:none;width:20px;height:20px;margin-top:4px;
+    border:1.5px solid var(--text3);border-radius:6px;
+    background:var(--bg);position:relative;transition:background .12s,border-color .12s;
+  }
+  .box::after{
+    content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;
+    border:solid var(--green-d);border-width:0 2px 2px 0;
+    transform:rotate(45deg) scale(0);transition:transform .12s;
+  }
+  .item input:checked ~ .box{background:var(--green);border-color:var(--green)}
+  .item input:checked ~ .box::after{transform:rotate(45deg) scale(1)}
+  .item input:checked ~ .txt{color:var(--text3);text-decoration:line-through}
+  .item input:focus-visible ~ .box{outline:2px solid var(--blue-d);outline-offset:2px}
+  .txt{flex:1;line-height:1.6;padding-top:1px}
+  .txt em{font-style:normal;color:var(--text2);font-size:14px}
+
+  .step{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--border)}
+  .step:last-of-type{border-bottom:1px solid var(--border)}
+  .num{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--blue);color:var(--blue-d);
+    font-family:var(--serif);font-size:16px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .step-body{flex:1;min-width:0}
+  .step-body h3{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 6px}
+  .step-body p{margin:0;font-size:16px}
+  .tip{margin-top:14px;padding:13px 16px;background:var(--green-lt);border-radius:10px;font-size:15px;line-height:1.75}
+  .tip b{color:var(--green-d)}
+  .kids{margin-top:10px;padding:13px 16px;background:var(--blue);border-radius:10px;font-size:15px;line-height:1.75;color:var(--blue-d)}
+  .kids b{font-weight:700}
+
+  .reset{
+    display:none;background:none;border:none;padding:6px 0;
+    font-family:var(--sans);font-size:14px;color:var(--green-d);
+    text-decoration:underline;cursor:pointer;
+  }
+  .reset.on{display:inline-block}
+  .backtop{display:inline-block;margin-top:14px;font-size:13px;color:var(--text2);text-decoration:none}
+  .backtop:hover{color:var(--blue-d)}
+
+  .note{margin-top:34px;font-size:16px;color:var(--text2);line-height:1.85}
+
+  footer{margin-top:52px;padding-top:24px;border-top:1px solid var(--border);text-align:center}
+  footer p{margin:0 0 14px;color:var(--text2);font-size:15px}
+  .ig{
+    display:inline-block;background:var(--coral);color:#fff;text-decoration:none;
+    font-size:16px;font-weight:700;padding:13px 26px;border-radius:999px;
+    box-shadow:0 4px 16px rgba(245,110,74,.28);transition:background .18s;
+  }
+  .ig:hover{background:#E55E3A}
+  .ig:focus-visible{outline:2px solid var(--coral-d);outline-offset:3px}
+  .disclosure{margin:20px 0 0;font-size:12px;color:var(--text3);line-height:1.7}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+  @media print{
+    body{background:#fff;font-size:12pt}
+    .profile-chip,.reset,.ig,.buy,.backtop,footer{display:none}
+    .recipe{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<a class="profile-chip" href="index.html">
+  <img src="img/avatar.jpg" alt="Nina">
+  <span>1minaday.nina</span>
+</a>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-text">
+      <p class="lead">我不是不會煮，我是不想花時間煮。這七道菜是我把「好吃」跟「不想動」談出來的結果。</p>
+      <p>整週的底只有三樣調味：一罐蒜醬、一瓶醬油、一包海藻。不用剝蒜、不用熬高湯、不用查食譜，每一道真正動手的時間都在 10 分鐘以內，剩下交給電鍋、氣炸鍋，或是時間。</p>
+      <span class="seal">聰明但懶惰</span>
+    </div>
+    <h1 class="signboard">懶人七天</h1>
+  </header>
+
+  <div class="facts">
+    <div><b>7+2</b><span>道晚餐</span></div>
+    <div><b>3</b><span>樣調味</span></div>
+    <div><b>≤10</b><span>分鐘動手</span></div>
+  </div>
+
+  <h2>整週只用這三樣</h2>
+  <p class="sub">全部是蒜蒜屋這一家的東西。我家冰箱門邊常駐，這七天會一直看到它們。</p>
+
+  <div class="pantry">
+    <div class="pantry-item">
+      <div class="ico">🧄</div>
+      <div>
+        <h3>原味蒜醬</h3>
+        <p>雲林蒜頭剝好、切好、用油封起來。我懶得剝蒜、剝了手又臭一整天，這罐直接解決我最討厭的那一步。</p>
+        <p class="use"><b>怎麼用：</b>一小匙等於三、四瓣蒜。拌麵、醃肉、炒飯、涼拌都是它。</p>
+      </div>
+    </div>
+    <div class="pantry-item">
+      <div class="ico">🫙</div>
+      <div>
+        <h3>昆布蒜味醬油</h3>
+        <p>黑豆醬油底，昆布、柴魚、蒜頭都已經在裡面。一瓶就有鹹、有鮮、有香，不用再另外買柴魚醬油和味醂湊味道。</p>
+        <p class="use"><b>怎麼用：</b>拌、醃、煮湯、做溏心蛋，比例都是「醬油一、水一」起跳，再照口味加。</p>
+      </div>
+    </div>
+    <div class="pantry-item">
+      <div class="ico">🌿</div>
+      <div>
+        <h3>六色海藻</h3>
+        <p>六種乾燥海藻混在一包裡，泡水十分鐘就漲成一大盆，沒有腥味、口感脆脆的。孩子沒胃口的時候，這是我唯一能塞進他們嘴裡的纖維。</p>
+        <p class="use"><b>怎麼用：</b>涼拌直接吃、丟湯裡、拌進蛋液煎，三種用法這週都會出現。</p>
+      </div>
+    </div>
+  </div>
+  <!-- 想換成本檔期的購買頁，把下面這個 href 改掉就好 -->
+  <a class="buy" href="https://www.instagram.com/1minaday.nina/" target="_blank" rel="noopener">跟我用同款，到 IG 找連結</a>
+
+  <h2 id="menu" style="scroll-margin-top:72px">七天菜單</h2>
+  <p class="sub">點日期跳到那一道。前兩道是之前在 IG 分享過、被問最多次的，先從那裡開始。</p>
+
+  <ul class="week">
+    <li><a href="#d1"><span class="d">DAY<small>01</small></span><span class="t"><b>海藻柚香和風拌麵</b><span>之前在 IG 分享過，被問最多次的一碗</span></span><span class="m">8 分</span></a></li>
+    <li><a href="#d2"><span class="d">DAY<small>02</small></span><span class="t"><b>蒜醬櫛瓜麵</b><span>不吃澱粉的那天，削一削炒兩分鐘</span></span><span class="m">5 分</span></a></li>
+    <li><a href="#d3"><span class="d">DAY<small>03</small></span><span class="t"><b>蒜香醬油拌麵</b><span>孩子睡了之後，五分鐘餵飽自己</span></span><span class="m">5 分</span></a></li>
+    <li><a href="#d4"><span class="d">DAY<small>04</small></span><span class="t"><b>蒜香醬油溏心蛋</b><span>一次做一週，之後每天少想一道菜</span></span><span class="m">備餐</span></a></li>
+    <li><a href="#d5"><span class="d">DAY<small>05</small></span><span class="t"><b>六色海藻涼拌</b><span>不開火，泡水加拌就是一道菜</span></span><span class="m">0 火</span></a></li>
+    <li><a href="#d6"><span class="d">DAY<small>06</small></span><span class="t"><b>電鍋蒜香醬油雞腿</b><span>醃十分鐘、按一下，跳起來就開飯</span></span><span class="m">電鍋</span></a></li>
+    <li><a href="#d7"><span class="d">DAY<small>07</small></span><span class="t"><b>氣炸蒜香烤肉</b><span>中秋前的預演，在家就能烤</span></span><span class="m">氣炸</span></a></li>
+    <li><a href="#d8"><span class="d extra">加碼<small>01</small></span><span class="t"><b>海藻蛋花湯</b><span>三分鐘，小孩生病沒胃口那種日子</span></span><span class="m">3 分</span></a></li>
+    <li><a href="#d9"><span class="d extra">加碼<small>02</small></span><span class="t"><b>電鍋蒜香奶油菇菇飯</b><span>一鍋到底，飯菜一起好</span></span><span class="m">一鍋</span></a></li>
+  </ul>
+
+  <!-- ══════════ DAY 1 ══════════ -->
+  <section class="recipe" id="d1">
+    <div class="recipe-head"><span class="day">DAY 01</span><h2>海藻柚香和風拌麵</h2></div>
+    <p class="why">這碗我之前在 IG 分享過，私訊問「那個麵是哪牌」的人最多，所以排第一天。拌麵用青花驕的，附的醬夠香夠辣；海藻用柚香和風醬拌，酸酸的剛好把辣油的膩解掉；最後半熟荷包蛋戳破拌開，整碗就滑了。</p>
+    <div class="chips"><span class="chip">8 分鐘</span><span class="chip">1 鍋 1 平底鍋</span><span class="chip blue">1 人份</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">青花驕拌麵 1 包 <em>連附的醬包一起用</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">六色海藻（乾）1 小把 <em>約 8g，泡 10 分鐘</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">柚香和風醬 1–2 大匙 <em>市售的就好，多一樣調味，但這一樣值得</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蛋 1 顆</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蔥花或白芝麻 <em>有就撒</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>先泡海藻</h3><p>海藻冷水泡 10 分鐘，瀝乾擠掉多的水，加柚香和風醬拌一拌放旁邊。這一步先做，後面才不用等。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>煮麵，同時煎蛋</h3><p>麵照包裝時間煮。旁邊平底鍋少油，蛋打下去，蓋鍋蓋小火 2 分鐘，蛋白熟、蛋黃還會流的那種半熟。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>疊起來</h3><p>麵撈起拌附的醬，海藻鋪一邊，荷包蛋放正中間，撒蔥花芝麻。吃之前把蛋黃戳破整碗拌開。</p></div></div>
+
+    <div class="kids"><b>孩子版：</b>拌麵換 DAY 3 的蒜香醬油拌麵，海藻一樣用和風醬拌，蛋煎全熟。他們會先把海藻挑完。</div>
+    <div class="tip"><b>懶人備註：</b>海藻一次多泡一倍，拌好和風醬冷藏兩天內都能吃，隔天配任何麵、任何飯都行。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 2 ══════════ -->
+  <section class="recipe" id="d2">
+    <div class="recipe-head"><span class="day">DAY 02</span><h2>蒜醬櫛瓜麵</h2></div>
+    <p class="why">不想吃澱粉、又不想只啃生菜的那天。櫛瓜對半縱切，拿削皮刀一片一片削成長長的薄片，看起來就像麵。蒜醬爆香丟進去炒兩分鐘，起鍋。整道菜的難度在「不要炒太久」。</p>
+    <div class="chips"><span class="chip">5 分鐘</span><span class="chip">1 平底鍋</span><span class="chip blue">1–2 人份</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">櫛瓜 2 條 <em>綠的黃的都可以</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布鹽 半小匙 <em>或鮮味炒手少許，見下面備註</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">油 1 小匙、黑胡椒少許</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">小番茄幾顆或起司粉 <em>選配</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>削</h3><p>櫛瓜洗淨去頭尾，對半縱切。切面朝下放砧板，用削皮刀從頭到尾削成長薄片，削到中間籽多的部分就停，那段切丁一起炒或不要。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>爆香</h3><p>平底鍋中大火，油下去，蒜醬連油一起下，10 秒聞到蒜香就好，不要等它變色。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>炒兩分鐘就起鍋</h3><p>櫛瓜片全部下鍋，大火翻炒 1–2 分鐘，片子變軟但還有一點脆就撒昆布鹽和黑胡椒，拌兩下馬上起鍋。炒久了會整鍋出水，變成櫛瓜湯。</p></div></div>
+
+    <div class="tip"><b>昆布鹽可以取代鮮味炒手：</b>兩個都是「鹽加鮮味」，鮮味炒手靠味精，昆布鹽靠昆布本身的鮮味，方向一樣，只是昆布鹽比較含蓄。兩條櫛瓜先放半小匙，起鍋前試味道，覺得不夠鮮就補幾滴昆布蒜味醬油，鹹度和鮮味一起補上來。</div>
+    <div class="tip"><b>懶人備註：</b>鹽一定最後放。櫛瓜遇鹽就出水，先放的話你會在鍋裡看到它慢慢變成湯。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 3 ══════════ -->
+  <section class="recipe" id="d3">
+    <div class="recipe-head"><span class="day">DAY 03</span><h2>蒜香醬油拌麵</h2></div>
+    <p class="why">雙寶終於睡了，我站在廚房只剩一個念頭：我要吃熱的，但我不要洗第二個鍋。這碗麵就是這樣來的。</p>
+    <div class="chips"><span class="chip">5 分鐘</span><span class="chip">1 鍋</span><span class="chip blue">1 人份</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">關廟麵或任何細麵 1 把 <em>約 80–100g，泡麵的麵也行</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 1.5 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 小匙 <em>連油一起挖</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蛋 1 顆</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蔥花或海苔絲 <em>有就加，沒有就算了</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>煮麵，同時調醬</h3><p>水滾下麵。等麵的時候，碗底放醬油、蒜醬，再舀 1 大匙煮麵水進去攪開，醬會變得滑滑亮亮的。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>麵快好前，蛋下同一鍋</h3><p>麵剩 1 分鐘時，把蛋直接打進麵鍋角落，做成水波蛋。不想冒險就撈起麵後用同鍋煎荷包蛋，反正都是一個鍋。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>拌開，趁熱吃</h3><p>麵撈進碗裡，由下往上拌到每根麵都上色，蛋放上面，撒蔥花。坐下來，不要站著吃。</p></div></div>
+
+    <div class="tip"><b>懶人備註：</b>醬油和蒜醬的比例記成「三比一」，之後拌什麼都用這個，飯、青菜、水餃都行。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 4 ══════════ -->
+  <section class="recipe" id="d4">
+    <div class="recipe-head"><span class="day">DAY 04</span><h2>蒜香醬油溏心蛋</h2></div>
+    <p class="why">週末做一次，接下來五天的便當、拌麵、宵夜都多一樣菜。這是「今天多花 15 分鐘，之後每天少想一件事」的那種投資。</p>
+    <div class="chips"><span class="chip">15 分鐘</span><span class="chip">泡一夜</span><span class="chip blue">6–8 顆</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蛋 6–8 顆 <em>室溫，冰箱拿出來先放 10 分鐘</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 100ml</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">水 100ml</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">味醂 1 大匙 <em>沒有就用糖 1 小匙</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 小匙</span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>煮蛋 6 分半</h3><p>水滾後蛋輕輕放進去，計時 6 分 30 秒，喜歡更熟就 7 分。時間到馬上撈進冰水泡 5 分鐘，殼會很好剝。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>調醬</h3><p>醬油、水、味醂、蒜醬放進保鮮盒或夾鏈袋攪勻，不用加熱。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>泡一夜</h3><p>剝好的蛋放進醬汁，蛋要泡到，泡不到就翻面。冷藏至少 6 小時，隔天早上就能吃，第二天最入味。</p></div></div>
+
+    <div class="tip"><b>懶人備註：</b>冷藏可以放 4–5 天。醬汁泡完蛋不要丟，加碼的菇菇飯煮的時候當一部分的醬油用掉。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 5 ══════════ -->
+  <section class="recipe" id="d5">
+    <div class="recipe-head"><span class="day">DAY 05</span><h2>六色海藻涼拌</h2></div>
+    <p class="why">今天不開火。海藻泡水的十分鐘剛好夠我把兩個孩子從澡盆裡撈出來，回到廚房它已經漲好等我了。</p>
+    <div class="chips"><span class="chip">10 分鐘泡水</span><span class="chip">0 火</span><span class="chip blue">2–3 人份</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">六色海藻（乾）1 小把 <em>約 10g，泡開會變一大盆，第一次先抓少一點</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">白醋或檸檬汁 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 小匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">糖 半小匙、白芝麻 1 小匙、香油幾滴</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">小黃瓜絲或洋蔥絲 <em>選配，想加點口感再放</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>泡</h3><p>海藻放大碗，冷水蓋過，泡 10 分鐘。它會漲很多倍，碗要夠大。泡好瀝乾，用手輕輕擠掉多的水。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>調</h3><p>醬油、醋、蒜醬、糖、芝麻、香油全部放小碗攪一攪。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>拌</h3><p>醬倒進海藻裡拌勻，冰箱放 10 分鐘更入味，不放直接吃也可以。</p></div></div>
+
+    <div class="kids"><b>孩子版：</b>蒜醬和醋先不放，只用醬油、糖、芝麻、香油拌，切碎一點，脆脆的口感他們很吃。</div>
+    <div class="tip"><b>懶人備註：</b>一次多泡一倍，瀝乾裝盒冷藏可以放兩天，隔天直接進加碼的海藻蛋花湯。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 6 ══════════ -->
+  <section class="recipe" id="d6">
+    <div class="recipe-head"><span class="day">DAY 06</span><h2>電鍋蒜香醬油雞腿</h2></div>
+    <p class="why">這道是我對「一鍋到底」的執念。雞腿丟進去、按下去，我去陪玩，跳起來的時候連醬汁都好了，拌飯拌到孩子搶。</p>
+    <div class="chips"><span class="chip">10 分鐘醃</span><span class="chip">電鍋</span><span class="chip blue">2 大 2 小</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">去骨雞腿 2 片 <em>約 500g，帶皮</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 2 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">米酒 1 大匙 <em>孩子吃就換水</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">糖 1 小匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">薑 2 片、蔥 1 支 <em>切段，墊底用</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>醃</h3><p>雞腿、醬油、蒜醬、米酒、糖放進可以進電鍋的深盤，抓一抓，皮朝上。醃 10 分鐘，或前一晚就抓好放冰箱，隔天直接蒸。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>蒸</h3><p>薑片、蔥段墊在雞腿下面。電鍋外鍋 1.5 杯水，按下去，跳起來再燜 5 分鐘。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>切、淋</h3><p>雞腿取出切塊，盤底的醬汁不要倒掉，那是整道菜的精華，全部淋回去，或直接拌進飯裡。</p></div></div>
+
+    <div class="tip"><b>懶人備註：</b>盤底醬汁多的話，隔天煮一把青菜直接拌它，又省一道調味。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ DAY 7 ══════════ -->
+  <section class="recipe" id="d7">
+    <div class="recipe-head"><span class="day">DAY 07</span><h2>氣炸蒜香烤肉</h2></div>
+    <p class="why">中秋節帶雙寶去烤肉現場，我只會顧孩子顧到沒吃到東西。所以我先在家用氣炸鍋預演一次，醃料一樣、味道一樣，還不用生火。</p>
+    <div class="chips"><span class="chip">10 分鐘醃</span><span class="chip">氣炸鍋</span><span class="chip blue">2 大 2 小</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">梅花豬肉片或去骨雞腿 400g</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">杏鮑菇 2 根、甜椒 1 顆 <em>切厚片，吸醬用</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 2 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">糖 1 小匙、白胡椒少許 <em>家裡有蒜蒜燒肉醬就直接用它取代這三樣</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">白芝麻 <em>最後撒</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>醃</h3><p>肉、菇、甜椒放同一個袋子，醬油、蒜醬、糖、胡椒倒進去，隔著袋子搓一搓，醃 10 分鐘。前一晚醃好更好。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>氣炸</h3><p>氣炸鍋 200 度，肉片攤平不要疊，8 分鐘；雞腿的話 12–15 分鐘中間翻一次。菇和甜椒最後 5 分鐘再放進去。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>上桌</h3><p>撒芝麻，旁邊放一盤 DAY 5 的海藻涼拌解膩。月餅自己買，我不做。</p></div></div>
+
+    <div class="tip"><b>懶人備註：</b>這個醃料就是中秋當天帶去現場的醃料。前一晚醃好整袋帶走，現場只要負責烤，不用再調味。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ 加碼 1 ══════════ -->
+  <section class="recipe" id="d8">
+    <div class="recipe-head"><span class="day extra">加碼 01</span><h2>海藻蛋花湯</h2></div>
+    <p class="why">孩子發燒、不吃飯、只肯喝湯的那種日子。這碗湯從開火到端上桌三分鐘，纖維和蛋白質都有，我自己也是靠它撐過好幾個晚上。</p>
+    <div class="chips"><span class="chip">3 分鐘</span><span class="chip">1 鍋</span><span class="chip blue">2 碗</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">水 500ml</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">六色海藻（乾）1 小撮 <em>約 3g，直接下鍋不用先泡</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 1 大匙 <em>湯底的鮮味全靠它，不用另外高湯</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蛋 1 顆 <em>打散</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">白胡椒、香油 <em>幾滴就好</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>水滾下海藻</h3><p>水滾後海藻直接放，煮 1 分鐘它就會漲開，同時加醬油。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>蛋花</h3><p>轉小火，蛋液沿著鍋邊細細倒進去，等 5 秒再輕輕推一下，蛋花才會大片漂亮。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>起鍋</h3><p>撒白胡椒、滴香油，關火。想吃飽一點就把隔夜飯丟進去變海藻蛋粥。</p></div></div>
+
+    <div class="kids"><b>孩子版：</b>白胡椒不放，醬油減半，飯一起煮軟成粥，湯匙就能餵。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+  <!-- ══════════ 加碼 2 ══════════ -->
+  <section class="recipe" id="d9">
+    <div class="recipe-head"><span class="day extra">加碼 02</span><h2>電鍋蒜香奶油菇菇飯</h2></div>
+    <p class="why">週一的我沒有力氣做兩道菜，所以飯跟菜一起煮。奶油是最後才放的，開蓋那一下的香味會讓全家自己走過來。</p>
+    <div class="chips"><span class="chip">5 分鐘備料</span><span class="chip">電鍋</span><span class="chip blue">2 大 2 小</span></div>
+
+    <div class="group">
+      <h3>材料</h3>
+      <ul>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">白米 2 杯 <em>洗好</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">水 1.8 杯 <em>比平常少一點，因為醬油也是水分</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">鴻喜菇或雪白菇 1 包 <em>手撕就好，不用切</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">昆布蒜味醬油 2 大匙 <em>DAY 4 泡過蛋的醬汁可以拿來抵一部分</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">原味蒜醬 1 大匙</span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">奶油 10g <em>一小塊</em></span></label></li>
+        <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">雞胸丁或培根 <em>選配，想有肉就切一點丟進去</em></span></label></li>
+      </ul>
+    </div>
+
+    <div class="step"><div class="num">1</div><div class="step-body"><h3>全部丟進內鍋</h3><p>米、水、醬油、蒜醬攪一下，菇和肉鋪在最上面不要攪。</p></div></div>
+    <div class="step"><div class="num">2</div><div class="step-body"><h3>煮飯模式</h3><p>電鍋外鍋 1 杯水按下去，或電子鍋直接用白米模式。跳起來先不要開，燜 10 分鐘。</p></div></div>
+    <div class="step"><div class="num">3</div><div class="step-body"><h3>奶油拌開</h3><p>開蓋，奶油放在飯上面，用飯匙由下往上翻鬆拌勻，奶油會邊融邊裹住每一粒米。</p></div></div>
+
+    <div class="tip"><b>懶人備註：</b>剩飯隔天用一點奶油煎成鍋巴飯，比第一天更好吃，這是唯一一道我會故意多煮的。</div>
+    <a class="backtop" href="#menu">↑ 回菜單</a>
+  </section>
+
+  <p class="note">七天結束之後，這三樣我還是會繼續用，因為它們解決的不是「今天吃什麼」，是「今天不想煮」。調味比例照著頁面上的來一次，之後就會變成手感，不用再回來看。<br><button class="reset" id="reset" type="button">清空這一頁所有勾選</button></p>
+
+  <footer>
+    <p>這一頁送給每個聰明但懶惰的爸媽。<br>不需要七天全做，做到哪一天都算贏。</p>
+    <a class="ig" href="https://www.instagram.com/1minaday.nina/" target="_blank" rel="noopener">到 IG 找 Nina</a>
+    <p class="disclosure">這一頁的三樣調味是我實際在用、也有合作的品牌。食譜是我家餐桌的真實版本，跟品牌沒有關係。</p>
+  </footer>
+
+</div>
+
+
+<script>
+  var boxes = document.querySelectorAll('.item input');
+  var reset = document.getElementById('reset');
+  function sync(){
+    var any = false;
+    boxes.forEach(function(b){ if(b.checked) any = true; });
+    reset.classList.toggle('on', any);
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', sync); });
+  reset.addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    sync();
+  });
+</script>
+</body>
+</html>

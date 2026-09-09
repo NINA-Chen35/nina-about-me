@@ -1044,6 +1044,11 @@ function loadContent(){
       if(!c.recipes && window.NINA_DATA && window.NINA_DATA.recipes){
         c.recipes = JSON.parse(JSON.stringify(window.NINA_DATA.recipes));
       }
+      // content.js 裡有、但本機快照沒有的食譜卡（例如 Claude 直接推上 GitHub 的新食譜頁），補進快照，避免下次發布時被蓋掉
+      if(Array.isArray(c.recipes) && window.NINA_DATA && Array.isArray(window.NINA_DATA.recipes)){
+        const have = new Set(c.recipes.map(r=>r.id));
+        window.NINA_DATA.recipes.forEach(r=>{ if(r && r.id && !have.has(r.id)) c.recipes.push(JSON.parse(JSON.stringify(r))); });
+      }
       return c;
     }
   } catch(_){}
