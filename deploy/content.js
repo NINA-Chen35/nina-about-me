@@ -436,6 +436,14 @@ window.NINA_DATA = {
       "image": "img/uploads/1788339457460-IMG_5895.jpg",
       "link": "recipe-beef-noodle.html",
       "published": true
+    },
+    {
+      "id": "recipe1788000000000",
+      "title": "蒜蒜屋懶人料理 7 天",
+      "desc": "一罐蒜醬、一瓶醬油、一包海藻，七道晚餐每道動手不超過 10 分鐘。",
+      "image": "",
+      "link": "recipe-garlic-lazy-week.html",
+      "published": true
     }
   ]
 };
