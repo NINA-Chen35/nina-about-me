@@ -441,7 +441,7 @@ window.NINA_DATA = {
       "id": "recipe1788000000000",
       "title": "蒜蒜屋懶人料理 7 天",
       "desc": "一罐蒜醬、一瓶醬油、一包海藻，七天菜單再加碼兩道，每道動手不超過 10 分鐘。",
-      "image": "",
+      "image": "img/uploads/recipe-garlic-lazy-week.jpg",
       "link": "recipe-garlic-lazy-week.html",
       "published": true
     }
