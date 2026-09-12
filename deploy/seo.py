@@ -26,6 +26,8 @@ BEGIN = "<!-- SEO:BEGIN 由 seo.py 產生，請勿手改；要改請改 seo.py �
 END = "<!-- SEO:END -->"
 
 SITE_NAME = "Nina 雙胞胎媽咪"
+# Google Search Console 驗證碼（2026-09-13 Nina 提供，只放首頁）
+GOOGLE_SITE_VERIFICATION = "F6ftN9_fucSaCovtXVmtCntzLgs7Q5s5KLKIlIwSEzI"
 DEFAULT_OG = "img/og-default.jpg"
 
 # ── 實體一致性：這段文字要跟 IG bio、Threads bio、文章署名用同一套說法 ──
@@ -336,6 +338,8 @@ def build_block(page, cfg, html, title):
         lines.append(END)
         return "\n".join(lines)
 
+    if page == "index.html" and GOOGLE_SITE_VERIFICATION:
+        lines.append('  <meta name="google-site-verification" content="%s">' % GOOGLE_SITE_VERIFICATION)
     lines += [
         '  <meta name="description" content="%s">' % desc,
         '  <link rel="canonical" href="%s">' % url,
