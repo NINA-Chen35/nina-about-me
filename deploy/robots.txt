@@ -1,0 +1,48 @@
+# robots.txt — 目標是「歡迎 AI 來抓」，所以全部放行。
+# 不想被引用的頁面用 <meta name="robots" content="noindex"> 擋，不要在這裡 Disallow，
+# 否則爬蟲讀不到 noindex，反而可能留下沒有內容的搜尋結果。
+
+User-agent: *
+Allow: /
+
+# 以下明確列出各家 AI 爬蟲，表明允許被引用（預設本來就是允許，這裡是寫清楚）
+User-agent: GPTBot  # ChatGPT 訓練
+Allow: /
+
+User-agent: OAI-SearchBot  # ChatGPT 搜尋
+Allow: /
+
+User-agent: ChatGPT-User  # ChatGPT 即時瀏覽
+Allow: /
+
+User-agent: ClaudeBot  # Claude
+Allow: /
+
+User-agent: Claude-User  # Claude 即時瀏覽
+Allow: /
+
+User-agent: Claude-SearchBot  # Claude 搜尋
+Allow: /
+
+User-agent: PerplexityBot  # Perplexity
+Allow: /
+
+User-agent: Perplexity-User  # Perplexity 即時瀏覽
+Allow: /
+
+User-agent: Google-Extended  # Google AI Overview / Gemini
+Allow: /
+
+User-agent: Applebot-Extended  # Apple Intelligence
+Allow: /
+
+User-agent: Bingbot  # Bing / Copilot
+Allow: /
+
+User-agent: meta-externalagent  # Meta AI
+Allow: /
+
+User-agent: Amazonbot  # Amazon
+Allow: /
+
+Sitemap: https://nina-about-me.vercel.app/sitemap.xml

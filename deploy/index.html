@@ -465,10 +465,23 @@
       position: absolute; top: 8px; left: 8px;
       display: inline-flex; align-items: center; gap: 4px;
       font-size: .6rem; font-weight: 800; letter-spacing: .02em;
-      padding: 3px 9px; border-radius: 99px;
+      padding: 4px 10px; border-radius: 99px;
       background: rgba(255,255,255,.92); color: var(--text2);
-      box-shadow: 0 1px 4px rgba(0,0,0,.1);
+      box-shadow: 0 1px 4px rgba(0,0,0,.14);
     }
+    /* 2026-09-13 徽章改用顏色凸顯：開團中＝珊瑚橘、即將開團＝藍、常駐＝綠 */
+    .gb-card-badge--date { background: var(--coral); color: #fff; font-size: .64rem; }
+    .gb-card.is-soon .gb-card-badge--date { background: var(--blue-d); color: #fff; }
+    .gb-card-badge--ongoing { background: var(--green-d); color: #fff; }
+    /* 超過 4 張就收起來 */
+    .gb-card.gb-hidden { display: none; }
+    .gb-more {
+      display: block; margin: 12px 22px 0; padding: 10px; width: calc(100% - 44px);
+      background: none; border: 1px dashed rgba(0,0,0,.18); border-radius: 10px;
+      color: var(--coral-d); font-size: .8rem; font-weight: 700; letter-spacing: .04em; cursor: pointer;
+      font-family: inherit;
+    }
+    .gb-more:hover { background: rgba(255,255,255,.6); }
     /* 圖片上的介紹影片／限動精選按鈕（偏下） */
     .gb-card-img-video-btn {
       position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 1;
@@ -593,7 +606,206 @@
     }
     .gb-cal-row-btn.open { background: var(--coral); color: var(--coral-d); }
     .gb-cal-row-btn.soon { background: var(--blue); color: var(--blue-d); }
+
+    /* ── 文章區（靜態寫死，不走 content.js，避免後台發布時被蓋掉）── */
+    .art-list { padding: 0 22px; display: flex; flex-direction: column; gap: 12px; }
+    .art-card {
+      display: block; text-decoration: none; color: inherit;
+      background: var(--bg); border: 1px solid var(--border);
+      border-left: 4px solid var(--coral);
+      border-radius: 12px; padding: 17px 19px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .art-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.07); }
+    .art-card .art-kicker {
+      display: inline-block; font-size: 11px; letter-spacing: .12em;
+      color: var(--coral-d); background: var(--coral-lt);
+      padding: 3px 9px; border-radius: 99px; margin-bottom: 9px;
+    }
+    .art-card .art-title {
+      font-family: 'Noto Serif TC', serif; font-weight: 600;
+      font-size: 17px; line-height: 1.5; margin-bottom: 6px;
+    }
+    .art-card .art-desc {
+      font-size: 13.5px; line-height: 1.7; color: var(--text2); font-weight: 300;
+    }
+    .art-card .art-go {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 11px; font-size: 13px; color: var(--coral-d); font-weight: 500;
+    }
+
+    /* ══ 半圓選單按鈕（Nina 揮手）＋右側目錄抽屜 ══ */
+    .nav-fab {
+      position: fixed; right: 0; top: 56%; z-index: 950;
+      width: 56px; height: 112px; border: 0; padding: 0; cursor: pointer;
+      background: var(--coral);
+      border-radius: 112px 0 0 112px;
+      box-shadow: -4px 6px 18px rgba(0,0,0,.14);
+      display: flex; align-items: center; justify-content: flex-end;
+      transform: translateX(6px);
+      transition: transform .25s cubic-bezier(.22,1,.36,1), background .2s;
+      animation: fabIn .9s cubic-bezier(.22,1,.36,1) .6s both;
+    }
+    .nav-fab:hover, .nav-fab:focus-visible { transform: translateX(0); background: #EE8E6C; outline: none; }
+    .nav-fab .fab-txt {
+      font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 15px; line-height: 1.25;
+      letter-spacing: .08em; color: #fff; margin-right: 10px; text-align: center;
+      writing-mode: horizontal-tb;
+    }
+    @keyframes fabIn { from { transform: translateX(80px); } to { transform: translateX(6px); } }
+    body.drawer-open .nav-fab { transform: translateX(80px); }
+
+    .drawer-bg {
+      position: fixed; inset: 0; z-index: 960; background: rgba(20,20,20,.38);
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 970;
+      width: min(300px, 82vw); background: var(--bg);
+      box-shadow: -8px 0 32px rgba(0,0,0,.16);
+      transform: translateX(100%); transition: transform .35s cubic-bezier(.22,1,.36,1);
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    body.drawer-open .drawer-bg { opacity: 1; pointer-events: auto; }
+    body.drawer-open .drawer { transform: none; }
+    body.drawer-open { overflow: hidden; }
+    .drawer-head {
+      display: flex; align-items: center; gap: 12px; padding: 22px 22px 18px;
+      border-bottom: 1px solid var(--border); background: var(--coral-lt);
+    }
+    .drawer-head img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid #fff; }
+    .drawer-head b { display: block; font-size: 1rem; font-weight: 700; }
+    .drawer-head span { font-size: .78rem; color: var(--text2); }
+    .drawer-close {
+      margin-left: auto; width: 34px; height: 34px; border-radius: 50%; border: 0;
+      background: rgba(0,0,0,.06); color: var(--text); cursor: pointer; font-size: 15px;
+    }
+    .drawer nav { padding: 10px 12px 18px; display: flex; flex-direction: column; }
+    .drawer nav a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 12px; border-radius: 10px; text-decoration: none; color: var(--text);
+      font-size: .98rem; font-weight: 500;
+    }
+    .drawer nav a i { width: 20px; text-align: center; color: var(--coral-d); font-size: 15px; }
+    .drawer nav a small { margin-left: auto; font-size: .72rem; color: var(--text3); font-weight: 400; }
+    .drawer nav a:hover { background: var(--bg2); }
+    .drawer nav a[hidden] { display: none; }
+    .drawer-foot { margin-top: auto; padding: 16px 22px 26px; font-size: .74rem; color: var(--text3); border-top: 1px solid var(--border); }
+    section, footer { scroll-margin-top: 60px; }
+
+    /* ══ 桌機版（≥ 860px）：內容置中限寬、卡片多欄 ══ */
+    @media (min-width: 860px) {
+      body { font-size: 17px; }
+      .top-bar {
+        padding-left: max(18px, calc((100% - 1080px) / 2 + 18px));
+        padding-right: max(18px, calc((100% - 1080px) / 2 + 18px));
+      }
+      .hero-video-wrap { max-height: 560px; }
+      .hero-info-card,
+      .gb-section > *, .goods-section > *, .vid-section > *, .find-section > * {
+        max-width: 1080px; margin-left: auto; margin-right: auto;
+      }
+      .gb-toast { max-width: none; }
+      .sec-title { font-size: 1.45rem; }
+      .gb-card-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .gb-more { max-width: 1036px; margin-left: auto; margin-right: auto; }
+      .art-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+      .art-card { display: flex; flex-direction: column; }
+      .art-card .art-go { margin-top: auto; padding-top: 12px; }
+      .vid-scroll { flex-wrap: wrap; overflow: visible; gap: 16px; }
+      .vid-card { flex: 0 0 calc(25% - 12px); }
+      .ig-row { text-align: center; }
+      .ig-btn { max-width: 420px; margin: 0 auto; }
+      .nav-fab { top: 50%; }
+    }
   </style>
+
+<!-- SEO:BEGIN 由 seo.py 產生，請勿手改；要改請改 seo.py 再重跑 -->
+  <meta name="description" content="Nina，台灣雙胞胎媽媽，極早產雙寶 898g／890g 的媽媽。這裡有團購檔期、私心愛用好物、媽咪私房菜食譜，和那些把苦日子過成段子的真實故事。">
+  <link rel="canonical" href="https://nina-about-me.vercel.app/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="Nina">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Nina 雙胞胎媽咪">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:url" content="https://nina-about-me.vercel.app/">
+  <meta property="og:title" content="Nina 雙胞胎媽咪｜@1minaday.nina">
+  <meta property="og:description" content="Nina，台灣雙胞胎媽媽，極早產雙寶 898g／890g 的媽媽。這裡有團購檔期、私心愛用好物、媽咪私房菜食譜，和那些把苦日子過成段子的真實故事。">
+  <meta property="og:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nina 雙胞胎媽咪｜@1minaday.nina">
+  <meta name="twitter:description" content="Nina，台灣雙胞胎媽媽，極早產雙寶 898g／890g 的媽媽。這裡有團購檔期、私心愛用好物、媽咪私房菜食譜，和那些把苦日子過成段子的真實故事。">
+  <meta name="twitter:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://nina-about-me.vercel.app/#website",
+      "url": "https://nina-about-me.vercel.app/",
+      "name": "Nina 雙胞胎媽咪",
+      "inLanguage": "zh-TW",
+      "publisher": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://nina-about-me.vercel.app/#nina",
+      "name": "Nina",
+      "alternateName": [
+        "1minaday.nina",
+        "Nina 雙胞胎媽咪"
+      ],
+      "description": "Nina，台灣雙胞胎媽媽，極早產雙胞胎（出生 898g / 890g）的媽媽，在 IG @1minaday.nina 分享雙胞胎育兒、早產兒照護與真實家庭日常。",
+      "jobTitle": "自媒體創作者",
+      "knowsAbout": [
+        "雙胞胎育兒",
+        "早產兒照護",
+        "矯正年齡",
+        "早期療育",
+        "試管嬰兒",
+        "親子出遊",
+        "懶人料理"
+      ],
+      "nationality": {
+        "@type": "Country",
+        "name": "台灣"
+      },
+      "url": "https://nina-about-me.vercel.app/",
+      "image": "https://nina-about-me.vercel.app/img/avatar.jpg",
+      "sameAs": [
+        "https://www.instagram.com/1minaday.nina/",
+        "https://www.threads.net/@1minaday.nina"
+      ]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://nina-about-me.vercel.app/#page",
+      "url": "https://nina-about-me.vercel.app/",
+      "name": "Nina 雙胞胎媽咪｜@1minaday.nina",
+      "description": "Nina，台灣雙胞胎媽媽，極早產雙寶 898g／890g 的媽媽。這裡有團購檔期、私心愛用好物、媽咪私房菜食譜，和那些把苦日子過成段子的真實故事。",
+      "inLanguage": "zh-TW",
+      "isPartOf": {
+        "@id": "https://nina-about-me.vercel.app/#website"
+      },
+      "mainEntity": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      },
+      "about": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      }
+    }
+  ]
+}
+  </script>
+<!-- SEO:END -->
 </head>
 <body>
 
@@ -605,6 +817,29 @@
     <i class="fa-brands fa-instagram fa-sm"></i>追蹤
   </a>
 </header>
+
+<!-- ════ 半圓選單按鈕＋目錄抽屜 ════ -->
+<button class="nav-fab" id="navFab" aria-label="打開目錄" aria-controls="navDrawer" aria-expanded="false">
+  <span class="fab-txt">目<br>錄</span>
+</button>
+<div class="drawer-bg" id="navDrawerBg"></div>
+<aside class="drawer" id="navDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <img src="img/avatar.jpg" alt="Nina">
+    <div><b>嗨，我是 Nina</b><span>想看哪一區？</span></div>
+    <button class="drawer-close" id="navDrawerClose" aria-label="關閉"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <nav id="navDrawerList">
+    <a href="#gbSection" data-sec="gbSection"><i class="fa-solid fa-fire"></i>限時團購<small>檔期日曆</small></a>
+    <a href="#goodsSection" data-sec="goodsSection"><i class="fa-regular fa-heart"></i>好物推薦</a>
+    <a href="#recipesSection" data-sec="recipesSection"><i class="fa-solid fa-utensils"></i>食譜分享</a>
+    <a href="#articlesSection" data-sec="articlesSection"><i class="fa-regular fa-file-lines"></i>文章<small>早產・療育・共讀</small></a>
+    <a href="#videosSection" data-sec="videosSection"><i class="fa-solid fa-play"></i>精彩片段</a>
+    <a href="#findSection" data-sec="findSection"><i class="fa-brands fa-instagram"></i>來 IG 找我</a>
+    <a href="#contactSection" data-sec="contactSection"><i class="fa-regular fa-envelope"></i>廠商合作洽詢</a>
+  </nav>
+  <div class="drawer-foot">@1minaday.nina・雙胞胎媽咪</div>
+</aside>
 
 <!-- ════ IG REEL MODAL ════ -->
 <div class="ig-modal" id="igModal" aria-hidden="true" role="dialog">
@@ -731,9 +966,42 @@
 </section>
 
 
+<!-- ════ 3.6 文章 ════ -->
+<section class="goods-section" id="articlesSection">
+  <div class="reveal" style="padding: 36px 22px 18px;">
+    <span class="sec-label" style="color:var(--coral-d);display:block;margin-bottom:3px;">寫下來的那些</span>
+    <h2 class="sec-title">文章</h2>
+  </div>
+  <div class="art-list reveal">
+
+    <a class="art-card" href="article-corrected-age.html" onclick="window.trackGb&&trackGb('article-corrected-age')">
+      <span class="art-kicker">早產與療育</span>
+      <p class="art-title">矯正年齡怎麼算？什麼時候可以不用再算？</p>
+      <p class="art-desc">27 週出生的雙寶，我到現在每支影片還是標兩個數字。公式、我們家的實際算法，還有哪一天可以畢業。</p>
+      <span class="art-go">讀這篇 →</span>
+    </a>
+
+    <a class="art-card" href="article-milk-bank.html" onclick="window.trackGb&&trackGb('article-milk-bank')">
+      <span class="art-kicker">早產與 NICU</span>
+      <p class="art-title">母乳可以捐嗎？台灣母乳庫捐贈流程整理</p>
+      <p class="art-desc">台灣有四間母乳庫。流程、抽血、運費誰出、2000cc 的迷思，一次整理完。我是拿過母乳庫的奶的那一方。</p>
+      <span class="art-go">讀這篇 →</span>
+    </a>
+
+    <a class="art-card" href="article-shared-reading.html" onclick="window.trackGb&&trackGb('article-shared-reading')">
+      <span class="art-kicker">語言發展</span>
+      <p class="art-title">親子共讀怎麼唸？聽語治療師教我的五個技巧</p>
+      <p class="art-desc">不是照著字唸就好。因為妹妹的聽損我們學到這些方法，後來發現一般孩子也完全適用。</p>
+      <span class="art-go">讀這篇 →</span>
+    </a>
+
+  </div>
+</section>
+
+
 
 <!-- ════ 4. VIDEOS ════ -->
-<section class="vid-section">
+<section class="vid-section" id="videosSection">
 
   <!-- Row 1: 那些我拍下來的時刻 -->
   <div class="sec-header reveal" id="vhdr-main">
@@ -772,7 +1040,7 @@
 
 
 <!-- ════ 5. FIND ME ════ -->
-<section class="find-section">
+<section class="find-section" id="findSection">
   <div class="reveal" style="padding:0 22px;">
     <span class="sec-label" style="display:block;text-align:center;">找到我</span>
     <h2 class="find-title">來 IG 找我</h2>
@@ -784,7 +1052,7 @@
 
 
 <!-- ════ 6. FOOTER ════ -->
-<footer>
+<footer id="contactSection">
   <div class="foot-inner">
     <p class="foot-title">廠商合作洽詢</p>
     <p class="foot-sub">如果你想與我合作，歡迎來信聊聊 🤝</p>
@@ -795,9 +1063,12 @@
       <button class="foot-btn-outline" onclick="copyFooterEmail(this)">
         <i class="fa-regular fa-copy"></i>複製 email
       </button>
+      <!-- 2026-09-13 暫時隱藏：media-kit.html 內的受眾數據是示意佔位數字，不正確。
+           數據更新後把下面這三行的註解拿掉即可恢復。
       <a href="media-kit.html" class="foot-btn-outline">
         <i class="fa-regular fa-file-lines"></i>合作資料
       </a>
+      -->
     </div>
   </div>
 </footer>
@@ -928,8 +1199,18 @@
     }
 
     // Render video sections
+    // 2026-09-13：頁面太長，把「番外篇」「補助懶人包」併進第一排。改回三排把這行設成 false 就好。
+    const MERGE_VIDEO_ROWS = true;
     if (D.videoSections) {
-      D.videoSections.forEach(sec => {
+      let vSections = D.videoSections;
+      if (MERGE_VIDEO_ROWS && vSections.length > 1) {
+        const mainSec = vSections.find(x => x.id === 'main') || vSections[0];
+        vSections.filter(x => x !== mainSec).forEach(x => {
+          ['vhdr-', 'vsec-'].forEach(pre => { const el = document.getElementById(pre + x.id); if (el) el.style.display = 'none'; });
+        });
+        vSections = [Object.assign({}, mainSec, { videos: vSections.flatMap(x => x.videos || []) })];
+      }
+      vSections.forEach(sec => {
         // Update section header
         const hdr = document.getElementById('vhdr-' + sec.id);
         if (hdr) {
@@ -1048,6 +1329,30 @@
         if (it.buyNote && it.link && it.buyNote.trim() === String(it.link).trim()) return '';
         return it.buyNote ? `<p class="gb-card-note"><i class="fa-regular fa-comment-dots"></i><span>${esc(it.buyNote)}</span></p>` : '';
       }
+      // 超過 4 張就收起來，用文字展開（每次重新渲染都會重算，所以先清掉舊按鈕）
+      const GB_CARD_LIMIT = 4;
+      function collapseGrid(gridId) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        const old = grid.nextElementSibling;
+        if (old && old.classList.contains('gb-more')) old.remove();
+        const cards = Array.from(grid.querySelectorAll(':scope > .gb-card'));
+        cards.forEach(c => c.classList.remove('gb-hidden'));
+        if (cards.length <= GB_CARD_LIMIT) return;
+        const extra = cards.slice(GB_CARD_LIMIT);
+        extra.forEach(c => c.classList.add('gb-hidden'));
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'gb-more';
+        const closedText = `展開更多（還有 ${extra.length} 個）`;
+        btn.textContent = closedText;
+        btn.addEventListener('click', () => {
+          const opening = btn.textContent === closedText;
+          extra.forEach(c => c.classList.toggle('gb-hidden', !opening));
+          btn.textContent = opening ? '收起' : closedText;
+          if (window.trackGb) trackGb('gb-more-' + gridId);
+        });
+        grid.insertAdjacentElement('afterend', btn);
+      }
       function renderGbCards(allSchedules) {
       limitedItems = allSchedules.filter(it => it.type !== 'ongoing');
       ongoingItems = allSchedules.filter(it => it.type === 'ongoing');
@@ -1063,7 +1368,7 @@
           const daysLeft = Math.round((ed - now) / 86400000);
           const daysUntilStart = Math.round((sd - now) / 86400000);
           const isCompact = it.cardStyle === 'compact';
-          const dateRangeBadge = `<span class="gb-card-badge">${fmtDateShort(sd)}-${fmtDateShort(ed)}</span>`;
+          const dateRangeBadge = `<span class="gb-card-badge gb-card-badge--date"><i class="fa-regular fa-calendar fa-xs"></i>${fmtDateShort(sd)}-${fmtDateShort(ed)}</span>`;
           const videoBtnHtml = it.introLink
             ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn" onclick="trackGb('gb-video-${it.id}')"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
           const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-bag-shopping')}${dateRangeBadge}${videoBtnHtml}</div>`;
@@ -1094,6 +1399,7 @@
             </div>
           </div>`;
         }).join('');
+        collapseGrid('gbLimitedList');
         document.getElementById('gbLimitedSection').style.display = '';
       }
 
@@ -1102,7 +1408,7 @@
           const isCompact = it.cardStyle === 'compact';
           const videoBtnHtml = it.introLink
             ? `<a href="${it.introLink}" target="_blank" rel="noopener" class="gb-card-img-video-btn" onclick="trackGb('gb-video-${it.id}')"><i class="fa-solid fa-circle-play fa-xs"></i>看介紹影片</a>` : '';
-          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge">♾️ 常駐優惠</span>${videoBtnHtml}</div>`;
+          const imgHtml = isCompact ? '' : `<div class="gb-card-img">${buildCardImg(it, 'fa-infinity')}<span class="gb-card-badge gb-card-badge--ongoing">♾️ 常駐優惠</span>${videoBtnHtml}</div>`;
           const codeHtml = buildCardCode(it);
           const btnHtml = it.link
             ? `<a href="${it.link}" target="_blank" rel="noopener" class="gb-card-btn" onclick="trackGb('gb-buy-${it.id}')">前往購買<i class="fa-solid fa-arrow-right fa-xs"></i></a>` : '';
@@ -1117,6 +1423,7 @@
             </div>
           </div>`;
         }).join('');
+        collapseGrid('gbOngoingGrid');
         document.getElementById('gbOngoingSection').style.display = '';
       }
 
@@ -1473,6 +1780,38 @@
   el.addEventListener('touchend', handleTap, { passive: false });
   el.addEventListener('click', handleTap);
 })();
+
+  /* ── 目錄抽屜 ── */
+  (function () {
+    const fab = document.getElementById('navFab');
+    const drawer = document.getElementById('navDrawer');
+    const bg = document.getElementById('navDrawerBg');
+    const closeBtn = document.getElementById('navDrawerClose');
+    if (!fab || !drawer) return;
+    function open() {
+      // 沒顯示的區塊（例如目前沒有團購）就不要出現在目錄裡
+      drawer.querySelectorAll('nav a[data-sec]').forEach(a => {
+        const t = document.getElementById(a.dataset.sec);
+        a.hidden = !t || t.offsetParent === null;
+      });
+      document.body.classList.add('drawer-open');
+      drawer.setAttribute('aria-hidden', 'false'); fab.setAttribute('aria-expanded', 'true');
+      if (window.trackGb) trackGb('menu-open');
+    }
+    function close() {
+      document.body.classList.remove('drawer-open');
+      drawer.setAttribute('aria-hidden', 'true'); fab.setAttribute('aria-expanded', 'false');
+    }
+    fab.addEventListener('click', open);
+    bg.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    drawer.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
+      const t = document.getElementById(a.dataset.sec);
+      if (t) { e.preventDefault(); close(); setTimeout(() => t.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120); }
+      if (window.trackGb) trackGb('menu-' + a.dataset.sec);
+    }));
+  })();
 </script>
 </body>
 </html>

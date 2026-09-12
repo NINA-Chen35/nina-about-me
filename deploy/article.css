@@ -1,0 +1,114 @@
+/* 文章頁共用樣式 — 三篇文章共用這一支，改一次全部生效 */
+:root{
+  color-scheme: light only;
+  --coral:#F4A082; --coral-lt:rgba(244,160,130,.16); --coral-d:#8A3A1E;
+  --blue:#D2DCF6; --blue-d:#39447E; --blue-lt:rgba(210,220,246,.32); --blue-bdr:rgba(57,68,126,.22);
+  --green:#D4DCA4; --green-d:#4F5420; --green-lt:rgba(212,220,164,.34);
+  --yellow-lt:rgba(255,223,111,.22);
+  --bg:#FFFFFF; --bg2:#ECEEDE; --bg3:#EEECEA;
+  --text:#1C1C1C; --text2:rgba(28,28,28,.58); --text3:rgba(28,28,28,.3);
+  --border:rgba(0,0,0,.09); --hero-bg:#141414;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg2); color:var(--text);
+  font-family:'Noto Sans TC',sans-serif; font-weight:300;
+  font-size:16.5px; line-height:1.85; -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+.sheet{max-width:660px;margin:0 auto;background:var(--bg);min-height:100vh}
+
+/* ── 回首頁小徽章 ── */
+.profile-chip{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; gap:9px;
+  padding:11px 20px; background:rgba(255,255,255,.93);
+  backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--border); text-decoration:none;
+}
+.profile-chip img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.profile-chip span{font-size:13.5px;font-weight:500;letter-spacing:.02em}
+.profile-chip .back{margin-left:auto;font-size:12.5px;color:var(--text2)}
+
+/* ── 標題區 ── */
+.hero{padding:38px 24px 26px;border-bottom:1px solid var(--border)}
+.hero .kicker{
+  display:inline-block; font-size:12px; letter-spacing:.16em;
+  color:var(--coral-d); background:var(--coral-lt);
+  padding:4px 11px; border-radius:99px; margin-bottom:16px;
+}
+.hero h1{
+  font-family:'Noto Serif TC',serif; font-weight:700;
+  font-size:clamp(25px,6.4vw,33px); line-height:1.42; letter-spacing:.01em;
+}
+.hero .meta{margin-top:14px;font-size:12.5px;color:var(--text3);letter-spacing:.03em}
+
+/* ── 答案區塊：AI 引用時最可能整段搬走的就是這一段 ── */
+.answer{
+  margin:0 24px 30px; padding:20px 22px;
+  background:var(--blue-lt); border:1px solid var(--blue-bdr);
+  border-radius:14px;
+}
+.answer .label{
+  font-size:11.5px; letter-spacing:.15em; color:var(--blue-d);
+  font-weight:500; margin-bottom:9px;
+}
+.answer p{font-size:16.5px;line-height:1.8;font-weight:400}
+
+/* ── 內文 ── */
+main{padding:30px 24px 0}
+main h2{
+  font-family:'Noto Serif TC',serif; font-weight:600;
+  font-size:20.5px; line-height:1.5; letter-spacing:.01em;
+  margin:38px 0 14px; padding-left:13px; border-left:4px solid var(--coral);
+}
+main h2:first-child{margin-top:0}
+main h3{font-size:16.5px;font-weight:500;margin:24px 0 8px;color:var(--text)}
+main p{margin-bottom:16px}
+main p b, main li b{font-weight:500;background:var(--yellow-lt);padding:0 3px;border-radius:3px}
+main ul,main ol{margin:0 0 18px 20px}
+main li{margin-bottom:9px}
+main hr{border:0;border-top:1px solid var(--border);margin:34px 0}
+
+/* 表格 */
+.tw{overflow-x:auto;margin:0 0 20px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:380px;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--bg3);font-weight:500}
+
+/* 提醒框 */
+.note{
+  background:var(--green-lt); border:1px solid rgba(79,84,32,.18);
+  border-radius:12px; padding:16px 18px; margin:0 0 20px; font-size:15px;
+}
+.note b{font-weight:500;color:var(--green-d);background:none;padding:0}
+.warn{
+  background:var(--coral-lt); border:1px solid rgba(138,58,30,.2);
+  border-radius:12px; padding:16px 18px; margin:0 0 20px; font-size:15px;
+}
+.warn b{font-weight:500;color:var(--coral-d);background:none;padding:0}
+
+/* ── FAQ ── */
+.faq{margin-top:40px;padding-top:6px}
+.faq h2{margin-bottom:18px}
+.faq .qa{border-top:1px solid var(--border);padding:18px 0}
+.faq .qa:last-child{border-bottom:1px solid var(--border)}
+.faq .q{font-weight:500;font-size:16px;margin-bottom:7px;line-height:1.6}
+.faq .a{font-size:15.5px;color:rgba(28,28,28,.8);margin:0}
+
+/* ── 頁尾 ── */
+footer{margin-top:46px;padding:32px 24px 44px;background:var(--bg3);border-top:1px solid var(--border)}
+footer .sig{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+footer .sig img{width:46px;height:46px;border-radius:50%;object-fit:cover}
+footer .sig .who{font-weight:500;font-size:15px}
+footer .sig .who span{display:block;font-size:12.5px;color:var(--text2);font-weight:300;margin-top:2px}
+footer .bio{font-size:14.5px;color:rgba(28,28,28,.72);margin-bottom:20px}
+footer .ig{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--hero-bg);color:#fff;text-decoration:none;
+  padding:11px 20px;border-radius:99px;font-size:14.5px;font-weight:400;
+}
+footer .disclosure{margin-top:22px;font-size:12.5px;line-height:1.75;color:var(--text3)}
