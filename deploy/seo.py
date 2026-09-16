@@ -84,31 +84,7 @@ PAGES = {
         "priority": "0.8",
         "changefreq": "monthly",
     },
-    # ── 文章 ──
-    "article-milk-bank.html": {
-        "desc": "母乳可以捐嗎？台灣有四間母乳庫，北中南東各一間。捐贈流程、要不要抽血、一定要親送嗎、運費誰出、為什麼只收產後六個月內的母乳，一次整理。作者是母乳庫的受惠者家屬。",
-        "schema": "article",
-        "section": "早產與 NICU",
-        "date": "2026-09-13",
-        "priority": "0.9",
-        "changefreq": "monthly",
-    },
-    "article-corrected-age.html": {
-        "desc": "矯正年齡＝實際年齡減掉早出生的那段時間，一般算到矯正年齡滿兩歲。27 週早產雙胞胎媽媽的實際算法、什麼時候可以不用再算，以及為什麼每次都標兩個數字。",
-        "schema": "article",
-        "section": "早產與療育",
-        "date": "2026-09-13",
-        "priority": "0.9",
-        "changefreq": "monthly",
-    },
-    "article-shared-reading.html": {
-        "desc": "親子共讀不是把字唸完就好。固定角色建立預測感、語調誇張加手勢、把書裡的動作做一次、平行說話、問完停下來等——聽語治療師教的五個技巧，一般孩子也適用。",
-        "schema": "article",
-        "section": "語言發展",
-        "date": "2026-09-13",
-        "priority": "0.9",
-        "changefreq": "monthly",
-    },
+    # 文章不寫在這裡：由 articles.json 登記檔載入（見 load_articles）
 
     # ── 食譜 ──
     "recipe-beef-noodle.html": {
@@ -152,6 +128,57 @@ PAGES = {
         "nofollow": True,
     },
 }
+
+
+ARTICLES_JSON = os.path.join(HERE, "articles.json")
+ARTICLES_BEGIN = "    <!-- ARTICLES:BEGIN 由 seo.py 依 articles.json 產生，請勿手改 -->"
+ARTICLES_END = "    <!-- ARTICLES:END -->"
+
+
+def load_articles():
+    """articles.json：新文章由 article_build.py 追加，這裡把它們併進 PAGES（新的排前面）。"""
+    if not os.path.exists(ARTICLES_JSON):
+        return []
+    arts = json.load(open(ARTICLES_JSON, encoding="utf-8"))
+    arts.sort(key=lambda a: a.get("date", ""), reverse=True)
+    ordered = {}
+    for k in ("index.html", "media-kit.html"):
+        if k in PAGES: ordered[k] = PAGES[k]
+    for a in arts:
+        ordered[a["file"]] = PAGES.get(a["file"]) or {
+            "desc": a["desc"], "schema": "article", "section": a.get("section", ""),
+            "date": a["date"], "modified": a.get("modified", a["date"]),
+            "priority": "0.9", "changefreq": "monthly",
+        }
+    for k, v in PAGES.items():
+        ordered.setdefault(k, v)
+    PAGES.clear(); PAGES.update(ordered)
+    return arts
+
+
+def write_index_cards(arts, write=True):
+    """把首頁「文章」區的卡片依 articles.json 重產（新的在前）。"""
+    path = os.path.join(HERE, "index.html")
+    html = open(path, encoding="utf-8").read()
+    if ARTICLES_BEGIN not in html:
+        return "略過（index.html 沒有 ARTICLES 標記）"
+    cards = []
+    for a in arts:
+        cards.append(
+            '    <a class="art-card" href="%s" onclick="window.trackGb&&trackGb(\'article-%s\')">\n'
+            '      <span class="art-kicker">%s</span>\n'
+            '      <p class="art-title">%s</p>\n'
+            '      <p class="art-desc">%s</p>\n'
+            '      <span class="art-go">讀這篇 →</span>\n'
+            '    </a>' % (a["file"], a["slug"], a.get("section", ""), a["title"], a.get("card", a["desc"]))
+        )
+    block = ARTICLES_BEGIN + "\n" + "\n\n".join(cards) + "\n" + ARTICLES_END
+    new = re.sub(re.escape(ARTICLES_BEGIN) + r".*?" + re.escape(ARTICLES_END), lambda m: block, html, flags=re.S)
+    if new == html:
+        return "無變化"
+    if write:
+        open(path, "w", encoding="utf-8").write(new)
+    return "已重產 %d 張卡片" % len(arts)
 
 
 def strip_tags(s):
@@ -451,6 +478,8 @@ def write_robots(write=True):
 def main():
     write = "--check" not in sys.argv
     print("網域：%s%s\n" % (SITE_URL, "" if write else "　（--check 模式，不寫檔）"))
+    arts = load_articles()
+    print("  %-32s %s" % ("index.html 文章卡片", write_index_cards(arts, write)))
     for page, cfg in PAGES.items():
         print("  %-32s %s" % (page, process(page, cfg, write)))
     n = write_sitemap(write)
