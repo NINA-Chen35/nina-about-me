@@ -441,6 +441,7 @@ window.NINA_DATA = {
       "id": "recipe1789000000000",
       "title": "一次 20 片冷凍牛肉排",
       "desc": "四樣材料、備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。",
+      "image": "img/uploads/recipe-meat-patty.jpg",
       "link": "recipe-meat-patty.html",
       "published": true
     },
