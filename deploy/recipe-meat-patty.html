@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>一次 20 片冷凍牛肉排｜食譜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:    #F4A082;
+    --coral-d:  #8A3A1E;
+    --blue:     #D2DCF6;
+    --blue-d:   #39447E;
+    --blue-bdr: rgba(57,68,126,.22);
+    --green:    #D4DCA4;
+    --green-d:  #4F5420;
+    --green-lt: rgba(212,220,164,.35);
+    --bg:       #FFFFFF;
+    --bg2:      #ECEEDE;
+    --text:     #1C1C1C;
+    --text2:    rgba(28,28,28,.55);
+    --text3:    rgba(28,28,28,.28);
+    --border:   rgba(0,0,0,.08);
+    --serif:'Noto Serif TC', serif;
+    --sans:'Noto Sans TC', sans-serif;
+    --shadow:0 12px 30px rgba(43,42,38,.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;background:var(--bg);color-scheme:light;scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:60px 22px 64px}
+
+  .profile-chip{
+    position:fixed;top:14px;right:14px;z-index:50;
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border:1px solid var(--border);border-radius:999px;
+    padding:5px 14px 5px 5px;box-shadow:var(--shadow);
+    text-decoration:none;color:var(--text);max-width:calc(100vw - 28px);
+  }
+  .profile-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;display:block;flex:none}
+  .profile-chip span{font-size:12px;font-weight:600;white-space:nowrap}
+
+  /* 招牌 */
+  .hero{display:flex;align-items:flex-end;gap:20px;padding:44px 0 30px}
+  .hero-text{flex:1;padding-bottom:6px}
+  .hero-text p{margin:0;color:var(--text2);font-size:15px;line-height:1.9}
+  .hero-text .lead{color:var(--text);font-size:17px;margin-bottom:14px}
+  .signboard{
+    margin:0;writing-mode:vertical-rl;
+    font-family:var(--serif);font-weight:700;
+    font-size:clamp(34px,10vw,48px);letter-spacing:.14em;line-height:1;
+    color:var(--blue-d);border-right:3px solid var(--blue);padding-right:14px;
+  }
+  .seal{
+    display:inline-block;margin-top:16px;
+    background:var(--coral);color:var(--coral-d);
+    font-family:var(--sans);font-weight:700;
+    font-size:13px;letter-spacing:.16em;
+    padding:6px 10px 6px 12px;border-radius:4px;
+  }
+
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg2);border-radius:14px}
+  .facts div{padding:16px 8px;text-align:center}
+  .facts div+div{border-left:1px solid var(--border)}
+  .facts b{display:block;font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.3;color:var(--blue-d)}
+  .facts span{font-size:13px;color:var(--text2)}
+
+  h2{font-family:var(--serif);font-weight:700;font-size:25px;letter-spacing:.06em;margin:46px 0 6px}
+  .sub{margin:0 0 22px;color:var(--text2);font-size:14px}
+
+  /* 三樣主角 */
+  .pantry{display:grid;gap:12px}
+  .pantry-item{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--bg2);border-radius:14px;padding:16px 18px;
+  }
+  .pantry-item .ico{
+    flex:none;width:42px;height:42px;border-radius:12px;
+    background:var(--bg);display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+  }
+  .pantry-item h3{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 4px;color:var(--blue-d)}
+  .pantry-item p{margin:0;font-size:15px;color:var(--text2);line-height:1.7}
+  .pantry-item .use{color:var(--text);font-size:14px;margin-top:6px}
+  .pantry-item .use b{color:var(--green-d);font-weight:700}
+  .buy{
+    display:inline-block;margin-top:12px;
+    background:var(--coral);color:#fff;text-decoration:none;
+    font-size:14px;font-weight:700;letter-spacing:.04em;
+    padding:9px 18px;border-radius:999px;transition:background .15s;
+  }
+  .buy:hover{background:#E55E3A}
+  .buy:focus-visible{outline:2px solid var(--coral-d);outline-offset:2px}
+
+  /* 七天索引 */
+  .week{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .week a{
+    display:flex;align-items:center;gap:12px;
+    text-decoration:none;color:var(--text);
+    padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;
+    transition:border-color .15s,background .15s;
+  }
+  .week a:hover{border-color:var(--blue-bdr);background:var(--bg2)}
+  .week .d{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    background:var(--blue);color:var(--blue-d);
+    font-family:var(--serif);font-weight:700;font-size:13px;line-height:1.15;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .week .d small{font-size:10px;font-weight:600;letter-spacing:.08em}
+  .week .d.extra{background:var(--coral);color:var(--coral-d)}
+  .recipe-head .day.extra{background:var(--green);color:var(--green-d)}
+  .week .t{flex:1;min-width:0}
+  .week .t b{display:block;font-size:16px;line-height:1.4}
+  .week .t span{display:block;font-size:13px;color:var(--text2);line-height:1.5}
+  .week .m{flex:none;font-size:12px;color:var(--green-d);font-weight:700;letter-spacing:.04em;white-space:nowrap}
+
+  /* 單道食譜 */
+  .recipe{margin-top:56px;padding-top:8px;scroll-margin-top:72px}
+  .recipe-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .recipe-head .day{
+    font-family:var(--serif);font-weight:700;font-size:13px;letter-spacing:.16em;
+    color:var(--coral-d);background:var(--coral);padding:4px 10px;border-radius:4px;
+  }
+  .recipe h2{margin:0}
+  .recipe .why{margin:8px 0 18px;color:var(--text2);font-size:15px;line-height:1.85}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .chip{
+    font-size:13px;font-weight:700;letter-spacing:.04em;
+    padding:5px 12px;border-radius:999px;
+    background:var(--green-lt);color:var(--green-d);
+  }
+  .chip.blue{background:var(--blue);color:var(--blue-d)}
+
+  .group{margin-bottom:22px}
+  .group h3{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--green-d);margin:0 0 6px;letter-spacing:.08em}
+  ul{list-style:none;margin:0;padding:0}
+  .item{display:flex;gap:11px;align-items:flex-start;padding:6px 0;cursor:pointer}
+  .item input{position:absolute;opacity:0;width:0;height:0}
+  .box{
+    flex:none;width:20px;height:20px;margin-top:4px;
+    border:1.5px solid var(--text3);border-radius:6px;
+    background:var(--bg);position:relative;transition:background .12s,border-color .12s;
+  }
+  .box::after{
+    content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;
+    border:solid var(--green-d);border-width:0 2px 2px 0;
+    transform:rotate(45deg) scale(0);transition:transform .12s;
+  }
+  .item input:checked ~ .box{background:var(--green);border-color:var(--green)}
+  .item input:checked ~ .box::after{transform:rotate(45deg) scale(1)}
+  .item input:checked ~ .txt{color:var(--text3);text-decoration:line-through}
+  .item input:focus-visible ~ .box{outline:2px solid var(--blue-d);outline-offset:2px}
+  .txt{flex:1;line-height:1.6;padding-top:1px}
+  .txt em{font-style:normal;color:var(--text2);font-size:14px}
+
+  .step{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--border)}
+  .step:last-of-type{border-bottom:1px solid var(--border)}
+  .num{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--blue);color:var(--blue-d);
+    font-family:var(--serif);font-size:16px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .step-body{flex:1;min-width:0}
+  .step-body h3{font-family:var(--serif);font-size:17px;font-weight:700;margin:0 0 6px}
+  .step-body p{margin:0;font-size:16px}
+  .tip{margin-top:14px;padding:13px 16px;background:var(--green-lt);border-radius:10px;font-size:15px;line-height:1.75}
+  .tip b{color:var(--green-d)}
+  .kids{margin-top:10px;padding:13px 16px;background:var(--blue);border-radius:10px;font-size:15px;line-height:1.75;color:var(--blue-d)}
+  .kids b{font-weight:700}
+
+  .reset{
+    display:none;background:none;border:none;padding:6px 0;
+    font-family:var(--sans);font-size:14px;color:var(--green-d);
+    text-decoration:underline;cursor:pointer;
+  }
+  .reset.on{display:inline-block}
+  .backtop{display:inline-block;margin-top:14px;font-size:13px;color:var(--text2);text-decoration:none}
+  .backtop:hover{color:var(--blue-d)}
+
+  .note{margin-top:34px;font-size:16px;color:var(--text2);line-height:1.85}
+
+  footer{margin-top:52px;padding-top:24px;border-top:1px solid var(--border);text-align:center}
+  footer p{margin:0 0 14px;color:var(--text2);font-size:15px}
+  .ig{
+    display:inline-block;background:var(--coral);color:#fff;text-decoration:none;
+    font-size:16px;font-weight:700;padding:13px 26px;border-radius:999px;
+    box-shadow:0 4px 16px rgba(245,110,74,.28);transition:background .18s;
+  }
+  .ig:hover{background:#E55E3A}
+  .ig:focus-visible{outline:2px solid var(--coral-d);outline-offset:3px}
+  .disclosure{margin:20px 0 0;font-size:12px;color:var(--text3);line-height:1.7}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+  @media print{
+    body{background:#fff;font-size:12pt}
+    .profile-chip,.reset,.ig,.buy,.backtop,footer{display:none}
+    .recipe{page-break-inside:avoid}
+  }
+
+  /* 這一頁多的：標籤樣張 */
+  .tag-sample{
+    background:var(--bg2);border:1.5px dashed var(--blue-bdr);border-radius:12px;
+    padding:18px 20px;margin:16px 0 6px;
+  }
+  .tag-sample .row{display:flex;gap:12px;align-items:baseline;padding:7px 0}
+  .tag-sample .row+.row{border-top:1px dashed var(--border)}
+  .tag-sample .n{
+    flex:none;font-family:var(--serif);font-weight:700;font-size:12px;letter-spacing:.14em;
+    color:var(--blue-d);background:var(--blue);border-radius:4px;padding:3px 8px;
+  }
+  .tag-sample .v{flex:1;min-width:0;font-weight:700;font-size:16px;line-height:1.5;word-break:break-word}
+  .tag-sample .v em{display:block;font-style:normal;font-weight:400;font-size:13px;color:var(--text2);margin-top:2px}
+  .portion{display:grid;gap:10px;margin:14px 0 0}
+  .portion div{
+    display:flex;justify-content:space-between;gap:12px;
+    background:var(--bg2);border-radius:10px;padding:12px 16px;font-size:15px;
+  }
+  .portion b{color:var(--blue-d);white-space:nowrap}
+</style>
+
+<!-- SEO:BEGIN 由 seo.py 產生，請勿手改；要改請改 seo.py 再重跑 -->
+  <meta name="description" content="一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。">
+  <link rel="canonical" href="https://nina-about-me.vercel.app/recipe-meat-patty.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="Nina">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Nina 雙胞胎媽咪">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:url" content="https://nina-about-me.vercel.app/recipe-meat-patty.html">
+  <meta property="og:title" content="一次 20 片冷凍牛肉排｜食譜">
+  <meta property="og:description" content="一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。">
+  <meta property="og:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="一次 20 片冷凍牛肉排｜食譜">
+  <meta name="twitter:description" content="一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。">
+  <meta name="twitter:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://nina-about-me.vercel.app/#website",
+      "url": "https://nina-about-me.vercel.app/",
+      "name": "Nina 雙胞胎媽咪",
+      "inLanguage": "zh-TW",
+      "publisher": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://nina-about-me.vercel.app/#nina",
+      "name": "Nina",
+      "alternateName": [
+        "1minaday.nina",
+        "Nina 雙胞胎媽咪"
+      ],
+      "description": "Nina，台灣雙胞胎媽媽，極早產雙胞胎（出生 898g / 890g）的媽媽，在 IG @1minaday.nina 分享雙胞胎育兒、早產兒照護與真實家庭日常。",
+      "jobTitle": "自媒體創作者",
+      "knowsAbout": [
+        "雙胞胎育兒",
+        "早產兒照護",
+        "矯正年齡",
+        "早期療育",
+        "試管嬰兒",
+        "親子出遊",
+        "懶人料理"
+      ],
+      "nationality": {
+        "@type": "Country",
+        "name": "台灣"
+      },
+      "url": "https://nina-about-me.vercel.app/",
+      "image": "https://nina-about-me.vercel.app/img/avatar.jpg",
+      "sameAs": [
+        "https://www.instagram.com/1minaday.nina/",
+        "https://www.threads.net/@1minaday.nina"
+      ]
+    },
+    {
+      "@type": "Recipe",
+      "@id": "https://nina-about-me.vercel.app/recipe-meat-patty.html#recipe",
+      "name": "冷凍牛肉排",
+      "description": "一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。",
+      "image": [
+        "https://nina-about-me.vercel.app/img/og-default.jpg"
+      ],
+      "author": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      },
+      "inLanguage": "zh-TW",
+      "recipeCuisine": "台灣",
+      "recipeCategory": "主菜",
+      "recipeIngredient": [
+        "低脂牛絞肉 1.5 公斤 好市多那包，一包剛好一批",
+        "蛋 2 顆 黏著用，沒有蛋會散",
+        "橄欖油 2 大匙 低脂肉沒油會柴，這匙不能省",
+        "蔬菜泥 300 公克 洋蔥、紅蘿蔔、櫛瓜打泥，家裡有什麼用什麼"
+      ],
+      "recipeInstructions": [
+        {
+          "@type": "HowToStep",
+          "name": "蔬菜先打成泥",
+          "text": "洋蔥、紅蘿蔔、櫛瓜切塊，用食物調理機打到看不出顆粒。打太粗小孩會挑出來，打成泥他們就吃不出來了。水分多的話稍微擠掉一點，不然肉團會太濕。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "全部拌在一起",
+          "text": "絞肉、蔬菜泥、蛋、橄欖油放進大盆，用手抓到出現黏性，大概兩三分鐘。不要過度攪打，會變得像貢丸。這一步不加任何調味料。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "分成 20 片壓平",
+          "text": "每片大約 75 公克，一個女生的掌心大。壓得比你想像中再扁一點，中間用拇指壓一個淺凹，煎的時候才不會鼓成球、中心也才熟得透。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "中間夾烘焙紙疊起來分裝",
+          "text": "每片之間夾一張烘焙紙，這樣冷凍後可以一片一片剝開，不用整包退冰。照下面的份量分袋，壓平擠掉空氣再封口。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "貼標籤，平放冷凍",
+          "text": "每包貼三行字（寫法看下一段），平放進冷凍庫，冰硬之後再立起來排，像檔案夾一樣抽。可以放一個月。 分裝的原則是「拿一包就是一餐」，不要讓煎的人還要算。 這是整件事的關鍵。標籤不是給自己看的，是給「不知道這是什麼、也懶得問你」的人看的。 第三行是最多人寫錯的一行。大部分人寫「煎熟」，但「煎熟」等於沒寫，對方還是得來問你。要寫到 不退冰、火候、幾分鐘、起鍋怎麼處理 ，四件事都在上面，他就不會問了。 這一段可以直接截圖傳給家裡負責煎的那位。 懶人備註： 20 片大概是我家一週的量。不要貪心分成一大包，大包的下場就是整包退冰、吃不完又冰回去。 貼紙選擇： 冷凍庫要挑防水款，普通標籤貼紙結霜之後會脫落。我在標籤機的 App 裡把模板存好，之後只改日期就印，一包十秒。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "不用退冰，直接下鍋",
+          "text": "冷凍狀態直接放進鍋子。退冰反而會出水，煎起來是灰的不是焦香的。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "中小火，每面 4 分鐘",
+          "text": "蓋鍋蓋。火太大外面焦了裡面還是冰的。翻一次就好，不要一直翻。"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "起鍋再調味",
+          "text": "大人那幾片撒鹽和黑胡椒，或擠一點番茄醬。小孩的什麼都不加，直接上桌。"
+        }
+      ],
+      "cookTime": "PT8M",
+      "totalTime": "PT23M"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://nina-about-me.vercel.app/recipe-meat-patty.html#page",
+      "url": "https://nina-about-me.vercel.app/recipe-meat-patty.html",
+      "name": "一次 20 片冷凍牛肉排｜食譜",
+      "description": "一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。",
+      "inLanguage": "zh-TW",
+      "isPartOf": {
+        "@id": "https://nina-about-me.vercel.app/#website"
+      },
+      "about": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      }
+    }
+  ]
+}
+  </script>
+<!-- SEO:END -->
+</head>
+<body>
+
+<a class="profile-chip" href="index.html">
+  <img src="img/avatar.jpg" alt="Nina">
+  <span>回 Nina 的頁面</span>
+</a>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-text">
+      <p class="lead">大家說我是時間管理大師，其實我只是懶得把同一件事想第二次。</p>
+      <p>肉排做一次二十片，不調味，大人小孩一起吃。分裝的時候每一包貼三行字，之後誰都能煎。</p>
+      <span class="seal">聰明但懶惰</span>
+    </div>
+    <h1 class="signboard">冷凍牛肉排</h1>
+  </header>
+
+  <div class="facts">
+    <div><b>20</b><span>片一批</span></div>
+    <div><b>4</b><span>樣材料</span></div>
+    <div><b>8</b><span>分鐘煎好</span></div>
+  </div>
+
+  <h2>為什麼要一次做二十片</h2>
+  <p class="sub">因為做一片跟做二十片，麻煩的地方是一樣的。</p>
+  <p>絞肉、打蔬菜泥、洗調理盆，這些工不會因為你只做四片就變少。既然都要弄，就一次弄到底，食材還比較便宜。</p>
+  <p>真正的重點不是肉排，是<b>做完就能交出去</b>。我只做一次，後面那幾餐都不是我的事了。第一天我老公問了一次「要退冰嗎」，我說標籤上有寫。之後那週的肉排，都是他煎的。</p>
+
+  <h2>材料</h2>
+  <p class="sub">四樣，沒有調味料。這是我家一批的份量，肉跟蔬菜泥大約 5:1，要做多做少照這個比例縮放。</p>
+
+  <div class="group">
+    <ul>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">低脂牛絞肉 1.5 公斤 <em>好市多那包，一包剛好一批</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蛋 2 顆 <em>黏著用，沒有蛋會散</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">橄欖油 2 大匙 <em>低脂肉沒油會柴，這匙不能省</em></span></label></li>
+      <li><label class="item"><input type="checkbox"><span class="box"></span><span class="txt">蔬菜泥 300 公克 <em>洋蔥、紅蘿蔔、櫛瓜打泥，家裡有什麼用什麼</em></span></label></li>
+    </ul>
+    <button class="reset" id="reset" type="button">清除勾選</button>
+  </div>
+
+  <div class="kids"><b>為什麼不調味：</b>調了就分兩批，等於做兩次。備料時大人小孩完全一樣，要吃的時候大人那盤起鍋再加鹽和黑胡椒，小孩的什麼都不加。一批肉排，兩種人吃。</div>
+
+  <h2>做法</h2>
+  <p class="sub">從絞肉出冰箱到全部進冷凍，大約四十分鐘。</p>
+
+  <div class="step"><div class="num">1</div><div class="step-body"><h3>蔬菜先打成泥</h3><p>洋蔥、紅蘿蔔、櫛瓜切塊，用食物調理機打到看不出顆粒。打太粗小孩會挑出來，打成泥他們就吃不出來了。水分多的話稍微擠掉一點，不然肉團會太濕。</p></div></div>
+
+  <div class="step"><div class="num">2</div><div class="step-body"><h3>全部拌在一起</h3><p>絞肉、蔬菜泥、蛋、橄欖油放進大盆，用手抓到出現黏性，大概兩三分鐘。不要過度攪打，會變得像貢丸。這一步不加任何調味料。</p></div></div>
+
+  <div class="step"><div class="num">3</div><div class="step-body"><h3>分成 20 片壓平</h3><p>每片大約 75 公克，一個女生的掌心大。壓得比你想像中再扁一點，中間用拇指壓一個淺凹，煎的時候才不會鼓成球、中心也才熟得透。</p></div></div>
+
+  <div class="step"><div class="num">4</div><div class="step-body"><h3>中間夾烘焙紙疊起來分裝</h3><p>每片之間夾一張烘焙紙，這樣冷凍後可以一片一片剝開，不用整包退冰。照下面的份量分袋，壓平擠掉空氣再封口。</p></div></div>
+
+  <div class="step"><div class="num">5</div><div class="step-body"><h3>貼標籤，平放冷凍</h3><p>每包貼三行字（寫法看下一段），平放進冷凍庫，冰硬之後再立起來排，像檔案夾一樣抽。可以放一個月。</p></div></div>
+
+  <h2>分裝份量</h2>
+  <p class="sub">分裝的原則是「拿一包就是一餐」，不要讓煎的人還要算。</p>
+  <div class="portion">
+    <div><span>大人的一餐</span><b>2 片</b></div>
+    <div><span>雙寶一餐（兩個人）</span><b>2 片</b></div>
+    <div><span>全家一起吃的那餐</span><b>4 片</b></div>
+  </div>
+  <div class="tip"><b>懶人備註：</b>20 片大概是我家一週的量。不要貪心分成一大包，大包的下場就是整包退冰、吃不完又冰回去。</div>
+
+  <h2>三行標籤怎麼寫</h2>
+  <p class="sub">這是整件事的關鍵。標籤不是給自己看的，是給「不知道這是什麼、也懶得問你」的人看的。</p>
+
+  <div class="tag-sample">
+    <div class="row"><span class="n">第 1 行</span><span class="v">牛肉排（無調味）<em>是什麼。寫清楚有沒有調味，煎的人才知道要不要加鹽。</em></span></div>
+    <div class="row"><span class="n">第 2 行</span><span class="v">09/15 做<em>哪天做的。不用寫到期日，寫製作日，自己心裡有數。</em></span></div>
+    <div class="row"><span class="n">第 3 行</span><span class="v">不退冰・中小火每面 4 分・起鍋再調味・小孩不加<em>怎麼煮。這一行要寫到不用動腦，看完就能直接做。</em></span></div>
+  </div>
+
+  <p>第三行是最多人寫錯的一行。大部分人寫「煎熟」，但「煎熟」等於沒寫，對方還是得來問你。要寫到<b>不退冰、火候、幾分鐘、起鍋怎麼處理</b>，四件事都在上面，他就不會問了。</p>
+  <div class="tip"><b>貼紙選擇：</b>冷凍庫要挑防水款，普通標籤貼紙結霜之後會脫落。我在標籤機的 App 裡把模板存好，之後只改日期就印，一包十秒。</div>
+
+  <h2>煎的人要做的事</h2>
+  <p class="sub">這一段可以直接截圖傳給家裡負責煎的那位。</p>
+
+  <div class="step"><div class="num">1</div><div class="step-body"><h3>不用退冰，直接下鍋</h3><p>冷凍狀態直接放進鍋子。退冰反而會出水，煎起來是灰的不是焦香的。</p></div></div>
+  <div class="step"><div class="num">2</div><div class="step-body"><h3>中小火，每面 4 分鐘</h3><p>蓋鍋蓋。火太大外面焦了裡面還是冰的。翻一次就好，不要一直翻。</p></div></div>
+  <div class="step"><div class="num">3</div><div class="step-body"><h3>起鍋再調味</h3><p>大人那幾片撒鹽和黑胡椒，或擠一點番茄醬。小孩的什麼都不加，直接上桌。</p></div></div>
+
+  <div class="kids"><b>孩子版：</b>雙寶會自己拿著啃。第一次吃可以切成條狀，比較好抓。想變一道新的就夾進吐司，或是剝碎拌進飯裡。</div>
+
+  <p class="note">這一頁是我家真實在跑的版本。比例和份量照你家人數調，但三行標籤那一段建議照抄，那才是讓這件事「交得出去」的原因。</p>
+
+  <footer>
+    <p>做一次，就做到可以複製，然後交出去。<br>這句話不只能用在肉排上。</p>
+    <a class="ig" href="https://www.instagram.com/1minaday.nina/" target="_blank" rel="noopener">到 IG 找 Nina</a>
+    <p class="disclosure">食譜是我家餐桌的真實版本。頁面裡提到的標籤機是我自己買來用的工具，跟這份食譜沒有關係。</p>
+  </footer>
+
+</div>
+
+<script>
+  var boxes = document.querySelectorAll('.item input');
+  var reset = document.getElementById('reset');
+  function sync(){
+    var any = false;
+    boxes.forEach(function(b){ if(b.checked) any = true; });
+    reset.classList.toggle('on', any);
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', sync); });
+  reset.addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    sync();
+  });
+</script>
+</body>
+</html>

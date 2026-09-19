@@ -37,6 +37,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nina-about-me.vercel.app/recipe-meat-patty.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nina-about-me.vercel.app/recipe-garlic-lazy-week.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>yearly</changefreq>

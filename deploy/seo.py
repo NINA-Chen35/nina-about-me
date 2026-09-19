@@ -93,6 +93,12 @@ PAGES = {
         "priority": "0.7",
         "changefreq": "yearly",
     },
+    "recipe-meat-patty.html": {
+        "desc": "一次做 20 片冷凍牛肉排：低脂牛絞肉、蛋、橄欖油、蔬菜泥四樣，備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。",
+        "schema": "recipe",
+        "priority": "0.7",
+        "changefreq": "yearly",
+    },
     "recipe-garlic-lazy-week.html": {
         "desc": "一罐蒜醬、一瓶醬油、一包海藻，七天七道晚餐再加碼兩道，每道動手不超過 10 分鐘。給聰明但懶惰的爸媽。",
         "schema": "article",
@@ -206,7 +212,9 @@ def extract_recipe(html, page, url, desc):
             if stop in blk:
                 blk = blk[:blk.index(stop)]
         h3 = re.search(r"<h3[^>]*>(.*?)</h3>", blk, re.S)
-        name = strip_tags(h3.group(1)) if h3 else ""
+        # 這裡要用 step_name，不能用 name——name 是上面抓到的食譜名稱（signboard），
+        # 被步驟標題覆寫的話，Recipe schema 的名稱會變成「最後一個步驟」。
+        step_name = strip_tags(h3.group(1)) if h3 else ""
         head_part = blk[:h3.end()] if h3 else ""
         rest_part = blk[h3.end():] if h3 else blk
 
@@ -236,7 +244,7 @@ def extract_recipe(html, page, url, desc):
 
         text = " ".join(x for x in parts if x)
         if text:
-            steps.append({"@type": "HowToStep", "name": name, "text": text})
+            steps.append({"@type": "HowToStep", "name": step_name, "text": text})
 
     if not ingredients or not steps:
         return None  # 抓不到就退回 Article，不要產出空殼 schema

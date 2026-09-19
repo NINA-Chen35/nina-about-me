@@ -438,6 +438,13 @@ window.NINA_DATA = {
       "published": true
     },
     {
+      "id": "recipe1789000000000",
+      "title": "一次 20 片冷凍牛肉排",
+      "desc": "四樣材料、備料不調味，大人小孩一起吃。附分裝份量與讓家人接手的三行標籤寫法。",
+      "link": "recipe-meat-patty.html",
+      "published": true
+    },
+    {
       "id": "recipe1788000000000",
       "title": "蒜蒜屋懶人料理 7 天",
       "desc": "一罐蒜醬、一瓶醬油、一包海藻，七天菜單再加碼兩道，每道動手不超過 10 分鐘。",
