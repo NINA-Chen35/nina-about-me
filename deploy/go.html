@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>前往 Nina 的影片</title>
+<title>前往 Nina 的連結</title>
 <style>
   :root { color-scheme: light only; }
   body { margin:0; padding:40px 16px; font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif; background:#fff7f3; color:#333; text-align:center; }
@@ -12,22 +12,34 @@
 </style>
 </head>
 <body>
-<p>正在帶你去 Nina 的影片…</p>
+<p>正在帶你過去…</p>
 <p id="fallback" hidden>沒有自動跳轉的話，<a id="link" href="https://www.instagram.com/1minaday.nina/">點這裡</a></p>
 <script>
 (function () {
-  // Threads 串文出口的追蹤跳轉：/go.html?r=<IG reel 短碼>&s=<串文代號>
-  // 記一次 th-<s> 事件到自己的 Supabase（同首頁 trackGb 的 API），然後跳到 IG 影片。
+  // 追蹤跳轉，兩種用法（都只記一次事件到自己的 Supabase，再跳走）：
+  //   Threads 出口：/go.html?r=<IG reel 短碼>&s=<串文代號>            → 事件 th-<代號>，跳 IG 影片
+  //   團購連結：    /go.html?s=<代號>&to=<https 網址（encodeURIComponent）> → 事件 <代號>，跳那個網址
+  // 代號慣例：st-<團購>（限動連結貼紙）、ln-<團購>（LINE 推播／記事本）、th-<串文>（Threads）。
+  // 只允許 https 網址、代號只能 a-z0-9_-；不合規就退回 IG 首頁，不會變成任意跳轉。
   var q = new URLSearchParams(location.search);
-  var r = (q.get('r') || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
-  var s = (q.get('s') || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40);
-  var target = r ? 'https://www.instagram.com/reel/' + r + '/' : 'https://www.instagram.com/1minaday.nina/';
+  var clean = function (v) { return (v || '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40); };
+  var r = clean(q.get('r'));
+  var s = clean(q.get('s'));
+  var to = q.get('to') || '';
+  var target = 'https://www.instagram.com/1minaday.nina/';
+  if (r) {
+    target = 'https://www.instagram.com/reel/' + r + '/';
+    if (!/^(st|ln|th)-/.test(s)) s = 'th-' + (s || 'unknown');
+  } else if (/^https:\/\/[^\s"'<>]+$/.test(to) && to.length < 500) {
+    target = to;
+    if (!s) s = 'go-unknown';
+  }
   document.getElementById('link').href = target;
   document.getElementById('fallback').hidden = false;
   try {
     fetch('https://creator-income-nine.vercel.app/api/public/track', {
       method: 'POST', headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ key: 'th-' + (s || 'unknown'), path: '/go' }), keepalive: true
+      body: JSON.stringify({ key: s || 'go-unknown', path: '/go' }), keepalive: true
     }).catch(function(){});
   } catch (e) {}
   setTimeout(function () { location.replace(target); }, 150);
