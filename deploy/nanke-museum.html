@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>南科考古館懶人包：門票、兒童廳預約、交通｜Nina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:    #F4A082;
+    --coral-lt: rgba(244,160,130,.18);
+    --coral-d:  #8A3A1E;
+    --yellow:   #FFDF6F;
+    --blue:     #D2DCF6;
+    --blue-d:   #39447E;
+    --blue-lt:  rgba(210,220,246,.35);
+    --blue-bdr: rgba(57,68,126,.22);
+    --green:    #D4DCA4;
+    --green-d:  #4F5420;
+    --green-lt: rgba(212,220,164,.35);
+
+    --bg:   #FFFFFF;
+    --bg2:  #ECEEDE;
+    --bg3:  #EEECEA;
+    --text: #1C1C1C;
+    --text2: rgba(28,28,28,.55);
+    --text3: rgba(28,28,28,.28);
+    --border: rgba(0,0,0,.08);
+
+    --hero-bg: #141414;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg2);
+    color:var(--text);
+    font-family:'Noto Sans TC',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+  }
+  .sheet{max-width:440px;margin:0 auto;background:var(--bg)}
+
+  /* ── hero（比照網站：唯一的深色區塊）── */
+  .hero{background:var(--hero-bg);color:#fff;padding:34px 24px 30px}
+  .hero .venue{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;font-size:15px;letter-spacing:.16em;
+    color:var(--green);margin-bottom:20px;
+  }
+  .hero h1{
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;font-size:clamp(28px,8.4vw,36px);
+    line-height:1.3;letter-spacing:.02em;
+  }
+  .hero h1 span{color:var(--coral)}
+  .hero p{font-size:14px;color:rgba(255,255,255,.62);margin-top:16px;line-height:1.8}
+
+  main{padding:26px 24px 30px}
+  section{margin-bottom:26px}
+  h2{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;font-size:17px;
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:12px;
+  }
+  .band{display:inline-block;width:5px;height:19px;border-radius:3px;background:var(--green)}
+  .band.b{background:var(--blue)}
+
+  .card{background:var(--green-lt);border-radius:8px;padding:16px 18px}
+  .card.b{background:var(--blue-lt)}
+
+  .group+.group{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+  .group-name{font-size:13px;font-weight:500;color:var(--green-d);margin-bottom:4px}
+
+  .line{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:15px}
+  .line .what{flex:0 1 auto}
+  .line .lead{flex:1 1 auto;min-width:12px;border-bottom:1px dotted var(--text3);transform:translateY(-4px)}
+  .line .amt{flex:0 0 auto;font-weight:500;font-variant-numeric:tabular-nums}
+  .line .amt s{color:var(--text3);font-weight:300;margin-right:6px}
+  .line.sub{font-size:13px;color:var(--text2);padding:1px 0 3px 2px}
+  .line.free .amt{color:var(--coral-d);font-weight:700}
+
+  .flag{
+    display:block;margin-top:12px;padding:10px 13px;
+    background:var(--coral-lt);border-radius:6px;
+    font-size:14px;line-height:1.75;
+  }
+  .flag b{color:var(--coral-d);font-weight:500}
+
+  .note{display:flex;gap:12px;padding:8px 0;font-size:14.5px;border-bottom:1px solid var(--border)}
+  .note:last-child{border-bottom:0;padding-bottom:0}
+  .note dt{flex:0 0 74px;color:var(--blue-d);font-weight:500;font-size:13.5px}
+  .note dd{flex:1}
+
+  /* ── 訂房 CTA ── */
+  .book{
+    display:block;
+    background:var(--coral);
+    border-radius:8px;
+    padding:16px 18px;
+    text-decoration:none;
+    color:var(--text);
+    text-align:center;
+  }
+  .book .go{
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;font-size:18px;letter-spacing:.04em;
+  }
+  .book .url{
+    display:block;font-size:12.5px;color:var(--coral-d);
+    margin-top:6px;letter-spacing:.03em;word-break:break-all;
+  }
+  .book:focus-visible{outline:2px solid var(--coral-d);outline-offset:3px}
+
+  /* ── signoff ── */
+  .signoff{background:var(--bg3);padding:26px 24px;text-align:center}
+  .signoff .by{font-size:12px;letter-spacing:.14em;color:var(--text2);margin-bottom:10px}
+  .signoff .handle{
+    display:inline-block;
+    font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;
+    color:var(--text);text-decoration:none;
+    border-bottom:2px solid var(--coral);padding-bottom:2px;
+  }
+  .signoff .handle:focus-visible{outline:2px solid var(--coral-d);outline-offset:4px}
+  .signoff .bio{font-size:13.5px;color:var(--text2);line-height:1.85;margin-top:14px}
+
+  footer{padding:20px 24px 30px;font-size:12px;color:var(--text2);line-height:1.9;background:var(--bg3);border-top:1px solid var(--border)}
+</style>
+
+<!-- SEO:BEGIN 由 seo.py 產生，請勿手改；要改請改 seo.py 再重跑 -->
+  <meta name="description" content="南科考古館懶人包：全票 80 元、未滿 6 歲免費，一家四口 160 元。兒童廳平日免預約、假日要約，入場要穿襪子。開放時間、停車與大眾運輸，出發前對一次就好。">
+  <link rel="canonical" href="https://nina-about-me.vercel.app/nanke-museum.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="author" content="Nina">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Nina 雙胞胎媽咪">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:url" content="https://nina-about-me.vercel.app/nanke-museum.html">
+  <meta property="og:title" content="南科考古館懶人包：門票、兒童廳預約、交通｜Nina">
+  <meta property="og:description" content="南科考古館懶人包：全票 80 元、未滿 6 歲免費，一家四口 160 元。兒童廳平日免預約、假日要約，入場要穿襪子。開放時間、停車與大眾運輸，出發前對一次就好。">
+  <meta property="og:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="南科考古館懶人包：門票、兒童廳預約、交通｜Nina">
+  <meta name="twitter:description" content="南科考古館懶人包：全票 80 元、未滿 6 歲免費，一家四口 160 元。兒童廳平日免預約、假日要約，入場要穿襪子。開放時間、停車與大眾運輸，出發前對一次就好。">
+  <meta name="twitter:image" content="https://nina-about-me.vercel.app/img/og-default.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://nina-about-me.vercel.app/#website",
+      "url": "https://nina-about-me.vercel.app/",
+      "name": "Nina 雙胞胎媽咪",
+      "inLanguage": "zh-TW",
+      "publisher": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://nina-about-me.vercel.app/#nina",
+      "name": "Nina",
+      "alternateName": [
+        "1minaday.nina",
+        "Nina 雙胞胎媽咪"
+      ],
+      "description": "Nina，台灣雙胞胎媽媽，極早產雙胞胎（出生 898g / 890g）的媽媽，在 IG @1minaday.nina 分享雙胞胎育兒、早產兒照護與真實家庭日常。",
+      "jobTitle": "自媒體創作者",
+      "knowsAbout": [
+        "雙胞胎育兒",
+        "早產兒照護",
+        "矯正年齡",
+        "早期療育",
+        "試管嬰兒",
+        "親子出遊",
+        "懶人料理"
+      ],
+      "nationality": {
+        "@type": "Country",
+        "name": "台灣"
+      },
+      "url": "https://nina-about-me.vercel.app/",
+      "image": "https://nina-about-me.vercel.app/img/avatar.jpg",
+      "sameAs": [
+        "https://www.instagram.com/1minaday.nina/",
+        "https://www.threads.net/@1minaday.nina"
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://nina-about-me.vercel.app/nanke-museum.html#page",
+      "url": "https://nina-about-me.vercel.app/nanke-museum.html",
+      "headline": "南科考古館懶人包：門票、兒童廳預約、交通｜Nina",
+      "description": "南科考古館懶人包：全票 80 元、未滿 6 歲免費，一家四口 160 元。兒童廳平日免預約、假日要約，入場要穿襪子。開放時間、停車與大眾運輸，出發前對一次就好。",
+      "inLanguage": "zh-TW",
+      "author": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      },
+      "publisher": {
+        "@id": "https://nina-about-me.vercel.app/#nina"
+      },
+      "isPartOf": {
+        "@id": "https://nina-about-me.vercel.app/#website"
+      },
+      "image": "https://nina-about-me.vercel.app/img/og-default.jpg"
+    }
+  ]
+}
+  </script>
+<!-- SEO:END -->
+</head>
+<body>
+<div class="sheet">
+
+  <header class="hero">
+    <p class="venue">南科考古館・台南新市</p>
+    <h1>一家四口<br><span>門票 160 元</span></h1>
+    <p>我們帶兩個兩歲的去，平日下午人少到像包場，待了一整個下午。門票、兒童廳預約、交通整理在這，出發前對一次就好。</p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2><i class="band"></i>門票</h2>
+      <div class="card">
+        <div class="line free"><span class="what">未滿 6 歲</span><span class="lead"></span><span class="amt">免費</span></div>
+        <div class="line"><span class="what">全票</span><span class="lead"></span><span class="amt">$80</span></div>
+        <div class="line"><span class="what">優待票（6–12 歲、學生）</span><span class="lead"></span><span class="amt">$50</span></div>
+        <div class="line"><span class="what">65 歲以上</span><span class="lead"></span><span class="amt">平日免費・假日半價</span></div>
+        <div class="line sub">優待與免費入場要出示證件</div>
+        <span class="flag"><b>10/17、10/18</b> 七週年館慶，<b>免費入館</b>。</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band b"></i>開放時間</h2>
+      <div class="card b">
+        <div class="line"><span class="what">週二到週日</span><span class="lead"></span><span class="amt">09:00–17:00</span></div>
+        <div class="line"><span class="what">售票到</span><span class="lead"></span><span class="amt">16:30</span></div>
+        <div class="line"><span class="what">週一</span><span class="lead"></span><span class="amt">休館</span></div>
+        <div class="line sub">週一遇國定假日照常開放・2026 年 10/27（二）、10/31（六）休館</div>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>場地有什麼</h2>
+      <div class="card">
+        <dl>
+          <div class="note"><dt>兒童廳</dt><dd>大球池、攀爬網、網狀隧道、彩色階梯</dd></div>
+          <div class="note"><dt>考古遊戲區</dt><dd>臉部拼圖（骨頭、肌肉、五官一層層疊）、積木、陶罐石器磁鐵牆</dd></div>
+          <div class="note"><dt>繪本區</dt><dd>一整櫃考古主題繪本，有桌椅可以坐著看</dd></div>
+          <div class="note"><dt>繪畫互動牆</dt><dd>畫一隻動物放上掃描台，牠會出現在牆上的投影草原裡</dd></div>
+          <div class="note"><dt>常設展</dt><dd>南科出土的史前文物與考古現場</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band b"></i>兒童廳預約</h2>
+      <div class="card b">
+        <div class="line free"><span class="what">平日週二到週五（非寒暑假）</span><span class="lead"></span><span class="amt">免預約</span></div>
+        <div class="line"><span class="what">週六日、國定假日、寒暑假</span><span class="lead"></span><span class="amt">要預約</span></div>
+        <div class="line sub">一場 40 分鐘：09:30／10:30／11:30／14:00／15:00／16:00</div>
+        <dl style="margin-top:10px">
+          <div class="note"><dt>名額</dt><dd>每場 70 人（大人小孩都算），網路 40 名、現場 30 名</dd></div>
+          <div class="note"><dt>怎麼約</dt><dd>可約 30 天內的場次，最晚入館日 3 天前；一次最多 4 人、一天只能約一個時段；每天 00:00 開放</dd></div>
+          <div class="note"><dt>報到</dt><dd>場次開始 10 分鐘內要到，沒到算放棄</dd></div>
+          <div class="note"><dt>取消</dt><dd>參觀日前兩天要取消完成，改人數要先取消再重約</dd></div>
+          <div class="note"><dt>陪同</dt><dd>12 歲以下至少一位大人陪，一位大人最多帶 3 個小孩</dd></div>
+        </dl>
+        <span class="flag">入場要<b>脫鞋、穿襪子</b>，沒穿襪子不能進。我們忘了帶，現場可以買。</span>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>出發前知道這些</h2>
+      <div class="card">
+        <dl>
+          <div class="note"><dt>吃東西</dt><dd>兒童廳和展廳都不能吃喝。我們是走到旁邊的 Park 17 商場吃，不大，但有星巴克、摩斯和 7-11</dd></div>
+          <div class="note"><dt>喝水</dt><dd>兒童廳鞋櫃前可以喝水，一樓有飲水機</dd></div>
+          <div class="note"><dt>推車</dt><dd>一樓服務台可以借嬰兒推車</dd></div>
+          <div class="note"><dt>置物</dt><dd>一樓大廳有投幣寄物櫃，貴重物品自己帶著</dd></div>
+          <div class="note"><dt>哺乳室</dt><dd>一樓有哺集乳室，可以餵奶、換尿布</dd></div>
+          <div class="note"><dt>身體不舒服</dt><dd>發燒、感冒還沒好不能進兒童廳</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band"></i>開車</h2>
+      <div class="card">
+        <dl>
+          <div class="note"><dt>停哪裡</dt><dd>南科三路的「行政服務區地下停車場」，跟南科管理局共用，停好上樓就到</dd></div>
+          <div class="note"><dt>國道一號南下</dt><dd>311 交流道下，往善化方向</dd></div>
+          <div class="note"><dt>國道一號北上</dt><dd>315 台南系統轉國道八號，9 號新市交流道下，往南科方向</dd></div>
+          <div class="note"><dt>國道三號南下</dt><dd>340 善化交流道下</dd></div>
+          <div class="note"><dt>國道三號北上</dt><dd>346 新化系統轉國道八號，9 號新市交流道下</dd></div>
+          <div class="note"><dt>導航</dt><dd>台南市新市區南科三路 10 號</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <h2><i class="band b"></i>大眾運輸</h2>
+      <div class="card b">
+        <dl>
+          <div class="note"><dt>高鐵</dt><dd>台南站 2 號出口搭「高鐵綠線」到 Park 17 商場站，走 3 分鐘</dd></div>
+          <div class="note"><dt>台鐵南科站</dt><dd>西側出口搭南科巡迴巴士到 Park 17 商場站，走 3 分鐘。巡迴巴士假日不開</dd></div>
+          <div class="note"><dt>台鐵新市站</dt><dd>搭綠 1 到南科商場站，走 3 分鐘</dd></div>
+          <div class="note"><dt>台鐵善化站</dt><dd>搭綠 1 到南科商場站，或善化棕線到 Park 17 商場站，走 3 分鐘</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <a class="book" href="https://event.culture.tw/NMP/portal/Tour/J5402MAction?useLanguage=tw&amp;tourId=97001" target="_blank" rel="noopener">
+        <span class="go">假日先預約兒童廳</span>
+        <span class="url">event.culture.tw</span>
+      </a>
+    </section>
+
+    <section>
+      <a class="book" href="https://stsp.nmp.gov.tw/" target="_blank" rel="noopener">
+        <span class="go">到官網看最新公告</span>
+        <span class="url">stsp.nmp.gov.tw</span>
+      </a>
+    </section>
+
+  </main>
+
+  <div class="signoff">
+    <p class="by">整理｜Nina</p>
+    <a class="handle" href="https://www.instagram.com/1minaday.nina/">@1minaday.nina</a>
+    <p class="bio">那個帶兩個孩子還能讓你笑出來的媽媽<br>更多帶小小孩出門的實測，都在 IG</p>
+  </div>
+
+  <footer>
+    票價、開放時間、交通、兒童廳預約規範整理自南科考古館官網與預約系統（2026 年 10 月），可能調整，出發前請以官方公告為準。<br>
+    內容是我們 2026 年 10 月平日去的個人心得。
+  </footer>
+
+</div>
+</body>
+</html>

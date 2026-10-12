@@ -105,6 +105,12 @@ PAGES = {
         "priority": "0.7",
         "changefreq": "yearly",
     },
+    "nanke-museum.html": {
+        "desc": "南科考古館懶人包：全票 80 元、未滿 6 歲免費，一家四口 160 元。兒童廳平日免預約、假日要約，入場要穿襪子。開放時間、停車與大眾運輸，出發前對一次就好。",
+        "schema": "article",
+        "priority": "0.6",
+        "changefreq": "monthly",
+    },
     "huilai.html": {
         "desc": "會來尖石溫泉渡假村完整費用與規則整理：露營車、大眾池、湯屋、套房價格，未滿 110 公分孩童免費。帶小小孩出發前對一次就好。",
         "schema": "article",
